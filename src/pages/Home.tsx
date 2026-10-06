@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
 import { properties } from '../data/properties'
@@ -107,6 +107,10 @@ export function Home() {
   // Rotating cinematic hero — high-res Maldives photography, changing text.
   const [slide, setSlide] = useState(0)
   const [playing, setPlaying] = useState(true)
+  // Experience rail scroll controls (mouse wheels don't scroll sideways).
+  const expRef = useRef<HTMLDivElement>(null)
+  const scrollExp = (dir: 1 | -1) =>
+    expRef.current?.scrollBy({ left: dir * 340, behavior: prefersReduced() ? 'auto' : 'smooth' })
   useEffect(() => {
     if (prefersReduced() || !playing) return
     const t = setInterval(() => setSlide((i) => (i + 1) % SLIDES.length), 6500)
@@ -298,14 +302,17 @@ export function Home() {
               <p className="kicker mb-3">Experiences</p>
               <h2 className="display-xl">Days you’ll talk<br />about for years.</h2>
             </Reveal>
-            <Reveal delay={100} className="flex items-center gap-4 shrink-0">
-              <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-slate-400" aria-hidden>Scroll →</span>
+            <Reveal delay={100} className="flex items-center gap-3 shrink-0">
+              <span className="flex items-center gap-2" role="group" aria-label="Scroll experiences">
+                <button onClick={() => scrollExp(-1)} aria-label="Scroll experiences left" className="w-11 h-11 rounded-full border border-slate-300 grid place-items-center text-ink-900 hover:bg-ink-900 hover:text-white hover:border-ink-900 transition-colors">←</button>
+                <button onClick={() => scrollExp(1)} aria-label="Scroll experiences right" className="w-11 h-11 rounded-full border border-slate-300 grid place-items-center text-ink-900 hover:bg-ink-900 hover:text-white hover:border-ink-900 transition-colors">→</button>
+              </span>
               <Link to="/experiences" className="alink text-[15px]">All experiences <span className="arr" aria-hidden>→</span></Link>
             </Reveal>
           </div>
         </div>
         <div className="container-x mt-9">
-          <div className="snaprow" role="list" aria-label="Featured experiences">
+          <div ref={expRef} className="snaprow" role="list" aria-label="Featured experiences">
             {experiences.slice(0, 8).map((e) => (
               <div key={e.slug} role="listitem" className="w-[270px] sm:w-[310px] h-[400px] shrink-0">
                 <ExperienceCard e={e} />
