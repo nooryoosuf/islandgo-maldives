@@ -1,0 +1,13 @@
+{
+  "name": "IslandGo Maldives",
+  "short_name": "IslandGo",
+  "description": "Discover the sunny side of the Maldives — destinations, stays, experiences, packages and travel guides.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a2342",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.svg", "sizes": "180x180", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

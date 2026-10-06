@@ -1,0 +1,2 @@
+/* SPA fallback for static hosts (Netlify/Vercel-style). For Vercel also see vercel.json. */
+/* :catchall -> /index.html */
