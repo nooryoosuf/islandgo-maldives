@@ -124,6 +124,11 @@ body {
   .snaprow::-webkit-scrollbar { display: none; }
   .snaprow > * { scroll-snap-align: start; }
 
+  /* Soft right-edge fade: signals "more inside" instead of "cut off" */
+  @media (hover: hover) {
+    .rail-fade { -webkit-mask-image: linear-gradient(to right, black 82%, transparent 99%); mask-image: linear-gradient(to right, black 82%, transparent 99%); }
+  }
+
   /* Infinite marquee (pause on hover) */
   .marquee { overflow: hidden; }
   .marquee-track { display: flex; align-items: center; width: max-content; animation: marquee var(--speed, 42s) linear infinite; }

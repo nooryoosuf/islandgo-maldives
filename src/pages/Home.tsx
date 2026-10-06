@@ -107,10 +107,22 @@ export function Home() {
   // Rotating cinematic hero — high-res Maldives photography, changing text.
   const [slide, setSlide] = useState(0)
   const [playing, setPlaying] = useState(true)
-  // Experience rail scroll controls (mouse wheels don't scroll sideways).
+  // Experience rail: auto-looping (pauses on interaction), arrows for control.
   const expRef = useRef<HTMLDivElement>(null)
+  const [expPaused, setExpPaused] = useState(false)
   const scrollExp = (dir: 1 | -1) =>
     expRef.current?.scrollBy({ left: dir * 340, behavior: prefersReduced() ? 'auto' : 'smooth' })
+  useEffect(() => {
+    if (prefersReduced()) return
+    const t = setInterval(() => {
+      const el = expRef.current
+      if (!el || document.hidden || expPaused) return
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 24
+      if (atEnd) el.scrollTo({ left: 0, behavior: 'smooth' })
+      else el.scrollBy({ left: 340, behavior: 'smooth' })
+    }, 4500)
+    return () => clearInterval(t)
+  }, [expPaused])
   useEffect(() => {
     if (prefersReduced() || !playing) return
     const t = setInterval(() => setSlide((i) => (i + 1) % SLIDES.length), 6500)
@@ -312,7 +324,16 @@ export function Home() {
           </div>
         </div>
         <div className="container-x mt-9">
-          <div ref={expRef} className="snaprow" role="list" aria-label="Featured experiences">
+          <div
+            ref={expRef}
+            className="snaprow rail-fade"
+            role="list"
+            aria-label="Featured experiences"
+            onMouseEnter={() => setExpPaused(true)}
+            onMouseLeave={() => setExpPaused(false)}
+            onFocus={() => setExpPaused(true)}
+            onBlur={() => setExpPaused(false)}
+          >
             {experiences.slice(0, 8).map((e) => (
               <div key={e.slug} role="listitem" className="w-[270px] sm:w-[310px] h-[400px] shrink-0">
                 <ExperienceCard e={e} />
