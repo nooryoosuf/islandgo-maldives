@@ -1,2 +1,3 @@
-/* SPA fallback for static hosts (Netlify/Vercel-style). For Vercel also see vercel.json. */
-/* :catchall -> /index.html */
+# Cloudflare Pages SPA fallback — serves index.html for all app routes
+# (lets /destinations/baa-atoll etc. load directly and on refresh).
+/* /index.html 200
