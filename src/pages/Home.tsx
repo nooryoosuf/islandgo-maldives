@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
 import { properties } from '../data/properties'
@@ -71,12 +71,12 @@ function MiniArticle({ a }: { a: Article }) {
 }
 
 const STYLES = [
-  { image: img.couple, title: 'Honeymoon', text: 'Private decks, sunset cruises & barefoot romance.', to: '/packages?cat=honeymoon' },
-  { image: img.family, title: 'Family', text: 'Shallow reefs, kids clubs & sandbank afternoons.', to: '/packages?cat=family' },
-  { image: img.dive, title: 'Diving', text: 'Thilas, channels, mantas & night dives.', to: '/experiences?q=diving' },
-  { image: img.surf, title: 'Surfing', text: 'Cokes, Chickens & boat-based guiding.', to: '/experiences?q=surf' },
-  { image: img.villaDeck, title: 'Luxury', text: 'Space, silence, seaplanes & overwater days.', to: '/packages?cat=luxury' },
-  { image: img.islandLife, title: 'Local islands', text: 'Culture, cafés & the smartest value.', to: '/stays?type=local-island' },
+  { image: img.couple, title: 'Honeymoon', text: 'Private decks, sunset cruises & barefoot romance.', to: '/packages/honeymoon' },
+  { image: img.family, title: 'Family', text: 'Shallow reefs, kids clubs & sandbank afternoons.', to: '/packages/family' },
+  { image: img.dive, title: 'Diving', text: 'Thilas, channels, mantas & night dives.', to: '/experiences/diving' },
+  { image: img.surf, title: 'Surfing', text: 'Cokes, Chickens & boat-based guiding.', to: '/experiences/surfing' },
+  { image: img.villaDeck, title: 'Luxury', text: 'Space, silence, seaplanes & overwater days.', to: '/packages/luxury' },
+  { image: img.islandLife, title: 'Local islands', text: 'Culture, cafés & the smartest value.', to: '/stays/local-islands' },
 ]
 
 const MARQUEE = ['Baa Atoll', 'Hanifaru Bay', 'North Malé', 'Ari Atoll', 'Thulusdhoo', 'Dhigurah', 'Maafushi', 'Lhaviyani', 'Vaavu', 'Sandbanks', 'Mantas', 'Whale sharks']
@@ -107,22 +107,6 @@ export function Home() {
   // Rotating cinematic hero — high-res Maldives photography, changing text.
   const [slide, setSlide] = useState(0)
   const [playing, setPlaying] = useState(true)
-  // Experience rail: auto-looping (pauses on interaction), arrows for control.
-  const expRef = useRef<HTMLDivElement>(null)
-  const [expPaused, setExpPaused] = useState(false)
-  const scrollExp = (dir: 1 | -1) =>
-    expRef.current?.scrollBy({ left: dir * 340, behavior: prefersReduced() ? 'auto' : 'smooth' })
-  useEffect(() => {
-    if (prefersReduced()) return
-    const t = setInterval(() => {
-      const el = expRef.current
-      if (!el || document.hidden || expPaused) return
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 24
-      if (atEnd) el.scrollTo({ left: 0, behavior: 'smooth' })
-      else el.scrollBy({ left: 340, behavior: 'smooth' })
-    }, 4500)
-    return () => clearInterval(t)
-  }, [expPaused])
   useEffect(() => {
     if (prefersReduced() || !playing) return
     const t = setInterval(() => setSlide((i) => (i + 1) % SLIDES.length), 6500)
@@ -314,28 +298,15 @@ export function Home() {
               <p className="kicker mb-3">Experiences</p>
               <h2 className="display-xl">Days you’ll talk<br />about for years.</h2>
             </Reveal>
-            <Reveal delay={100} className="flex items-center gap-3 shrink-0">
-              <span className="flex items-center gap-2" role="group" aria-label="Scroll experiences">
-                <button onClick={() => scrollExp(-1)} aria-label="Scroll experiences left" className="w-11 h-11 rounded-full border border-slate-300 grid place-items-center text-ink-900 hover:bg-ink-900 hover:text-white hover:border-ink-900 transition-colors">←</button>
-                <button onClick={() => scrollExp(1)} aria-label="Scroll experiences right" className="w-11 h-11 rounded-full border border-slate-300 grid place-items-center text-ink-900 hover:bg-ink-900 hover:text-white hover:border-ink-900 transition-colors">→</button>
-              </span>
+            <Reveal delay={100} className="shrink-0">
               <Link to="/experiences" className="alink text-[15px]">All experiences <span className="arr" aria-hidden>→</span></Link>
             </Reveal>
           </div>
         </div>
         <div className="container-x mt-9">
-          <div
-            ref={expRef}
-            className="snaprow rail-fade"
-            role="list"
-            aria-label="Featured experiences"
-            onMouseEnter={() => setExpPaused(true)}
-            onMouseLeave={() => setExpPaused(false)}
-            onFocus={() => setExpPaused(true)}
-            onBlur={() => setExpPaused(false)}
-          >
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" role="list" aria-label="Featured experiences">
             {experiences.slice(0, 8).map((e) => (
-              <div key={e.slug} role="listitem" className="w-[270px] sm:w-[310px] h-[400px] shrink-0">
+              <div key={e.slug} role="listitem" className="h-[360px] sm:h-[400px]">
                 <ExperienceCard e={e} />
               </div>
             ))}

@@ -6,6 +6,7 @@ import { propertiesByDestination, properties } from '../data/properties'
 import { packages } from '../data/packages'
 import { Breadcrumbs, CTASection, DestinationCard, ExperienceCard, Gallery, ImageHero, PackageCard, PropertyCard, SectionHeader, StickyEnquire } from '../components/ui'
 import { wa } from '../lib/whatsapp'
+import { resolveStayType } from '../lib/categories'
 import { EnquiryForm, Faq, FilterBar } from '../components/forms'
 import { EmptyState } from '../components/feedback'
 import { getProperty } from '../data/properties'
@@ -92,10 +93,12 @@ export function DestinationDetail() {
 }
 
 // ---------- STAYS ----------
-export function StaysList() {
+export function StaysList({ preset }: { preset?: string }) {
   const [sp] = useSearchParams()
   const [q, setQ] = useState('')
-  const type = sp.get('type') ?? ''
+  const resolved = resolveStayType(preset)
+  const type = resolved?.type ?? sp.get('type') ?? ''
+  const typeLabel = resolved?.label ?? (type ? type.replace('-', ' ') : '')
   const list = useMemo(() => properties.filter((p) => {
     const okT = !type || p.type === type
     const okQ = !q || (p.name + p.location + p.description).toLowerCase().includes(q.toLowerCase())
@@ -103,12 +106,18 @@ export function StaysList() {
   }), [q, type])
   return (
     <main>
-      <ImageHero image={properties[0].heroImage} kicker="Stays · Resorts, hotels & guesthouses" title="Where to stay" text="No fake availability, no checkout pressure — explore, then enquire.">
+      <ImageHero
+        image={properties[0].heroImage}
+        kicker={typeLabel ? `Stays · ${typeLabel}` : 'Stays · Resorts, hotels & guesthouses'}
+        title={typeLabel ? `Maldives ${typeLabel.toLowerCase()}` : 'Where to stay'}
+        text={typeLabel ? `Hand-picked ${typeLabel.toLowerCase()} across the atolls — explore, then enquire.` : 'No fake availability, no checkout pressure — explore, then enquire.'}
+      >
         <Link to="/plan-trip" className="btn-primary">Ask about a stay</Link>
       </ImageHero>
+      <div className="container-x pt-6"><Breadcrumbs items={typeLabel ? [{ label: 'Stays', to: '/stays' }, { label: typeLabel }] : [{ label: 'Stays' }]} /></div>
       <section className="container-x section-pad">
         <FilterBar value={q} onChange={setQ} placeholder="Search stays, islands, vibes…" options={[{ label: 'Resorts', value: 'resort' }, { label: 'Hotels', value: 'hotel' }, { label: 'Local islands', value: 'local-island' }]} />
-        {type && <p className="mt-3 text-sm text-slate-500">Filtered by type: <b className="text-ink-900 capitalize">{type.replace('-', ' ')}</b> · <Link to="/stays" className="text-ocean-700 font-bold">clear</Link></p>}
+        {type && <p className="mt-3 text-sm text-slate-500">Filtered by type: <b className="text-ink-900 capitalize">{typeLabel || type.replace('-', ' ')}</b> · <Link to="/stays" className="text-ocean-700 font-bold">clear</Link></p>}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
           {list.map((p) => <PropertyCard key={p.slug} p={p} />)}
         </div>
@@ -121,6 +130,7 @@ export function StaysList() {
 
 export function StayDetail() {
   const { slug = '' } = useParams()
+  if (resolveStayType(slug)) return <StaysList preset={slug} />
   const p = getProperty(slug)
   if (!p) return <NotFound />
   const dest = getDestination(p.destinationSlug)

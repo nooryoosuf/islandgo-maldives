@@ -9,13 +9,15 @@ import { Breadcrumbs, CTASection, ExperienceCard, Gallery, ImageHero, PackageCar
 import { EnquiryForm, FilterBar } from '../components/forms'
 import { wa } from '../lib/whatsapp'
 import { EmptyState } from '../components/feedback'
+import { isPackageCat, packageCatLabel, isExpCat, expCatLabel, expCatSlug } from '../lib/categories'
 import { NotFound } from './Explore'
 
 // ---------- PACKAGES ----------
-export function PackagesList() {
+export function PackagesList({ presetCat }: { presetCat?: string }) {
   const [sp] = useSearchParams()
   const [q, setQ] = useState('')
-  const cat = sp.get('cat') ?? ''
+  const cat = presetCat ?? sp.get('cat') ?? ''
+  const catLabel = cat ? packageCatLabel(cat) : ''
   const list = useMemo(() => packages.filter((p) => {
     const okC = !cat || p.category.includes(cat as never)
     const okQ = !q || (p.name + p.description).toLowerCase().includes(q.toLowerCase())
@@ -23,7 +25,13 @@ export function PackagesList() {
   }), [q, cat])
   return (
     <main>
-      <ImageHero image={packages[0].heroImage} kicker="Packages · Flexible starting points" title="Packages" text="Honeymoon to budget — every itinerary is tailored to your dates. No checkout, just enquire." />
+      <ImageHero
+        image={packages[0].heroImage}
+        kicker={catLabel ? `Packages · ${catLabel}` : 'Packages · Flexible starting points'}
+        title={catLabel ? `${catLabel} in the Maldives` : 'Packages'}
+        text={catLabel ? `Hand-picked ${catLabel.toLowerCase()} trips — every itinerary is tailored to your dates.` : 'Honeymoon to budget — every itinerary is tailored to your dates. No checkout, just enquire.'}
+      />
+      <div className="container-x pt-6"><Breadcrumbs items={catLabel ? [{ label: 'Packages', to: '/packages' }, { label: catLabel }] : [{ label: 'Packages' }]} /></div>
       <section className="container-x section-pad">
         <FilterBar value={q} onChange={setQ} placeholder="Search honeymoon, diving, budget…" options={[{ label: 'Honeymoon', value: 'honeymoon' }, { label: 'Family', value: 'family' }, { label: 'Luxury', value: 'luxury' }, { label: 'Adventure', value: 'adventure' }, { label: 'Budget', value: 'budget' }]} />
         {cat && <p className="mt-3 text-sm text-slate-500">Filtered: <b className="text-ink-900 capitalize">{cat}</b> · <Link to="/packages" className="text-ocean-700 font-bold">clear</Link></p>}
@@ -37,6 +45,7 @@ export function PackagesList() {
 
 export function PackageDetail() {
   const { slug = '' } = useParams()
+  if (isPackageCat(slug)) return <PackagesList presetCat={slug} />
   const p = getPackage(slug)
   if (!p) return <NotFound />
   const related = packages.filter((x) => x.slug !== p.slug).slice(0, 3)
@@ -96,14 +105,22 @@ function ExpRow({ e, i }: { e: (typeof experiences)[number]; i: number }) {
   )
 }
 
-export function ExperiencesList() {
+export function ExperiencesList({ presetExp }: { presetExp?: string }) {
   const [sp] = useSearchParams()
   const [q, setQ] = useState(sp.get('q') ?? '')
-  const list = experiences.filter((e) => !q || (e.name + e.category + e.description).toLowerCase().includes(q.toLowerCase()))
+  const preset = isExpCat(presetExp ?? '') ? expCatLabel(presetExp as string) : ''
+  const base = presetExp && isExpCat(presetExp) ? experiences.filter((e) => expCatSlug(e.category) === presetExp) : experiences
+  const list = !q ? base : base.filter((e) => (e.name + e.category + e.description).toLowerCase().includes(q.toLowerCase()))
   const [featured, ...rest] = list
   return (
     <main>
-      <ImageHero image={experiences[0].heroImage} kicker="Experiences · Diving to culture" title="Experiences" text="Mantas, channels, surf boats and village teas — the days between beach naps." />
+      <ImageHero
+        image={experiences[0].heroImage}
+        kicker={preset ? `Experiences · ${preset}` : 'Experiences · Diving to culture'}
+        title={preset ? `${preset} in the Maldives` : 'Experiences'}
+        text={preset ? `Guided ${preset.toLowerCase()} with local experts — permits, boats and timing handled.` : 'Mantas, channels, surf boats and village teas — the days between beach naps.'}
+      />
+      <div className="container-x pt-6"><Breadcrumbs items={preset ? [{ label: 'Experiences', to: '/experiences' }, { label: preset }] : [{ label: 'Experiences' }]} /></div>
       <section className="container-x section-pad">
         {featured && (
           <Link to={`/experiences/${featured.slug}`} className="group grid gap-8 lg:grid-cols-12 lg:gap-12 items-center pb-12">
@@ -120,7 +137,7 @@ export function ExperiencesList() {
           </Link>
         )}
         <div className="flex flex-wrap items-end justify-between gap-4 pt-4">
-          <h2 className="h-display text-2xl sm:text-3xl">All experiences</h2>
+          <h2 className="h-display text-2xl sm:text-3xl">{preset ? `All ${preset.toLowerCase()}` : 'All experiences'}</h2>
           <div className="w-full sm:w-72">
             <label htmlFor="exp-search" className="label">Search experiences</label>
             <input id="exp-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Try diving, surf, sandbank…" className="input !py-2.5" />
@@ -138,6 +155,7 @@ export function ExperiencesList() {
 
 export function ExperienceDetail() {
   const { slug = '' } = useParams()
+  if (isExpCat(slug)) return <ExperiencesList presetExp={slug} />
   const e = getExperience(slug)
   if (!e) return <NotFound />
   const idx = experiences.findIndex((x) => x.slug === e.slug)

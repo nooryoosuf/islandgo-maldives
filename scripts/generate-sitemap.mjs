@@ -17,6 +17,11 @@ function slugs(file, exportName) {
   return [...new Set(out)]
 }
 
+// Category landing pages (source of truth: src/lib/categories.ts — keep in sync).
+const packageCats = ['honeymoon', 'family', 'luxury', 'adventure', 'budget', 'island-hopping', 'diving', 'surfing']
+const expCats = ['diving', 'snorkelling', 'surfing', 'island-trips', 'cruises', 'fishing', 'culture']
+const stayCats = ['resorts', 'hotels', 'local-islands']
+
 const routes = [
   '/',
   '/destinations',
@@ -37,6 +42,9 @@ const routes = [
   ...slugs('src/data/packages.ts').map((s) => `/packages/${s}`),
   ...slugs('src/data/experiences.ts').map((s) => `/experiences/${s}`),
   ...slugs('src/data/articles.ts').map((s) => `/guide/${s}`),
+  ...packageCats.map((s) => `/packages/${s}`),
+  ...expCats.map((s) => `/experiences/${s}`),
+  ...stayCats.map((s) => `/stays/${s}`),
 ]
 
 const today = new Date().toISOString().slice(0, 10)

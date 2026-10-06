@@ -119,16 +119,6 @@ body {
   .mnav-item { opacity: 0; transform: translateY(20px); animation: mnav-in .55s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: calc(var(--i, 0) * 70ms + 90ms); }
   @keyframes mnav-in { to { opacity: 1; transform: none; } }
 
-  /* Horizontal snap-scroll discovery row */
-  .snaprow { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .75rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .snaprow::-webkit-scrollbar { display: none; }
-  .snaprow > * { scroll-snap-align: start; }
-
-  /* Soft right-edge fade: signals "more inside" instead of "cut off" */
-  @media (hover: hover) {
-    .rail-fade { -webkit-mask-image: linear-gradient(to right, black 82%, transparent 99%); mask-image: linear-gradient(to right, black 82%, transparent 99%); }
-  }
-
   /* Infinite marquee (pause on hover) */
   .marquee { overflow: hidden; }
   .marquee-track { display: flex; align-items: center; width: max-content; animation: marquee var(--speed, 42s) linear infinite; }

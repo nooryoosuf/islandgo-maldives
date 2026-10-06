@@ -7,6 +7,7 @@ import { getProperty } from '../data/properties'
 import { getPackage } from '../data/packages'
 import { getExperience } from '../data/experiences'
 import { getArticle } from '../data/articles'
+import { isPackageCat, packageCatLabel, isExpCat, expCatLabel, resolveStayType } from '../lib/categories'
 import { trackPageView } from '../lib/analytics'
 
 const STATIC: Record<string, { title: string; desc: string }> = {
@@ -48,6 +49,14 @@ export function RouteMeta() {
     )
   }
   if (path.startsWith('/stays/') && params.slug) {
+    const st = resolveStayType(params.slug)
+    if (st)
+      return (
+        <>
+          <SEO title={`${st.label} | Maldives Resorts & Stays | ${site.name}`} description={`Hand-picked Maldives ${st.label.toLowerCase()} across the atolls — explore, then enquire. No fake availability.`} path={path} />
+          <JsonLd data={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Stays', path: '/stays' }, { name: st.label }])} />
+        </>
+      )
     const p = getProperty(params.slug)
     if (!p) return <SEO title={`Not found | ${site.name}`} description="Page not found." path={path} noindex />
     return (
@@ -58,6 +67,15 @@ export function RouteMeta() {
     )
   }
   if (path.startsWith('/packages/') && params.slug) {
+    if (isPackageCat(params.slug)) {
+      const label = packageCatLabel(params.slug)
+      return (
+        <>
+          <SEO title={`${label} Packages | Maldives Travel Packages | ${site.name}`} description={`Hand-picked Maldives ${label.toLowerCase()} trips — flexible itineraries tailored to your dates. Enquire, no checkout.`} path={path} />
+          <JsonLd data={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Packages', path: '/packages' }, { name: label }])} />
+        </>
+      )
+    }
     const p = getPackage(params.slug)
     if (!p) return <SEO title={`Not found | ${site.name}`} description="Page not found." path={path} noindex />
     return (
@@ -68,6 +86,15 @@ export function RouteMeta() {
     )
   }
   if (path.startsWith('/experiences/') && params.slug) {
+    if (isExpCat(params.slug)) {
+      const label = expCatLabel(params.slug)
+      return (
+        <>
+          <SEO title={`${label} | Maldives Experiences | ${site.name}`} description={`Guided ${label.toLowerCase()} across the Maldives with local experts — permits, boats and timing handled.`} path={path} />
+          <JsonLd data={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Experiences', path: '/experiences' }, { name: label }])} />
+        </>
+      )
+    }
     const e = getExperience(params.slug)
     if (!e) return <SEO title={`Not found | ${site.name}`} description="Page not found." path={path} noindex />
     return (
