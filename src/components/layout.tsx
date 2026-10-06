@@ -80,17 +80,6 @@ export function Header() {
         solid ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/70' : 'bg-transparent border-b border-transparent'
       }`}
     >
-      {/* slim top strip — slides away over the hero, returns on scroll */}
-      <div className={`hidden md:block bg-ocean-950 text-white/90 text-[13px] overflow-hidden transition-all duration-300 ${solid ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="container-x flex items-center justify-between py-1.5">
-          <p>☀ Maldives specialists · Malé-based team · Replies within a few hours</p>
-          <div className="flex gap-4">
-            <a href={wa.general()} onClick={() => track('whatsapp_click', { from: 'topbar' })} className="hover:text-white font-semibold">WhatsApp {site.contact.whatsappDisplay}</a>
-            <Link to="/offers" className="text-sunset-300 hover:text-white font-semibold">Winter early-bird −15%</Link>
-          </div>
-        </div>
-      </div>
-
       <div className="relative z-50 container-x flex items-center justify-between h-[72px] gap-3">
         <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name} home`}>
           <span className="grid place-items-center w-10 h-10 rounded-2xl bg-ocean-600 text-white text-xl" aria-hidden>◍</span>
