@@ -4,4 +4,4 @@ Allow: /
 Disallow: /api/private/
 Disallow: /admin/
 
-Sitemap: https://islandgo.mv/sitemap.xml
+Sitemap: https://islandgomv.com/sitemap.xml
