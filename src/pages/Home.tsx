@@ -340,7 +340,7 @@ export function Home() {
               ['Malé-based', 'We live here. Same ferries, same thilas, tide checks before promises.'],
               ['WhatsApp-first', 'Message a human, not a ticket queue — quotes to welcome briefing.'],
               ['Right island first', 'Atoll and season before star rating. We say so when it matters.'],
-              ['No fake booking engine', 'No invented availability. Clear enquiries, real confirmations.'],
+              ['Enquire, then confirm', 'Real availability and prices, confirmed in writing before anything is booked.'],
             ].map(([t, d], i) => (
               <li key={t} className="flex gap-5 sm:gap-7 py-5 items-baseline">
                 <span className="font-display text-lg text-white/25 w-8 shrink-0" aria-hidden>{String(i + 1).padStart(2, '0')}</span>

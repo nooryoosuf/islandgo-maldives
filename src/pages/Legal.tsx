@@ -50,7 +50,7 @@ export function Terms() {
       <h2 className="h-display text-2xl">Prices & availability</h2>
       <p>All “from” prices are indicative starting points in USD, excluding international flights unless stated. Final quotes confirm inclusions, transfers, taxes and validity dates.</p>
       <h2 className="h-display text-2xl">Content</h2>
-      <p>Photography includes high-quality placeholders until agency shoots replace them. Marine-life sightings (mantas, whale sharks, dolphins) are never guaranteed — we operate ethical, no-chase policies.</p>
+      <p>Photography is representative of the islands, resorts and experiences described. Marine-life sightings (mantas, whale sharks, dolphins) are never guaranteed — we operate ethical, no-chase policies.</p>
     </Shell>
   )
 }

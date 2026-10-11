@@ -110,7 +110,7 @@ export function StaysList({ preset }: { preset?: string }) {
         image={properties[0].heroImage}
         kicker={typeLabel ? `Stays · ${typeLabel}` : 'Stays · Resorts, hotels & guesthouses'}
         title={typeLabel ? `Maldives ${typeLabel.toLowerCase()}` : 'Where to stay'}
-        text={typeLabel ? `Hand-picked ${typeLabel.toLowerCase()} across the atolls — explore, then enquire.` : 'No fake availability, no checkout pressure — explore, then enquire.'}
+        text={typeLabel ? `Hand-picked ${typeLabel.toLowerCase()} across the atolls — explore, then enquire.` : 'Browse every island stay — then enquire for confirmed availability and honest prices.'}
       >
         <Link to="/plan-trip" className="btn-primary">Ask about a stay</Link>
       </ImageHero>

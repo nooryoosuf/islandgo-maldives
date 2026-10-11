@@ -211,12 +211,12 @@ export function Footer() {
         <div>
           <p className="font-bold text-sm uppercase tracking-wider text-white/60 mb-3">Contact</p>
           <p className="text-white/85 text-[15px]">{site.contact.address}<br /><a className="font-semibold text-sunset-400 hover:text-sunset-300" href={`mailto:${site.contact.email}`}>{site.contact.email}</a><br /><a className="hover:text-white" href={whatsappLink('Hi!')}>{site.contact.whatsappDisplay} (WhatsApp)</a><br /><span className="text-white/60 text-[13px]">{site.contact.hours}</span></p>
-          <p className="text-white/50 text-[13px] mt-3">No booking engine, no fake availability — real humans, real quotes.</p>
+          <p className="text-white/50 text-[13px] mt-3">Chat with a human — replies within hours, Malé time.</p>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row justify-between gap-2 text-[13px] text-white/50">
-          <p>© 2026 IslandGo MV. Placeholder photography via Unsplash — replace with agency shoots.</p>
+          <p>© 2026 IslandGo MV · Explore • Discover • Experience Maldives.</p>
           <p className="flex gap-4">
             <Link to="/privacy" className="hover:text-white">Privacy</Link>
             <Link to="/terms" className="hover:text-white">Terms</Link>

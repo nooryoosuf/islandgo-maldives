@@ -115,7 +115,7 @@ export function EnquiryForm({ context }: { context: string }) {
       }}
     >
       <h3 className="font-display text-2xl text-ink-900">Ask about this {context}</h3>
-      <p className="text-slate-500 text-[14.5px] mt-1">No payment, no fake availability — a real quote from our team.</p>
+      <p className="text-slate-500 text-[14.5px] mt-1">No payment — a personal quote from our team.</p>
       <div className="grid sm:grid-cols-2 gap-4 mt-5">
         <div>
           <label className="label" htmlFor={`name-${context}`}>Name *</label>

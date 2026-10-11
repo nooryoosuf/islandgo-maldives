@@ -13,7 +13,7 @@ import { trackPageView } from '../lib/analytics'
 const STATIC: Record<string, { title: string; desc: string }> = {
   '/': { title: 'IslandGo Maldives — Discover the Sunny Side of the Maldives', desc: 'Resorts, local islands, diving, surfing, packages and honest Malé-based trip planning. Explore destinations and plan your trip.' },
   '/destinations': { title: 'Destinations | Maldives Travel Guide | IslandGo Maldives', desc: 'Explore Maldives atolls and local islands — North Malé, Baa, Ari, local-island life and more, with honest season advice.' },
-  '/stays': { title: 'Resorts, Hotels & Local Islands | IslandGo Maldives', desc: 'Overwater resorts, boutique hotels and family-run guesthouses across the Maldives. Explore, then enquire — no fake availability.' },
+  '/stays': { title: 'Resorts, Hotels & Local Islands | IslandGo Maldives', desc: 'Overwater resorts, boutique hotels and family-run guesthouses across the Maldives. Explore, then enquire for confirmed availability.' },
   '/packages': { title: 'Maldives Travel Packages | IslandGo Maldives', desc: 'Honeymoon, family, luxury, adventure and budget Maldives packages — flexible starting points tailored to your dates.' },
   '/experiences': { title: 'Maldives Experiences | IslandGo Maldives', desc: 'Diving, manta snorkelling, surfing, sandbanks, dolphin cruises, fishing and island culture with local guides.' },
   '/guide': { title: 'Maldives Travel Guide | IslandGo Maldives', desc: 'First-timer briefings, resort-vs-local-island advice, manta seasons, surf guides and packing tips from locals.' },
@@ -53,7 +53,7 @@ export function RouteMeta() {
     if (st)
       return (
         <>
-          <SEO title={`${st.label} | Maldives Resorts & Stays | ${site.name}`} description={`Hand-picked Maldives ${st.label.toLowerCase()} across the atolls — explore, then enquire. No fake availability.`} path={path} />
+          <SEO title={`${st.label} | Maldives Resorts & Stays | ${site.name}`} description={`Hand-picked Maldives ${st.label.toLowerCase()} across the atolls — explore, then enquire for confirmed availability.`} path={path} />
           <JsonLd data={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Stays', path: '/stays' }, { name: st.label }])} />
         </>
       )
