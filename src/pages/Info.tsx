@@ -149,7 +149,8 @@ export function PlanTrip() {
   const styleParam = params.get('style') || ''
   const [dest, setDest] = useState(destName)
   const [interest, setInterest] = useState(params.get('interest') || '')
-  const [f, setF] = useState({ name: '', email: '', phone: '', dates: '', pref: prefill, notes: '' })
+  const [f, setF] = useState({ name: '', email: '', phone: '', dates: params.get('dates') || '', pref: prefill, notes: '' })
+  const [adults, setAdults] = useState(['1', '2', '3'].includes(params.get('travellers') || '') ? (params.get('travellers') as string) : params.get('travellers') ? '4+' : '2')
   const [styleSel, setStyleSel] = useState(PLAN_STYLES.includes(styleParam) ? styleParam : 'Honeymoon')
   const waMessage = `Hi ${site.shortName}! I'd like to plan a trip.${dest ? ` Destination: ${dest}.` : ''} My style: ${styleSel}.${interest ? ` Interested in: ${interest}.` : ''}`
   const notesPlaceholder = dest || interest
@@ -214,7 +215,7 @@ export function PlanTrip() {
           <div><label className="label" htmlFor="p-email">Email *</label><input id="p-email" type="email" className="input" placeholder="you@email.com" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} autoComplete="email" aria-invalid={!!errs.email} />{errs.email && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.email}</p>}</div>
           <div><label className="label" htmlFor="p-phone">WhatsApp / phone</label><input id="p-phone" className="input" placeholder="+44 …" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} autoComplete="tel" aria-invalid={!!errs.phone} />{errs.phone && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.phone}</p>}</div>
           <div><label className="label" htmlFor="p-dates">Travel dates</label><input id="p-dates" className="input" placeholder="e.g. 12–20 Feb 2027" value={f.dates} onChange={(e) => setF({ ...f, dates: e.target.value })} /></div>
-          <div><label className="label" htmlFor="p-adults">Adults</label><select id="p-adults" className="input" defaultValue="2"><option>2</option><option>1</option><option>3</option><option>4+</option></select></div>
+          <div><label className="label" htmlFor="p-adults">Adults</label><select id="p-adults" className="input" value={adults} onChange={(e) => setAdults(e.target.value)}>{['1', '2', '3', '4+'].map((n) => <option key={n}>{n}</option>)}</select></div>
           <div><label className="label" htmlFor="p-kids">Children</label><select id="p-kids" className="input" defaultValue="0"><option>0</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div><label className="label" htmlFor="p-style">Travel style</label><select id="p-style" className="input" value={styleSel} onChange={(e) => setStyleSel(e.target.value)}>{PLAN_STYLES.map((s) => <option key={s}>{s}</option>)}</select></div>
           <div><label className="label" htmlFor="p-budget">Budget per person (excl. flights)</label><select id="p-budget" className="input" defaultValue="$1,000–2,000"><option>Under $1,000</option><option>$1,000–2,000</option><option>$2,000–4,000</option><option>$4,000+</option></select></div>

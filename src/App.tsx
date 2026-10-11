@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Header, Footer, WhatsAppFloat } from './components/layout'
 import { ScrollToTop } from './components/ScrollToTop'
 import { RouteMeta } from './components/RouteMeta'
@@ -9,6 +9,7 @@ import { PackagesList, PackageDetail, ExperiencesList, ExperienceDetail, GuideLi
 import { OffersPage, About, Contact, PlanTrip } from './pages/Info'
 import { SearchPage } from './pages/Search'
 import { Privacy, Terms, Cookies } from './pages/Legal'
+import { ClassicHome } from './pages/ClassicHome'
 
 const withMeta = (el: React.ReactNode) => (
   <>
@@ -18,11 +19,13 @@ const withMeta = (el: React.ReactNode) => (
 )
 
 export default function App() {
+  const loc = useLocation()
+  const bare = loc.pathname === '/preview-classic'
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <SkipLink />
       <ScrollToTop />
-      <Header />
+      {!bare && <Header />}
       <div className="flex-1" id="main-content">
         <ErrorBoundary>
           <Routes>
@@ -50,11 +53,13 @@ export default function App() {
             <Route path="/privacy" element={withMeta(<Privacy />)} />
             <Route path="/terms" element={withMeta(<Terms />)} />
             <Route path="/cookies" element={withMeta(<Cookies />)} />
+            {/* Design preview (unlinked, noindexed, excluded from sitemap) */}
+            <Route path="/preview-classic" element={withMeta(<ClassicHome />)} />
             <Route path="*" element={withMeta(<NotFound />)} />
           </Routes>
         </ErrorBoundary>
       </div>
-      <Footer />
+      {!bare && <Footer />}
       <WhatsAppFloat />
       <CookieBanner />
     </div>
