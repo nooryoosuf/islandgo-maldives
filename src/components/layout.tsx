@@ -82,7 +82,7 @@ export function Header() {
     >
       <div className="relative z-50 container-x flex items-center justify-between h-[72px] gap-3">
         <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name} home`}>
-          <span className="grid place-items-center w-10 h-10 rounded-2xl bg-ocean-600 text-white text-xl" aria-hidden>◍</span>
+          <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-11 w-auto rounded-lg bg-white object-contain border border-slate-200/60" />
           <span className="leading-tight">
             <span className={`block font-display font-bold text-[20px] transition-colors ${ink}`}>IslandGo <span className={solid ? 'text-ocean-600' : 'text-sunset-300'}>Maldives</span></span>
             <span className={`block text-[11.5px] font-semibold tracking-wide uppercase transition-colors ${sub}`}>Sunny side travel studio</span>
