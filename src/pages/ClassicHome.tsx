@@ -31,7 +31,7 @@ const SERVICES = [
 
 const ORIGINS = ['Velana International Airport (MLE)', 'Malé City', 'Hulhumalé', 'Already on an island']
 
-function Widget() {
+export function ClassicWidget() {
   const [service, setService] = useState(SERVICES[0].label)
   const [from, setFrom] = useState(ORIGINS[0])
   const [to, setTo] = useState('')
@@ -95,27 +95,32 @@ function Widget() {
   )
 }
 
+export function ClassicHeader() {
+  return (
+    <header className="bg-white border-b border-slate-100">
+      <div className="container-x flex items-center justify-between gap-4 h-[76px]">
+        <Link to="/preview-classic" className="flex items-center gap-3 shrink-0" aria-label="IslandGo MV home">
+          <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-12 w-auto object-contain" />
+        </Link>
+        <nav className="hidden lg:flex items-center gap-7 text-[15px] font-semibold text-ink-900" aria-label="Preview">
+          {NAV.map(([l, to], i) => (
+            <Link key={l} to={to} aria-current={i === 0 ? 'page' : undefined} className={i === 0 ? 'text-ocean-600 border-b-2 border-sunset-500 pb-0.5' : 'hover:text-ocean-600'}>{l}</Link>
+          ))}
+        </nav>
+        <Link to="/plan-trip" className="btn-primary !py-2.5 hidden sm:inline-flex">🗓 Request a Booking</Link>
+        <Link to="/plan-trip" className="btn-primary !py-2 !px-4 sm:hidden text-sm">Book</Link>
+      </div>
+      <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Preview mobile">
+        {NAV.map(([l, to]) => <Link key={l} to={to} className="hover:text-ocean-600">{l}</Link>)}
+      </nav>
+    </header>
+  )
+}
+
 export function ClassicHome() {
   return (
     <main className="bg-white">
-      {/* White agency header */}
-      <header className="bg-white border-b border-slate-100">
-        <div className="container-x flex items-center justify-between gap-4 h-[76px]">
-          <Link to="/preview-classic" className="flex items-center gap-3 shrink-0" aria-label="IslandGo MV home">
-            <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-12 w-auto object-contain" />
-          </Link>
-          <nav className="hidden lg:flex items-center gap-7 text-[15px] font-semibold text-ink-900" aria-label="Preview">
-            {NAV.map(([l, to], i) => (
-              <Link key={l} to={to} aria-current={i === 0 ? 'page' : undefined} className={i === 0 ? 'text-ocean-600 border-b-2 border-sunset-500 pb-0.5' : 'hover:text-ocean-600'}>{l}</Link>
-            ))}
-          </nav>
-          <Link to="/plan-trip" className="btn-primary !py-2.5 hidden sm:inline-flex">🗓 Request a Booking</Link>
-          <Link to="/plan-trip" className="btn-primary !py-2 !px-4 sm:hidden text-sm">Book</Link>
-        </div>
-        <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Preview mobile">
-          {NAV.map(([l, to]) => <Link key={l} to={to} className="hover:text-ocean-600">{l}</Link>)}
-        </nav>
-      </header>
+      <ClassicHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -144,57 +149,73 @@ export function ClassicHome() {
 
       {/* Booking widget overlapping hero */}
       <div className="container-x relative z-10 -mt-28 sm:-mt-32">
-        <Widget />
+        <ClassicWidget />
       </div>
 
-      {/* Service cards */}
-      <section className="container-x py-12 sm:py-16">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s) => (
-            <Link key={s.label} to={s.to} className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:-translate-y-1 transition-transform">
-              <div className="relative">
-                <img src={s.image} alt={s.label} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
-                <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-xl" aria-hidden>{s.icon}</span>
+      <ClassicServices />
+
+      <ClassicWhy />
+
+      <ClassicFooter />
+    </main>
+  )
+}
+
+export function ClassicServices() {
+  return (
+    <section className="container-x py-12 sm:py-16" aria-label="Services">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {SERVICES.map((s) => (
+          <Link key={s.label} to={s.to} className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:-translate-y-1 transition-transform">
+            <div className="relative">
+              <img src={s.image} alt={s.label} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+              <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-xl" aria-hidden>{s.icon}</span>
+            </div>
+            <div className="p-5 pt-7 flex items-start justify-between gap-3">
+              <div>
+                <h2 className="font-display font-bold text-[19px] text-ink-900">{s.label}</h2>
+                <p className="text-slate-500 text-[13.5px] mt-1 leading-relaxed">{s.text}</p>
               </div>
-              <div className="p-5 pt-7 flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="font-display font-bold text-[19px] text-ink-900">{s.label}</h2>
-                  <p className="text-slate-500 text-[13.5px] mt-1 leading-relaxed">{s.text}</p>
-                </div>
-                <span className="grid place-items-center w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-amber-500 to-amber-300 text-white font-bold group-hover:translate-x-1 transition-transform" aria-hidden>›</span>
-              </div>
-            </Link>
+              <span className="grid place-items-center w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-amber-500 to-amber-300 text-white font-bold group-hover:translate-x-1 transition-transform" aria-hidden>›</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export function ClassicWhy() {
+  return (
+    <section className="container-x pb-14 sm:pb-20" aria-label="Why choose us">
+      <div className="grid gap-8 lg:grid-cols-[1fr_2fr] items-start">
+        <div>
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900">Why Choose<br /><span className="text-amber-500">IslandGo MV?</span></h2>
+          <p className="text-slate-500 text-[15px] mt-3">Your trusted local travel partner for unforgettable Maldives experiences.</p>
+        </div>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
+          {[
+            ['💎', 'Local Expertise', 'In-depth knowledge of the Maldives'],
+            ['🛡', 'Honest Prices', 'Great value, confirmed in writing'],
+            ['👥', 'Easy Planning', 'Quick and simple enquiries'],
+            ['🎧', 'Fast Support', 'Replies within hours'],
+            ['💙', 'Real Experiences', 'Unforgettable memories'],
+          ].map(([icon, t, d]) => (
+            <li key={t} className="text-center sm:text-left">
+              <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-2xl" aria-hidden>{icon}</span>
+              <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
+              <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
+            </li>
           ))}
-        </div>
-      </section>
+        </ul>
+      </div>
+    </section>
+  )
+}
 
-      {/* Why choose */}
-      <section className="container-x pb-14 sm:pb-20">
-        <div className="grid gap-8 lg:grid-cols-[1fr_2fr] items-start">
-          <div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900">Why Choose<br /><span className="text-amber-500">IslandGo MV?</span></h2>
-            <p className="text-slate-500 text-[15px] mt-3">Your trusted local travel partner for unforgettable Maldives experiences.</p>
-          </div>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
-            {[
-              ['💎', 'Local Expertise', 'In-depth knowledge of the Maldives'],
-              ['🛡', 'Honest Prices', 'Great value, confirmed in writing'],
-              ['👥', 'Easy Planning', 'Quick and simple enquiries'],
-              ['🎧', 'Fast Support', 'Replies within hours'],
-              ['💙', 'Real Experiences', 'Unforgettable memories'],
-            ].map(([icon, t, d]) => (
-              <li key={t} className="text-center sm:text-left">
-                <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-2xl" aria-hidden>{icon}</span>
-                <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
-                <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Navy footer */}
-      <footer className="bg-ocean-950 text-white">
+export function ClassicFooter() {
+  return (
+    <footer className="bg-ocean-950 text-white">
         <div className="container-x py-12 grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_auto]">
           <div>
             <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-14 w-auto rounded-lg bg-white object-contain" />
@@ -220,6 +241,5 @@ export function ClassicHome() {
           </div>
         </div>
       </footer>
-    </main>
   )
 }

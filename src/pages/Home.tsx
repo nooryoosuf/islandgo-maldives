@@ -12,7 +12,7 @@ import { HeroParallax, Magnetic, Marquee, Reveal, Spot, Words, prefersReduced } 
 import { track } from '../lib/analytics'
 
 // ---------- Destination tile (image overlay + zoom on hover) ----------
-function DestTile({ d, className = '', wide }: { d: Destination; className?: string; wide?: boolean }) {
+export function DestTile({ d, className = '', wide }: { d: Destination; className?: string; wide?: boolean }) {
   return (
     <Link
       to={`/destinations/${d.slug}`}
@@ -35,7 +35,7 @@ function DestTile({ d, className = '', wide }: { d: Destination; className?: str
 }
 
 // ---------- Stay row (editorial index list, not a card grid) ----------
-function StayRow({ p, i }: { p: (typeof properties)[number]; i: number }) {
+export function StayRow({ p, i }: { p: (typeof properties)[number]; i: number }) {
   return (
     <Link to={`/stays/${p.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
       <span className="font-display text-xl sm:text-2xl text-slate-300 w-8" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
@@ -55,7 +55,7 @@ function StayRow({ p, i }: { p: (typeof properties)[number]; i: number }) {
 }
 
 // ---------- Compact horizontal article row ----------
-function MiniArticle({ a }: { a: Article }) {
+export function MiniArticle({ a }: { a: Article }) {
   return (
     <Link to={`/guide/${a.slug}`} className="group flex gap-5 items-center py-5 border-t border-slate-200 last:border-b">
       <span className="img-zoom block w-32 h-24 sm:w-44 sm:h-28 rounded-2xl overflow-hidden border border-slate-200/70 shrink-0">
@@ -70,7 +70,7 @@ function MiniArticle({ a }: { a: Article }) {
   )
 }
 
-const STYLES = [
+export const STYLES = [
   { image: img.couple, title: 'Honeymoon', text: 'Private decks, sunset cruises & barefoot romance.', to: '/packages/honeymoon' },
   { image: img.family, title: 'Family', text: 'Shallow reefs, kids clubs & sandbank afternoons.', to: '/packages/family' },
   { image: img.dive, title: 'Diving', text: 'Thilas, channels, mantas & night dives.', to: '/experiences/diving' },

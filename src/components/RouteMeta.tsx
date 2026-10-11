@@ -26,6 +26,7 @@ const STATIC: Record<string, { title: string; desc: string }> = {
   '/terms': { title: 'Terms & Conditions (Draft) | IslandGo Maldives', desc: 'Enquiry terms for IslandGo Maldives travel planning. Draft placeholder — final legal copy to be confirmed.' },
   '/cookies': { title: 'Cookie Policy | IslandGo Maldives', desc: 'How IslandGo Maldives uses cookies — essentials only, analytics only after consent.' },
   '/preview-classic': { title: 'Classic Homepage Preview | IslandGo MV', desc: 'Internal design preview — not indexed.' },
+  '/preview-merged': { title: 'Merged Homepage Preview | IslandGo MV', desc: 'Internal design preview — not indexed.' },
 }
 
 /** Central per-route SEO + structured data + page-view tracking. */
@@ -116,7 +117,7 @@ export function RouteMeta() {
     )
   }
   const s = STATIC[path] ?? { title: `IslandGo Maldives — ${site.tagline}`, desc: site.description }
-  const noindex = path === '/preview-classic' ? true : undefined
+  const noindex = path === '/preview-classic' || path === '/preview-merged' ? true : undefined
   return (
     <>
       <SEO title={s.title} description={s.desc} path={path} noindex={noindex} />

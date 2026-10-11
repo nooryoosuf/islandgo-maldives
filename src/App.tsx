@@ -10,6 +10,7 @@ import { OffersPage, About, Contact, PlanTrip } from './pages/Info'
 import { SearchPage } from './pages/Search'
 import { Privacy, Terms, Cookies } from './pages/Legal'
 import { ClassicHome } from './pages/ClassicHome'
+import { PreviewMerged } from './pages/PreviewMerged'
 
 const withMeta = (el: React.ReactNode) => (
   <>
@@ -20,7 +21,7 @@ const withMeta = (el: React.ReactNode) => (
 
 export default function App() {
   const loc = useLocation()
-  const bare = loc.pathname === '/preview-classic'
+  const bare = loc.pathname === '/preview-classic' || loc.pathname === '/preview-merged'
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <SkipLink />
@@ -55,6 +56,7 @@ export default function App() {
             <Route path="/cookies" element={withMeta(<Cookies />)} />
             {/* Design preview (unlinked, noindexed, excluded from sitemap) */}
             <Route path="/preview-classic" element={withMeta(<ClassicHome />)} />
+            <Route path="/preview-merged" element={withMeta(<PreviewMerged />)} />
             <Route path="*" element={withMeta(<NotFound />)} />
           </Routes>
         </ErrorBoundary>
