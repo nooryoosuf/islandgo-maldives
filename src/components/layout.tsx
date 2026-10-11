@@ -84,7 +84,7 @@ export function Header() {
         <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name} home`}>
           <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-11 w-auto rounded-lg bg-white object-contain border border-slate-200/60" />
           <span className="leading-tight">
-            <span className={`block font-display font-bold text-[20px] transition-colors ${ink}`}>IslandGo <span className={solid ? 'text-ocean-600' : 'text-sunset-300'}>Maldives</span></span>
+            <span className={`block font-display font-bold text-[20px] transition-colors ${ink}`}>IslandGo<span className="text-sunset-400">MV</span></span>
             <span className={`block text-[11.5px] font-semibold tracking-wide uppercase transition-colors ${sub}`}>Sunny side travel studio</span>
           </span>
         </Link>
@@ -188,7 +188,7 @@ export function Footer() {
       </div>
       <div className="container-x pb-14 grid gap-10 md:grid-cols-4 border-t border-white/10 pt-10">
         <div>
-          <p className="font-display font-bold text-2xl">IslandGo <span className="text-sunset-400">Maldives</span></p>
+          <p className="font-display font-bold text-2xl">IslandGo<span className="text-sunset-400">MV</span></p>
           <p className="text-white/70 text-[15px] mt-3 leading-relaxed">A Malé-based travel studio for the sunny side of the Maldives — destinations, stays, experiences and honest planning help.</p>
           <div className="flex flex-wrap gap-2 mt-4">
             <a href={wa.general()} onClick={() => track('whatsapp_click', { from: 'footer' })} className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/20">WhatsApp</a>
@@ -210,13 +210,13 @@ export function Footer() {
         </nav>
         <div>
           <p className="font-bold text-sm uppercase tracking-wider text-white/60 mb-3">Contact</p>
-          <p className="text-white/85 text-[15px]">{site.contact.address}<br /><a className="hover:text-white" href={`mailto:${site.contact.email}`}>{site.contact.email}</a><br /><a className="hover:text-white" href={whatsappLink('Hi!')}>{site.contact.whatsappDisplay} (WhatsApp)</a><br /><span className="text-white/60 text-[13px]">{site.contact.hours}</span></p>
+          <p className="text-white/85 text-[15px]">{site.contact.address}<br /><a className="font-semibold text-sunset-400 hover:text-sunset-300" href={`mailto:${site.contact.email}`}>{site.contact.email}</a><br /><a className="hover:text-white" href={whatsappLink('Hi!')}>{site.contact.whatsappDisplay} (WhatsApp)</a><br /><span className="text-white/60 text-[13px]">{site.contact.hours}</span></p>
           <p className="text-white/50 text-[13px] mt-3">No booking engine, no fake availability — real humans, real quotes.</p>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row justify-between gap-2 text-[13px] text-white/50">
-          <p>© 2026 {site.name}. Placeholder photography via Unsplash — replace with agency shoots.</p>
+          <p>© 2026 IslandGo MV. Placeholder photography via Unsplash — replace with agency shoots.</p>
           <p className="flex gap-4">
             <Link to="/privacy" className="hover:text-white">Privacy</Link>
             <Link to="/terms" className="hover:text-white">Terms</Link>
