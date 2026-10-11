@@ -82,7 +82,7 @@ export const destinations: Destination[] = [
     atoll: 'Kaafu & beyond',
     heroImage: img.islandLife,
     cardImage: img.islandLife,
-    gallery: [img.islandLife, img.guesthouse, img.foodLocal, img.beachBoat],
+    gallery: [img.beachAerial, img.beachBoat, img.islandLife, img.foodLocal],
     highlights: [
       { title: 'Culture first', text: 'Meet hosts, join cooking nights, visit mosques, schools and boatyards.', icon: '◐' },
       { title: 'Great value', text: 'Guesthouse stays, full-board + excursions often under resort room-only rates.', icon: '◎' },
@@ -93,6 +93,28 @@ export const destinations: Destination[] = [
     transfer: 'Public ferry or speedboat 30–90 min',
     idealFor: ['Budget', 'Culture', 'Solo travellers', 'Surfers'],
     featured: true,
+  },
+  {
+    slug: 'himmafushi',
+    name: 'Himmafushi',
+    tagline: 'Surf breaks, sandbars & slow island days',
+    description:
+      'A quiet inhabited island in Kaafu Atoll, 30–40 minutes by speedboat from Malé — loved by surfers for nearby Chickens and Jailbreaks, and by slow travellers for its beaches and village calm.',
+    longIntro:
+      'Himmafushi sits between Thulusdhoo and the open ocean, with the famous Chickens break peeling off its eastern reef. The island itself is sleepy in the best way: sandy lanes, a small harbour, local cafés, weekend bodu beru, and guesthouse stays at a fraction of resort prices. Day boats reach sandbanks, turtle reefs and neighbouring surf islands.',
+    atoll: 'Kaafu Atoll',
+    heroImage: img.surf,
+    cardImage: img.islandLife,
+    gallery: [img.surf, img.beachBoat, img.islandLife, img.foodLocal],
+    highlights: [
+      { title: 'Chickens on the doorstep', text: 'One of the Maldives’ classic lefts breaks off the island reef.', icon: '🏄' },
+      { title: 'Jailbreaks by boat', text: 'Short dhoni ride to another legendary reef pass.', icon: '⛵' },
+      { title: 'Village calm', text: 'Sandy lanes, cafés and beach sunsets without the crowds.', icon: '☀' },
+    ],
+    thingsToDo: ['surf-guiding', 'diving-reef', 'island-hopping-day', 'cultural-village-tour'],
+    bestTime: 'May to October for surf; November to April for calm seas',
+    transfer: 'Speedboat 30–40 min from Malé',
+    idealFor: ['Surfers', 'Budget', 'Culture'],
   },
   {
     slug: 'lhaviyani-atoll',

@@ -50,7 +50,7 @@ export function About() {
           </div>
           <div className="flex gap-3 mt-6"><Link to="/plan-trip" className="btn-primary">Plan Your Trip</Link><Link to="/contact" className="btn-ghost">Contact</Link></div>
         </div>
-        <img src={img.couple} alt="Travellers on a Maldivian beach" loading="lazy" className="rounded-[2rem] w-full aspect-[4/3] object-cover border border-slate-200" />
+        <img src={img.couple} alt="Pristine Maldivian beach with turquoise water" loading="lazy" className="rounded-[2rem] w-full aspect-[4/3] object-cover border border-slate-200" />
       </section>
       <section className="bg-sand-50 border-y border-slate-100"><div className="container-x section-pad">
         <SectionHeader kicker="How we work" title="What makes us different" />
@@ -93,7 +93,7 @@ export function Contact() {
               {href ? <a href={href as string} className="font-bold text-ocean-700 text-[17px]">{v}</a> : <p className="font-bold text-ink-900 text-[17px]">{v}</p>}
             </div>
           ))}
-          <div className="rounded-3xl overflow-hidden border border-slate-200"><img src={img.maleCity} alt="Malé island skyline at golden hour" loading="lazy" className="w-full aspect-[16/9] object-cover" /></div>
+          <div className="rounded-3xl overflow-hidden border border-slate-200"><img src={img.maleCity} alt="Traditional dhoni boats in the harbour" loading="lazy" className="w-full aspect-[16/9] object-cover" /></div>
         </div>
         <div className="card !shadow-none p-6 sm:p-8">
           {status === 'sent' ? (
@@ -193,7 +193,7 @@ export function PlanTrip() {
           <p className="sm:col-span-2 text-center text-[13px] text-slate-400">No payment · No spam · Reply within hours on email + WhatsApp</p>
         </form>
         <aside className="space-y-4">
-          <div className="rounded-3xl overflow-hidden border border-slate-200"><img src={img.couple} alt="Couple walking on a Maldivian beach at sunset" loading="lazy" className="w-full aspect-[4/3] object-cover" /></div>
+          <div className="rounded-3xl overflow-hidden border border-slate-200"><img src={img.couple} alt="Palm-fringed Maldivian beach" loading="lazy" className="w-full aspect-[4/3] object-cover" /></div>
           <div className="card !shadow-none p-6">
             <p className="font-bold text-ink-900">What happens next?</p>
             <ol className="mt-3 space-y-2.5 text-[15px] text-slate-600">

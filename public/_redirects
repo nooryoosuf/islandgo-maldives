@@ -1,3 +1,4 @@
 # Cloudflare Pages SPA fallback — serves index.html for all app routes
 # (lets /destinations/baa-atoll etc. load directly and on refresh).
+/packages/luxury-baa-escape /packages/luxury-coco-serenity 301
 /* /index.html 200
