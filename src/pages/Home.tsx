@@ -104,6 +104,16 @@ export function Home() {
   const featStay = properties.filter((p) => p.featured)
   const featPack = packages.filter((p) => p.featured).slice(0, 3)
 
+  // Discovery panel: selections build a prefilled plan-trip URL.
+  const [where, setWhere] = useState('')
+  const [style, setStyle] = useState('')
+  const [want, setWant] = useState('')
+  const planParams = new URLSearchParams()
+  if (where) planParams.set('destination', where)
+  if (style) planParams.set('style', style)
+  if (want) planParams.set('interest', want)
+  const planHref = `/plan-trip${planParams.toString() ? `?${planParams.toString()}` : ''}`
+
   // Rotating cinematic hero — high-res Maldives photography, changing text.
   const [slide, setSlide] = useState(0)
   const [playing, setPlaying] = useState(true)
@@ -194,24 +204,26 @@ export function Home() {
         <Reveal className="bg-white rounded-[1.6rem] border border-slate-200 shadow-soft p-4 sm:p-5 grid gap-3 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end">
           <label className="rounded-2xl bg-sand-100/70 px-4 py-3 block">
             <span className="label !mb-0.5">Where to?</span>
-            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" defaultValue="">
-              <option value="" disabled>Pick an island character</option>
+            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" value={where} onChange={(e) => setWhere(e.target.value)}>
+              <option value="">Anywhere in the Maldives</option>
               {destinations.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}
             </select>
           </label>
           <label className="rounded-2xl bg-sand-100/70 px-4 py-3 block">
             <span className="label !mb-0.5">Travel style</span>
-            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" defaultValue="Honeymoon">
-              {['Honeymoon', 'Family', 'Luxury', 'Adventure', 'Budget', 'Island hopping'].map((s) => <option key={s}>{s}</option>)}
+            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" value={style} onChange={(e) => setStyle(e.target.value)}>
+              <option value="">Flexible / not sure</option>
+              {['Honeymoon', 'Family', 'Luxury', 'Adventure / diving', 'Budget', 'Island hopping'].map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </label>
           <label className="rounded-2xl bg-sand-100/70 px-4 py-3 block">
             <span className="label !mb-0.5">I want</span>
-            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" defaultValue="Diving">
-              {['Diving', 'Snorkelling', 'Surfing', 'Relaxing', 'Culture'].map((s) => <option key={s}>{s}</option>)}
+            <select className="bg-transparent font-bold text-ink-900 outline-none w-full" value={want} onChange={(e) => setWant(e.target.value)}>
+              <option value="">Just exploring</option>
+              {['Diving', 'Snorkelling', 'Surfing', 'Relaxing', 'Culture'].map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </label>
-          <Link to="/plan-trip" className="btn-ocean !px-7 !py-4 whitespace-nowrap">Start planning <span className="arr" aria-hidden>→</span></Link>
+          <Link to={planHref} className="btn-ocean !px-7 !py-4 whitespace-nowrap">Start planning <span className="arr" aria-hidden>→</span></Link>
         </Reveal>
       </div>
 

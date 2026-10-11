@@ -4,7 +4,11 @@ import { offers } from '../data/articles'
 import { destinations } from '../data/destinations'
 import { img } from '../data/images'
 import { site } from '../config/site'
-import { wa } from '../lib/whatsapp'
+import { wa, whatsappLink } from '../lib/whatsapp'
+import { getDestination } from '../data/destinations'
+import { getProperty } from '../data/properties'
+import { getPackage } from '../data/packages'
+import { getExperience } from '../data/experiences'
 import { isValidEmail, isValidPhone, sanitizeInput } from '../lib/utils'
 import { track } from '../lib/analytics'
 import { Breadcrumbs, CTASection, ImageHero, SectionHeader } from '../components/ui'
@@ -133,10 +137,24 @@ export function Contact() {
   )
 }
 
+const PLAN_STYLES = ['Honeymoon', 'Family', 'Luxury', 'Adventure / diving', 'Budget', 'Island hopping']
+
 export function PlanTrip() {
   const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '')
-  const prefill = params.get('destination') || params.get('stay') || params.get('package') || params.get('experience') || ''
+  const destName = getDestination(params.get('destination') || '')?.name ?? ''
+  const stayName = getProperty(params.get('stay') || '')?.name ?? ''
+  const pkgName = getPackage(params.get('package') || '')?.name ?? ''
+  const expName = getExperience(params.get('experience') || '')?.name ?? ''
+  const prefill = destName || stayName || pkgName || expName
+  const styleParam = params.get('style') || ''
+  const [dest, setDest] = useState(destName)
+  const [interest, setInterest] = useState(params.get('interest') || '')
   const [f, setF] = useState({ name: '', email: '', phone: '', dates: '', pref: prefill, notes: '' })
+  const [styleSel, setStyleSel] = useState(PLAN_STYLES.includes(styleParam) ? styleParam : 'Honeymoon')
+  const waMessage = `Hi ${site.shortName}! I'd like to plan a trip.${dest ? ` Destination: ${dest}.` : ''} My style: ${styleSel}.${interest ? ` Interested in: ${interest}.` : ''}`
+  const notesPlaceholder = dest || interest
+    ? `${styleSel}${dest ? ` in ${dest}` : ''}${interest ? ` with ${interest.toLowerCase()}` : ''} — quiet reef, short boat ride, vegetarian food…`
+    : 'Honeymoon, quiet reef, short boat ride, vegetarian food…'
   const [errs, setErrs] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({})
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
@@ -146,7 +164,7 @@ export function PlanTrip() {
         <p className="text-6xl" aria-hidden>☀</p>
         <h1 className="h-display text-4xl mt-4">Shukriyā! Enquiry sent.</h1>
         <p className="text-slate-600 mt-3">Our Malé team will reply within a few hours with 2–3 honest options. Want it faster?</p>
-        <a href={wa.general()} className="btn-primary mt-6">Continue on WhatsApp</a>
+        <a href={whatsappLink(waMessage)} className="btn-primary mt-6">Continue on WhatsApp</a>
         <p className="mt-4"><Link to="/" className="font-bold text-ocean-700">← Back home</Link></p>
       </main>
     )
@@ -177,18 +195,33 @@ export function PlanTrip() {
             }, 900)
           }}
         >
+          {(dest || interest) && (
+            <div className="sm:col-span-2 flex flex-wrap items-center gap-2" aria-live="polite">
+              <span className="text-[13px] font-bold uppercase tracking-wide text-slate-500">Your picks:</span>
+              {dest && (
+                <button type="button" onClick={() => setDest('')} className="chip bg-ocean-50 text-ocean-800 border border-ocean-100" aria-label={`Remove destination ${dest}`}>
+                  ◍ {dest} <span aria-hidden>✕</span>
+                </button>
+              )}
+              {interest && (
+                <button type="button" onClick={() => setInterest('')} className="chip bg-ocean-50 text-ocean-800 border border-ocean-100" aria-label={`Remove interest ${interest}`}>
+                  ✦ {interest} <span aria-hidden>✕</span>
+                </button>
+              )}
+            </div>
+          )}
           <div><label className="label" htmlFor="p-name">Name *</label><input id="p-name" className="input" placeholder="Your name" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} autoComplete="name" aria-invalid={!!errs.name} />{errs.name && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.name}</p>}</div>
           <div><label className="label" htmlFor="p-email">Email *</label><input id="p-email" type="email" className="input" placeholder="you@email.com" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} autoComplete="email" aria-invalid={!!errs.email} />{errs.email && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.email}</p>}</div>
           <div><label className="label" htmlFor="p-phone">WhatsApp / phone</label><input id="p-phone" className="input" placeholder="+44 …" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} autoComplete="tel" aria-invalid={!!errs.phone} />{errs.phone && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.phone}</p>}</div>
           <div><label className="label" htmlFor="p-dates">Travel dates</label><input id="p-dates" className="input" placeholder="e.g. 12–20 Feb 2027" value={f.dates} onChange={(e) => setF({ ...f, dates: e.target.value })} /></div>
           <div><label className="label" htmlFor="p-adults">Adults</label><select id="p-adults" className="input" defaultValue="2"><option>2</option><option>1</option><option>3</option><option>4+</option></select></div>
           <div><label className="label" htmlFor="p-kids">Children</label><select id="p-kids" className="input" defaultValue="0"><option>0</option><option>1</option><option>2</option><option>3+</option></select></div>
-          <div><label className="label" htmlFor="p-style">Travel style</label><select id="p-style" className="input" defaultValue="Honeymoon"><option>Honeymoon</option><option>Family</option><option>Luxury</option><option>Adventure / diving</option><option>Budget</option><option>Island hopping</option></select></div>
+          <div><label className="label" htmlFor="p-style">Travel style</label><select id="p-style" className="input" value={styleSel} onChange={(e) => setStyleSel(e.target.value)}>{PLAN_STYLES.map((s) => <option key={s}>{s}</option>)}</select></div>
           <div><label className="label" htmlFor="p-budget">Budget per person (excl. flights)</label><select id="p-budget" className="input" defaultValue="$1,000–2,000"><option>Under $1,000</option><option>$1,000–2,000</option><option>$2,000–4,000</option><option>$4,000+</option></select></div>
           <div className="sm:col-span-2"><label className="label" htmlFor="p-pref">Resort / island preference {prefill && <span className="text-ocean-600 normal-case">· prefilled: {sanitizeInput(prefill, 60)}</span>}</label><input id="p-pref" className="input" value={f.pref} onChange={(e) => setF({ ...f, pref: e.target.value })} placeholder="Anywhere you already love?" /></div>
           <div className="sm:col-span-2"><span className="label" id="p-act">Must-do activities</span>
             <div className="flex flex-wrap gap-2" role="group" aria-labelledby="p-act">{['Diving', 'Snorkelling', 'Surfing', 'Sandbank', 'Dolphins', 'Fishing', 'Culture', 'Spa'].map((a) => <label key={a} className="chip bg-slate-50 border border-slate-200 cursor-pointer has-[:checked]:bg-ocean-600 has-[:checked]:text-white has-[:checked]:border-ocean-600"><input type="checkbox" className="sr-only" />{a}</label>)}</div></div>
-          <div className="sm:col-span-2"><label className="label" htmlFor="p-notes">Anything else? *</label><textarea id="p-notes" rows={4} className="input" placeholder="Honeymoon, quiet reef, short boat ride, vegetarian food…" value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} aria-invalid={!!errs.notes} />{errs.notes && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.notes}</p>}</div>
+          <div className="sm:col-span-2"><label className="label" htmlFor="p-notes">Anything else? *</label><textarea id="p-notes" rows={4} className="input" placeholder={notesPlaceholder} value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} aria-invalid={!!errs.notes} />{errs.notes && <p className="text-red-600 text-[13px] mt-1" role="alert">{errs.notes}</p>}</div>
           <button className="btn-primary sm:col-span-2 !py-4 !text-base" disabled={sending}>{sending ? 'Sending…' : 'Send enquiry →'}</button>
           <p className="sm:col-span-2 text-center text-[13px] text-slate-400">No payment · No spam · Reply within hours on email + WhatsApp</p>
         </form>
@@ -201,7 +234,7 @@ export function PlanTrip() {
               <li><b className="text-ink-900">2.</b> 2–3 matched islands + honest prices.</li>
               <li><b className="text-ink-900">3.</b> You tweak; we confirm availability in writing.</li>
             </ol>
-            <a href={wa.general()} className="btn-ghost w-full mt-4">Skip the form — WhatsApp</a>
+            <a href={whatsappLink(waMessage)} className="btn-ghost w-full mt-4">Skip the form — WhatsApp</a>
           </div>
         </aside>
       </section>
