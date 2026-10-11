@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { isValidEmail, isValidPhone, sanitizeInput } from '../lib/utils'
+import { site } from '../config/site'
+import { wa } from '../lib/whatsapp'
 import { track } from '../lib/analytics'
 
 // ---------- FilterBar (simple, useful; query + one-tap chips) ----------
@@ -82,7 +84,7 @@ export function EnquiryForm({ context }: { context: string }) {
         <p className="text-4xl" aria-hidden>☀</p>
         <h3 className="font-display text-2xl text-ink-900 mt-2">Thanks — enquiry received!</h3>
         <p className="text-slate-600 mt-2">Our Malé team replies within a few hours on email + WhatsApp. Reference: <b>{sanitizeInput(context, 80)}</b></p>
-        <a href="https://wa.me/9607500000" className="btn-ocean mt-5">Continue on WhatsApp</a>
+        <a href={wa.general()} className="btn-ocean mt-5">Continue on WhatsApp</a>
       </div>
     )
 
@@ -144,7 +146,7 @@ export function EnquiryForm({ context }: { context: string }) {
       <button className="btn-primary w-full mt-5" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending…' : 'Send enquiry'}
       </button>
-      <p className="text-center text-[13px] text-slate-400 mt-3">Prefer chat? <a className="font-bold text-ocean-700" href="https://wa.me/9607500000">WhatsApp +960 750-0000</a></p>
+      <p className="text-center text-[13px] text-slate-400 mt-3">Prefer chat? <a className="font-bold text-ocean-700" href={wa.general()}>WhatsApp {site.contact.whatsappDisplay}</a></p>
     </form>
   )
 }

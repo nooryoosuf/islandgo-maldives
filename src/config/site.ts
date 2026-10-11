@@ -11,14 +11,14 @@ export const site = {
   tagline: 'Discover the sunny side of the Maldives',
   description:
     'IslandGo Maldives is a Malé-based travel studio for destinations, resorts, local islands, experiences, packages and honest trip planning.',
-  url: (env.VITE_SITE_URL || 'https://islandgo.mv').replace(/\/$/, ''),
+  url: (env.VITE_SITE_URL || 'https://islandgomv.com').replace(/\/$/, ''),
   locale: 'en',
   lang: 'en',
   themeColor: '#0a2342',
   contact: {
-    email: env.VITE_CONTACT_EMAIL || 'hello@islandgo.mv',
-    whatsappNumber: (env.VITE_WHATSAPP_NUMBER || '9607500000').replace(/\D/g, ''),
-    whatsappDisplay: '+960 750-0000',
+    email: env.VITE_CONTACT_EMAIL || 'islandgomvtraveltours@gmail.com',
+    whatsappNumber: (env.VITE_WHATSAPP_NUMBER || '9607337549').replace(/\D/g, ''),
+    whatsappDisplay: '+960 733-7549',
     address: 'Ferry Terminal Rd, Malé, Maldives',
     hours: 'Daily 8am–10pm Malé time (GMT+5)',
   },

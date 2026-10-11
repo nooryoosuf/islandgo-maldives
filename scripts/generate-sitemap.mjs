@@ -6,7 +6,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const siteUrl = (process.env.VITE_SITE_URL || 'https://islandgo.mv').replace(/\/$/, '')
+const siteUrl = (process.env.VITE_SITE_URL || 'https://islandgomv.com').replace(/\/$/, '')
 
 function slugs(file, exportName) {
   const src = readFileSync(resolve(root, file), 'utf8')

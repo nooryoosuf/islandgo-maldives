@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { wa } from '../lib/whatsapp'
 import type { Article, Destination, Experience, Package, Property } from '../data/types'
 import { Reveal } from './motion'
 
@@ -99,7 +100,7 @@ export function CTASection({ image, title, text }: { image: string; title: strin
           <p className="mt-4 max-w-xl text-white/85 text-[17px] leading-relaxed">{text}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/plan-trip" className="btn-primary !px-7 !py-3.5 !text-base">Plan Your Trip <span className="arr" aria-hidden>→</span></Link>
-            <a href="https://wa.me/9607500000" className="btn-outline-light !px-7 !py-3.5 !text-base">WhatsApp us</a>
+            <a href={wa.general()} className="btn-outline-light !px-7 !py-3.5 !text-base">WhatsApp us</a>
           </div>
           <p className="mt-5 text-[13px] text-white/60 font-semibold">Free planning help · reply within hours · no payment needed</p>
         </Reveal>

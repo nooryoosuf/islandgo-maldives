@@ -37,7 +37,7 @@ export function Privacy() {
         <li>No payment data is collected on this website (there is no checkout).</li>
       </ul>
       <h2 className="h-display text-2xl">Your rights</h2>
-      <p>Ask us anytime at <a className="font-bold text-ocean-700" href="mailto:hello@islandgo.mv">hello@islandgo.mv</a> to view, correct or delete your enquiry data.</p>
+      <p>Ask us anytime at <a className="font-bold text-ocean-700" href="mailto:islandgomvtraveltours@gmail.com">islandgomvtraveltours@gmail.com</a> to view, correct or delete your enquiry data.</p>
     </Shell>
   )
 }
