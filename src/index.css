@@ -128,6 +128,15 @@ body {
   .dropdown-in { animation: drop-in .25s ease both; transform-origin: top center; }
   @keyframes drop-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
 
+  /* Mobile edge-to-edge snap rail (mockup-style horizontal cards).
+     Base = horizontal snap; sm+ = normal grids via grid classes. */
+  .mrail { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -1rem; padding-inline: 1rem; padding-bottom: .5rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .mrail::-webkit-scrollbar { display: none; }
+  .mrail > * { flex: 0 0 74%; scroll-snap-align: start; }
+  @media (min-width: 640px) {
+    .mrail { display: grid; overflow: visible; margin-inline: 0; padding-inline: 0; }
+    .mrail > * { flex: none; }
+  }
   /* Infinite marquee (pause on hover) */
   .marquee { overflow: hidden; }
   .marquee-track { display: flex; align-items: center; width: max-content; animation: marquee var(--speed, 42s) linear infinite; }

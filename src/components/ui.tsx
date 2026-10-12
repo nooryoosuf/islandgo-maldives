@@ -77,7 +77,7 @@ export function ImageHero({ image, kicker, title, text, children }: { image: str
         <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/75 via-ocean-950/20 to-ocean-950/30" aria-hidden />
       </div>
       {/* top padding clears the solid header */}
-      <div className="relative container-x pt-36 sm:pt-40 pb-14 sm:pb-20 text-white page-in">
+      <div className="relative container-x pt-28 sm:pt-40 pb-14 sm:pb-20 text-white page-in">
         <p className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur px-4 py-1.5 text-[13px] font-bold uppercase tracking-[0.12em] mb-4">{kicker}</p>
         <h1 className="font-display font-semibold tracking-tight text-[clamp(2.25rem,5.5vw,4rem)] max-w-3xl leading-[1.04]">{title}</h1>
         {text && <p className="mt-4 max-w-2xl text-white/85 text-[17px] leading-relaxed">{text}</p>}
@@ -133,7 +133,7 @@ export function StickyEnquire({ label, planTo, waHref }: { label: string; planTo
   }, [])
   if (!show) return null
   return (
-    <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-2 pb-[max(0.65rem,env(safe-area-inset-bottom))]">
+    <div className="lg:hidden fixed inset-x-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-2 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] pb-[max(0.65rem,env(safe-area-inset-bottom))]">
       <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 truncate">{label}</p>
       <div className="flex gap-2 mt-1.5">
         <a href={waHref} className="btn-ghost flex-1 !py-2.5 !text-[14px]">WhatsApp</a>

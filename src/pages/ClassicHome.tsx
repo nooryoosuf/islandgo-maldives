@@ -8,7 +8,7 @@ import { articles } from '../data/articles'
 import { img } from '../data/images'
 import { ArticleCard, CategoryCard, CTASection, DestinationCard, ExperienceCard, PackageCard, PropertyCard } from '../components/ui'
 import { track } from '../lib/analytics'
-import { IconAnchor, IconClock, IconCompass, IconGem, IconHeart, IconHome, IconPack, IconShieldCheck, IconSun, IconUsers } from '../components/icons'
+import { IconAnchor, IconBed, IconClock, IconCompass, IconGem, IconHeart, IconHome, IconPack, IconShieldCheck, IconSun, IconUsers } from '../components/icons'
 
 // Classic agency homepage sections (reference-mockup direction).
 // Global chrome (white header + navy footer in layout.tsx) wraps this page.
@@ -121,6 +121,24 @@ export function ClassicHome() {
         <ClassicWidget />
       </div>
 
+      {/* Quick tiles — mobile app-style shortcuts */}
+      <section className="container-x lg:hidden pt-6" aria-label="Quick links">
+        <div className="grid grid-cols-5 gap-2">
+          {([
+            [IconBed, 'Resorts', '/stays/resorts'],
+            [IconHome, 'Guesthouses', '/stays/local-islands'],
+            [IconAnchor, 'Transfers', '/experiences/island-hopping-day'],
+            [IconCompass, 'Excursions', '/experiences'],
+            [IconPack, 'Packages', '/packages'],
+          ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, label, to]) => (
+            <Link key={label} to={to} className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-200 bg-white py-3 px-1 text-center">
+              <span className="text-ocean-600"><Icon className="w-6 h-6" /></span>
+              <span className="text-[11px] font-bold leading-tight text-ink-900">{label}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <ClassicServices />
 
       <ClassicWhy />
@@ -166,7 +184,7 @@ function ClassicSections() {
     <>
       <section className="container-x py-12 sm:py-16" aria-label="Destinations">
         <CHead kicker="Destinations" title="Find Your Island" text="Six atolls and island characters we know deeply — pick the water first, then the island." link="/destinations" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {featDest.map((d) => <DestinationCard key={d.slug} d={d} />)}
         </div>
       </section>
@@ -174,7 +192,7 @@ function ClassicSections() {
       <section className="bg-sky-50/60 border-y border-sky-100">
         <div className="container-x py-12 sm:py-16" aria-label="Where to stay">
           <CHead kicker="Where to Stay" title="Sleep Over" accent="the Lagoon" text="Real resorts and guesthouses around North Malé — Coco Bodu Hithi to Maafushi beach hotels." link="/stays" linkLabel="All stays" />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featStay.map((p) => <PropertyCard key={p.slug} p={p} />)}
           </div>
         </div>
@@ -189,14 +207,28 @@ function ClassicSections() {
 
       <section className="container-x pb-12 sm:pb-16" aria-label="Experiences">
         <CHead kicker="Experiences" title="Days You’ll Remember" text="Mantas, channels, surf boats and village teas — the days between beach naps." link="/experiences" linkLabel="All experiences" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {experiences.slice(0, 8).map((e) => <ExperienceCard key={e.slug} e={e} />)}
         </div>
       </section>
 
+      {/* Excursion banner */}
+      <section className="container-x pb-12 sm:pb-16" aria-label="Excursions">
+        <Link to="/experiences" className="group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/70 min-h-[300px] sm:min-h-[340px] img-zoom">
+          <img src={img.turtle} alt="Snorkeller swimming with a sea turtle" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/75 via-ocean-950/25 to-transparent" aria-hidden />
+          <div className="relative p-6 sm:p-10 max-w-lg text-white flex flex-col items-start justify-center h-full min-h-[inherit]">
+            <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-white/70">Exciting</p>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl leading-tight mt-1">Excursions</h2>
+            <p className="text-white/80 text-[14.5px] sm:text-[16px] mt-2">Snorkelling • Island Hopping • Dolphin Cruise • Sunset Trips & More</p>
+            <span className="inline-flex items-center gap-2 mt-5 rounded-full bg-white text-ink-900 font-bold text-[14.5px] sm:text-[15px] px-6 py-3 group-hover:gap-3.5 transition-all">Explore Excursions <span aria-hidden>→</span></span>
+          </div>
+        </Link>
+      </section>
+
       <section className="container-x pb-12 sm:pb-16" aria-label="Packages">
         <CHead kicker="Packages" title="Easy" accent="Starting Points" text="Fixed ideas, flexible details — every trip is tailored to your dates." link="/packages" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featPack.map((p) => <PackageCard key={p.slug} p={p} />)}
         </div>
       </section>
@@ -217,7 +249,7 @@ function ClassicSections() {
 
       <section className="container-x pb-14 sm:pb-20" aria-label="Travel guide">
         <CHead kicker="Travel Guide" title="Read Before" accent="You Fly" link="/guide" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {articles.slice(0, 3).map((a) => <ArticleCard key={a.slug} a={a} />)}
         </div>
       </section>
@@ -234,7 +266,7 @@ function ClassicSections() {
 export function ClassicServices() {
   return (
     <section className="container-x py-12 sm:py-16" aria-label="Services">
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {SERVICES.map((s) => (
           <Link key={s.label} to={s.to} className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:-translate-y-1 transition-transform">
             <div className="relative">

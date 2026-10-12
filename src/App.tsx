@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Header, Footer, WhatsAppFloat } from './components/layout'
+import { Header, Footer, TabBar, WhatsAppFloat } from './components/layout'
 import { ScrollToTop } from './components/ScrollToTop'
 import { RouteMeta } from './components/RouteMeta'
 import { CookieBanner, ErrorBoundary, SkipLink } from './components/feedback'
@@ -63,6 +63,7 @@ export default function App() {
         </ErrorBoundary>
       </div>
       <Footer />
+      <TabBar />
       <WhatsAppFloat />
       <CookieBanner />
     </div>
