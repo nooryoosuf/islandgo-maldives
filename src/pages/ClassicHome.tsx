@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
 import { properties } from '../data/properties'
@@ -8,6 +8,7 @@ import { articles } from '../data/articles'
 import { img } from '../data/images'
 import { ArticleCard, CategoryCard, CTASection, DestinationCard, ExperienceCard, PackageCard, PropertyCard } from '../components/ui'
 import { track } from '../lib/analytics'
+import { IconAnchor, IconClock, IconCompass, IconGem, IconHeart, IconHome, IconPack, IconShieldCheck, IconSun, IconUsers } from '../components/icons'
 
 // Classic agency homepage sections (reference-mockup direction).
 // Global chrome (white header + navy footer in layout.tsx) wraps this page.
@@ -15,10 +16,10 @@ import { track } from '../lib/analytics'
 // no fake booking, no invented claims.
 
 const SERVICES = [
-  { label: 'Speedboat Transfers', interest: 'speedboat transfers', image: img.beachBoat, icon: '⛴', to: '/experiences/island-hopping-day', text: 'Fast, safe and comfortable transfers across the Maldives.' },
-  { label: 'Hotels & Guesthouses', interest: 'a resort or guesthouse stay', image: img.resortPool, icon: '⌂', to: '/stays', text: 'Handpicked stays on local islands and resorts.' },
-  { label: 'Tours & Excursions', interest: 'tours and excursions', image: img.turtle, icon: '🤿', to: '/experiences', text: 'Snorkelling, resort trips, island hopping and more.' },
-  { label: 'Holiday Packages', interest: 'a holiday package', image: img.sandbank, icon: '🧳', to: '/packages', text: 'Complete Maldives holiday packages for every traveller.' },
+  { label: 'Speedboat Transfers', interest: 'speedboat transfers', image: img.beachBoat, Icon: IconAnchor, to: '/experiences/island-hopping-day', text: 'Fast, safe and comfortable transfers across the Maldives.' },
+  { label: 'Hotels & Guesthouses', interest: 'a resort or guesthouse stay', image: img.resortPool, Icon: IconHome, to: '/stays', text: 'Handpicked stays on local islands and resorts.' },
+  { label: 'Tours & Excursions', interest: 'tours and excursions', image: img.turtle, Icon: IconCompass, to: '/experiences', text: 'Snorkelling, resort trips, island hopping and more.' },
+  { label: 'Holiday Packages', interest: 'a holiday package', image: img.sandbank, Icon: IconPack, to: '/packages', text: 'Complete Maldives holiday packages for every traveller.' },
 ]
 
 const ORIGINS = ['Velana International Airport (MLE)', 'Malé City', 'Hulhumalé', 'Already on an island']
@@ -101,13 +102,13 @@ export function ClassicHome() {
           </h1>
           <p className="mt-3 font-semibold text-white/90">Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives</p>
           <div className="mt-7 flex flex-wrap gap-x-8 gap-y-3">
-            {[
-              ['🌴', 'Stunning Islands', 'Breathtaking destinations'],
-              ['🛡', 'Safe & Reliable', 'Trusted local travel partner'],
-              ['✆', 'Fast Support', 'We reply within hours'],
-            ].map(([icon, t, d]) => (
+            {([
+              [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
+              [IconShieldCheck, 'Safe & Reliable', 'Trusted local travel partner'],
+              [IconClock, 'Fast Support', 'We reply within hours'],
+            ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
               <div key={t} className="flex items-center gap-2.5">
-                <span className="text-2xl" aria-hidden>{icon}</span>
+                <span className="text-amber-400"><Icon className="w-7 h-7" /></span>
                 <span><span className="block font-bold text-[15px]">{t}</span><span className="block text-white/70 text-[13px]">{d}</span></span>
               </div>
             ))}
@@ -238,7 +239,7 @@ export function ClassicServices() {
           <Link key={s.label} to={s.to} className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:-translate-y-1 transition-transform">
             <div className="relative">
               <img src={s.image} alt={s.label} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
-              <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-xl" aria-hidden>{s.icon}</span>
+                <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-sky-700"><s.Icon className="w-5 h-5" /></span>
             </div>
             <div className="p-5 pt-7 flex items-start justify-between gap-3">
               <div>
@@ -262,21 +263,21 @@ export function ClassicWhy() {
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900">Why Choose<br /><span className="text-amber-500">IslandGo MV?</span></h2>
           <p className="text-slate-500 text-[15px] mt-3">Your trusted local travel partner for unforgettable Maldives experiences.</p>
         </div>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
-          {[
-            ['💎', 'Local Expertise', 'In-depth knowledge of the Maldives'],
-            ['🛡', 'Honest Prices', 'Great value, confirmed in writing'],
-            ['👥', 'Easy Planning', 'Quick and simple enquiries'],
-            ['🎧', 'Fast Support', 'Replies within hours'],
-            ['💙', 'Real Experiences', 'Unforgettable memories'],
-          ].map(([icon, t, d]) => (
-            <li key={t} className="text-center sm:text-left">
-              <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-2xl" aria-hidden>{icon}</span>
-              <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
-              <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
-            </li>
-          ))}
-        </ul>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
+            {([
+              [IconGem, 'Local Expertise', 'In-depth knowledge of the Maldives'],
+              [IconShieldCheck, 'Honest Prices', 'Great value, confirmed in writing'],
+              [IconUsers, 'Easy Planning', 'Quick and simple enquiries'],
+              [IconClock, 'Fast Support', 'Replies within hours'],
+              [IconHeart, 'Real Experiences', 'Unforgettable memories'],
+            ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
+              <li key={t} className="text-center sm:text-left">
+                <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-sky-700"><Icon className="w-6 h-6" /></span>
+                <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
+                <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
+              </li>
+            ))}
+          </ul>
       </div>
     </section>
   )

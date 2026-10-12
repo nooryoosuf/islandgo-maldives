@@ -59,7 +59,7 @@ export function PackageDetail() {
           <p className="text-[17px] text-slate-700 mt-3 leading-relaxed">{p.description}</p>
           <div className="flex flex-wrap gap-2 mt-4">
             {p.destinationSlugs.map((s) => { const d = getDestination(s); return d ? <Link key={s} to={`/destinations/${s}`} className="chip bg-ocean-50 text-ocean-800">◍ {d.name}</Link> : null })}
-            {(p.propertySlugs ?? []).map((s) => { const st = getProperty(s); return st ? <Link key={s} to={`/stays/${s}`} className="chip bg-sand-100 text-ink-700">⌂ {st.name}</Link> : null })}
+            {(p.propertySlugs ?? []).map((s) => { const st = getProperty(s); return st ? <Link key={s} to={`/stays/${s}`} className="chip bg-sand-100 text-ink-700">Stay: {st.name}</Link> : null })}
           </div>
           <h3 className="h-display text-2xl mt-10">Day by day</h3>
           <ol className="mt-4 space-y-3">{p.itinerary.map((it) => <li key={it.day} className="rounded-2xl border border-slate-200 p-5"><p className="text-[12px] font-bold uppercase tracking-wider text-sunset-600">{it.day}</p><p className="font-bold text-ink-900">{it.title}</p><p className="text-slate-600 text-[15px] mt-1">{it.text}</p></li>)}</ol>

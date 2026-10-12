@@ -153,7 +153,7 @@ export function Home() {
 
         <div className="relative container-x flex flex-col justify-end min-h-[94svh] pt-40 pb-32 sm:pb-36">
           <p className="hero-in inline-flex w-fit items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur px-4 py-1.5 text-[13px] font-bold uppercase tracking-[0.14em] text-white mb-6">
-            ☀ The sunny side of the Maldives
+            The sunny side of the Maldives
           </p>
           <h1 className="font-display font-semibold text-white tracking-tight text-[clamp(2.75rem,7.5vw,5.75rem)] leading-[1.0] max-w-4xl">
             <Words key={`t-${slide}`} text={SLIDES[slide].title} delay={100} />

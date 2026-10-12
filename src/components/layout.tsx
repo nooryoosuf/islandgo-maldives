@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { site } from '../config/site'
 import { wa } from '../lib/whatsapp'
 import { track } from '../lib/analytics'
+import { IconChat, IconMail, IconPin } from './icons'
 
 // Classic agency chrome: white header + navy contact footer.
 // Matches the client's reference mockup.
@@ -9,7 +10,6 @@ import { track } from '../lib/analytics'
 const NAV: [string, string][] = [
   ['Home', '/'],
   ['Destinations', '/destinations'],
-  ['Transfers', '/experiences/island-hopping-day'],
   ['Hotels', '/stays'],
   ['Tours', '/experiences'],
   ['Packages', '/packages'],
@@ -25,7 +25,7 @@ export function Header() {
         <Link to="/" className="flex items-center shrink-0" aria-label="IslandGo MV home">
           <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-12 w-auto object-contain" />
         </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-[15px] font-semibold text-ink-900" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-6 text-[15px] font-semibold text-ink-900" aria-label="Primary">
           {NAV.map(([l, to]) => {
             const active = loc.pathname === to
             return (
@@ -34,6 +34,9 @@ export function Header() {
               </Link>
             )
           })}
+          <Link to="/b2b" aria-current={loc.pathname === '/b2b' ? 'page' : undefined} className={`rounded-full border px-4 py-1.5 text-[14px] font-bold transition-colors ${loc.pathname === '/b2b' ? 'bg-ocean-600 border-ocean-600 text-white' : 'border-ocean-300 text-ocean-700 hover:bg-ocean-600 hover:border-ocean-600 hover:text-white'}`}>
+            B2B Partners
+          </Link>
         </nav>
         <Link to="/plan-trip" onClick={() => track('plan_trip_click', { from: 'header' })} className="btn-primary !py-2.5 hidden sm:inline-flex">
           🗓 Request a Booking
@@ -42,13 +45,16 @@ export function Header() {
           Book
         </Link>
       </div>
-      <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Mobile">
-        {NAV.map(([l, to]) => (
-          <Link key={l} to={to} aria-current={loc.pathname === to ? 'page' : undefined} className={loc.pathname === to ? 'text-ocean-600' : 'hover:text-ocean-600'}>
-            {l}
+        <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Mobile">
+          {NAV.map(([l, to]) => (
+            <Link key={l} to={to} aria-current={loc.pathname === to ? 'page' : undefined} className={loc.pathname === to ? 'text-ocean-600' : 'hover:text-ocean-600'}>
+              {l}
+            </Link>
+          ))}
+          <Link to="/b2b" aria-current={loc.pathname === '/b2b' ? 'page' : undefined} className={loc.pathname === '/b2b' ? 'text-ocean-600' : 'text-sunset-600 hover:text-sunset-500'}>
+            B2B Partners
           </Link>
-        ))}
-      </nav>
+        </nav>
     </header>
   )
 }
@@ -69,9 +75,9 @@ export function Footer() {
           </p>
         </div>
         <div className="text-[14.5px] space-y-3">
-          <p className="flex gap-2.5"><span aria-hidden>📍</span><span>{site.contact.address}</span></p>
-          <p className="flex gap-2.5"><span aria-hidden>✆</span><a href={wa.general()} onClick={() => track('whatsapp_click', { from: 'footer' })} className="hover:text-white font-semibold">{site.contact.whatsappDisplay}<span className="block text-white/55 text-[12.5px] font-normal">Call or WhatsApp</span></a></p>
-          <p className="flex gap-2.5"><span aria-hidden>✉</span><a href={`mailto:${site.contact.email}`} className="hover:text-white font-semibold break-all">{site.contact.email}<span className="block text-white/55 text-[12.5px] font-normal">We reply quickly</span></a></p>
+          <p className="flex gap-2.5"><IconPin className="w-5 h-5 mt-0.5 shrink-0 text-white/50" /><span>{site.contact.address}</span></p>
+          <p className="flex gap-2.5"><IconChat className="w-5 h-5 mt-0.5 shrink-0 text-white/50" /><a href={wa.general()} onClick={() => track('whatsapp_click', { from: 'footer' })} className="hover:text-white font-semibold">{site.contact.whatsappDisplay}<span className="block text-white/55 text-[12.5px] font-normal">Call or WhatsApp</span></a></p>
+          <p className="flex gap-2.5"><IconMail className="w-5 h-5 mt-0.5 shrink-0 text-white/50" /><a href={`mailto:${site.contact.email}`} className="hover:text-white font-semibold break-all">{site.contact.email}<span className="block text-white/55 text-[12.5px] font-normal">We reply quickly</span></a></p>
         </div>
         <nav className="grid grid-cols-2 md:grid-cols-1 gap-1.5 text-[14.5px] text-white/80" aria-label="Footer">
           {NAV.map(([l, to]) => <Link key={l} to={to} className="hover:text-white w-fit">{l}</Link>)}

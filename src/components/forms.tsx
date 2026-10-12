@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { isValidEmail, isValidPhone, sanitizeInput } from '../lib/utils'
 import { site } from '../config/site'
 import { wa } from '../lib/whatsapp'
+import { IconCheck } from './icons'
 import { track } from '../lib/analytics'
 
 // ---------- FilterBar (simple, useful; query + one-tap chips) ----------
@@ -81,7 +82,7 @@ export function EnquiryForm({ context }: { context: string }) {
   if (status === 'sent')
     return (
       <div className="rounded-3xl bg-ocean-50 border border-ocean-100 p-8 text-center" role="status">
-        <p className="text-4xl" aria-hidden>☀</p>
+        <span className="inline-grid place-items-center w-14 h-14 rounded-full bg-ocean-600 text-white"><IconCheck className="w-7 h-7" /></span>
         <h3 className="font-display text-2xl text-ink-900 mt-2">Thanks — enquiry received!</h3>
         <p className="text-slate-600 mt-2">Our Malé team replies within a few hours on email + WhatsApp. Reference: <b>{sanitizeInput(context, 80)}</b></p>
         <a href={wa.general()} className="btn-ocean mt-5">Continue on WhatsApp</a>

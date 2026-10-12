@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
 import { offers } from '../data/articles'
 import { destinations } from '../data/destinations'
@@ -10,6 +10,7 @@ import { getProperty } from '../data/properties'
 import { getPackage } from '../data/packages'
 import { getExperience } from '../data/experiences'
 import { isValidEmail, isValidPhone, sanitizeInput } from '../lib/utils'
+import { IconChat, IconCheck, IconCompass, IconHeart, IconHome } from '../components/icons'
 import { track } from '../lib/analytics'
 import { Breadcrumbs, CTASection, ImageHero, SectionHeader } from '../components/ui'
 
@@ -59,8 +60,13 @@ export function About() {
       <section className="bg-sand-50 border-y border-slate-100"><div className="container-x section-pad">
         <SectionHeader kicker="How we work" title="What makes us different" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[['◍', 'Right island first', 'Season + transfer + vibe before price comparison.'], ['✆', 'Humans on WhatsApp', 'Same person from first message to welcome briefing.'], ['◎', 'Resorts + local islands', 'We sell both, so advice stays neutral.'], ['♥', 'No pressure', 'Quotes valid 7 days. No countdown timers, ever.']].map(([i, t, d]) => (
-            <div key={t} className="rounded-3xl bg-white border border-slate-200 p-6"><p className="text-2xl">{i}</p><p className="font-bold text-ink-900 mt-2">{t}</p><p className="text-slate-600 text-[14.5px] mt-1">{d}</p></div>
+          {([
+            ['Right island first', 'Season + transfer + vibe before price comparison.', IconCompass],
+            ['Humans on WhatsApp', 'Same person from first message to welcome briefing.', IconChat],
+            ['Resorts + local islands', 'We sell both, so advice stays neutral.', IconHome],
+            ['No pressure', 'Quotes valid 7 days. No countdown timers, ever.', IconHeart],
+          ] as [string, string, ComponentType<{ className?: string }>][]).map(([t, d, Icon]) => (
+            <div key={t} className="rounded-3xl bg-white border border-slate-200 p-6"><span className="inline-grid place-items-center w-11 h-11 rounded-2xl bg-ocean-50 text-ocean-700"><Icon className="w-6 h-6" /></span><p className="font-bold text-ink-900 mt-3">{t}</p><p className="text-slate-600 text-[14.5px] mt-1">{d}</p></div>
           ))}
         </div>
       </div></section>
@@ -162,7 +168,7 @@ export function PlanTrip() {
   if (sent)
     return (
       <main className="container-x section-pad max-w-2xl text-center">
-        <p className="text-6xl" aria-hidden>☀</p>
+        <p className="text-6xl" aria-hidden><span className="inline-grid place-items-center w-16 h-16 rounded-full bg-sunset-500 text-white"><IconCheck className="w-8 h-8" /></span></p>
         <h1 className="h-display text-4xl mt-4">Shukriyā! Enquiry sent.</h1>
         <p className="text-slate-600 mt-3">Our Malé team will reply within a few hours with 2–3 honest options. Want it faster?</p>
         <a href={whatsappLink(waMessage)} className="btn-primary mt-6">Continue on WhatsApp</a>

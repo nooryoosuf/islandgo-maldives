@@ -5,8 +5,10 @@ import { site } from '../config/site'
 import { wa } from '../lib/whatsapp'
 import { isValidEmail, isValidPhone } from '../lib/utils'
 import { track } from '../lib/analytics'
+import type { ComponentType } from 'react'
 import { Breadcrumbs, CTASection, ImageHero, SectionHeader } from '../components/ui'
 import { Faq } from '../components/forms'
+import { IconAnchor, IconCheck, IconCompass, IconHome, IconPack } from '../components/icons'
 
 const TRADE_SERVICES = ['Holiday packages', 'Hotels & resorts', 'Speedboat transfers', 'Excursions & experiences']
 
@@ -21,7 +23,7 @@ function TradeForm() {
   if (status === 'sent')
     return (
       <div className="rounded-3xl bg-ocean-50 border border-ocean-100 p-8 text-center" role="status">
-        <p className="text-4xl" aria-hidden>🤝</p>
+        <span className="inline-grid place-items-center w-14 h-14 rounded-full bg-ocean-600 text-white"><IconCheck className="w-7 h-7" /></span>
         <h3 className="font-display text-2xl text-ink-900 mt-2">Trade enquiry received.</h3>
         <p className="text-slate-600 mt-2">Our trade desk replies within one business day with next steps and net-rate arrangements.</p>
       </div>
@@ -117,15 +119,15 @@ export function B2B() {
         <div className="container-x section-pad">
           <SectionHeader kicker="Trade services" title="What we handle for partners" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              ['🧳', 'Packages for resale', 'Honeymoon, family, luxury and budget itineraries priced for your market.'],
-              ['⌂', 'Hotels & resorts', 'Contracted guesthouses plus resort allocations around North Malé.'],
-              ['⛴', 'Transfers', 'Speedboat coordination matched to your clients’ flights.'],
-              ['🤿', 'Excursions', 'Sandbanks, snorkelling safaris, cruises and fishing nights.'],
-            ].map(([icon, t, d]) => (
+            {([
+              [IconPack, 'Packages for resale', 'Honeymoon, family, luxury and budget itineraries priced for your market.'],
+              [IconHome, 'Hotels & resorts', 'Contracted guesthouses plus resort allocations around North Malé.'],
+              [IconAnchor, 'Transfers', 'Speedboat coordination matched to your clients’ flights.'],
+              [IconCompass, 'Excursions', 'Sandbanks, snorkelling safaris, cruises and fishing nights.'],
+            ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
               <div key={t} className="rounded-3xl bg-white border border-slate-200 p-6">
-                <p className="text-2xl" aria-hidden>{icon}</p>
-                <p className="font-bold text-ink-900 mt-2">{t}</p>
+                <span className="inline-grid place-items-center w-11 h-11 rounded-2xl bg-ocean-50 text-ocean-700"><Icon className="w-6 h-6" /></span>
+                <p className="font-bold text-ink-900 mt-3">{t}</p>
                 <p className="text-slate-600 text-[14.5px] mt-1">{d}</p>
               </div>
             ))}

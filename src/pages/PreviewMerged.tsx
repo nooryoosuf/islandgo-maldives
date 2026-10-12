@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
 import { properties } from '../data/properties'
@@ -7,6 +8,7 @@ import { articles } from '../data/articles'
 import { img } from '../data/images'
 import { ArticleCard, CTASection, ExperienceCard, PackageCard, SectionHeader } from '../components/ui'
 import { HeroParallax, Marquee, Reveal, Spot, Words } from '../components/motion'
+import { IconClock, IconShieldCheck, IconSun } from '../components/icons'
 import { ClassicServices, ClassicWhy, ClassicWidget } from './ClassicHome'
 import { DestTile, MiniArticle, STYLES, StayRow } from './Home'
 
@@ -43,13 +45,13 @@ export function PreviewMerged() {
             Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives
           </p>
           <div className="hero-in mt-7 flex flex-wrap gap-x-8 gap-y-3" style={{ animationDelay: '750ms' }}>
-            {[
-              ['🌴', 'Stunning Islands', 'Breathtaking destinations'],
-              ['🛡', 'Safe & Reliable', 'Trusted local travel partner'],
-              ['✆', 'Fast Support', 'We reply within hours'],
-            ].map(([icon, t, d]) => (
+            {([
+              [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
+              [IconShieldCheck, 'Safe & Reliable', 'Trusted local travel partner'],
+              [IconClock, 'Fast Support', 'We reply within hours'],
+            ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
               <div key={t} className="flex items-center gap-2.5">
-                <span className="text-2xl" aria-hidden>{icon}</span>
+                <span className="text-amber-400"><Icon className="w-7 h-7" /></span>
                 <span><span className="block font-bold text-[15px]">{t}</span><span className="block text-white/70 text-[13px]">{d}</span></span>
               </div>
             ))}
