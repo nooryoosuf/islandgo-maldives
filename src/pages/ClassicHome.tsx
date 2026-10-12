@@ -95,7 +95,7 @@ export function ClassicHome() {
       <section className="relative overflow-hidden">
         <img src={img.heroBeachWide} alt="Aerial view of a Maldivian resort island" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/55 via-ocean-950/10 to-transparent" aria-hidden />
-        <div className="relative container-x pt-14 sm:pt-20 pb-40 sm:pb-48 text-white">
+        <div className="relative container-x pt-14 sm:pt-20 pb-16 sm:pb-48 text-white">
           <p className="text-[13px] font-bold tracking-[0.3em] text-white/80">DISCOVER PARADISE</p>
           <h1 className="font-display font-bold text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.02] mt-3 max-w-2xl">
             Discover the Maldives<br />with <span className="text-amber-400">IslandGo MV</span>
@@ -116,8 +116,8 @@ export function ClassicHome() {
         </div>
       </section>
 
-      {/* Booking widget overlapping hero */}
-      <div className="container-x relative z-10 -mt-28 sm:-mt-32">
+      {/* Booking widget overlapping hero (desktop and up — mobile uses quick tiles + tab bar) */}
+      <div className="container-x relative z-10 -mt-28 sm:-mt-32 hidden sm:block">
         <ClassicWidget />
       </div>
 
