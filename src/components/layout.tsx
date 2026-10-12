@@ -10,11 +10,9 @@ import { IconBed, IconChat, IconCompass, IconHome, IconMail, IconPack, IconPin, 
 
 const NAV: [string, string][] = [
   ['Home', '/'],
-  ['Destinations', '/destinations'],
   ['Hotels', '/stays'],
   ['Tours', '/experiences'],
   ['Packages', '/packages'],
-  ['About', '/about'],
   ['Contact', '/contact'],
 ]
 
@@ -118,6 +116,8 @@ export function Footer() {
             <Link to="/terms" className="hover:text-white">Terms</Link>
             <Link to="/cookies" className="hover:text-white">Cookies</Link>
             <Link to="/guide" className="hover:text-white">Travel Guide</Link>
+            <Link to="/destinations" className="hover:text-white">Destinations</Link>
+            <Link to="/about" className="hover:text-white">About</Link>
             <Link to="/b2b" className="hover:text-white">B2B Partners</Link>
           </p>
         </div>
@@ -146,7 +146,7 @@ export function Footer() {
 
 const TABS = [
   ['Home', '/', IconHome],
-  ['Resorts', '/stays', IconBed],
+  ['Hotels', '/stays', IconBed],
   ['Tours', '/experiences', IconCompass],
   ['Packages', '/packages', IconPack],
   ['Contact', '/contact', IconChat],

@@ -148,15 +148,26 @@ export function StickyEnquire({ label, planTo, waHref }: { label: string; planTo
 export function DestinationCard({ d }: { d: Destination }) {
   return (
     <Link to={`/destinations/${d.slug}`} className="card card-hover img-zoom group block shadow-soft">
-      <Img src={d.cardImage} alt={d.name} ratio="aspect-[4/3]" />
-      <div className="p-5 sm:p-6">
-        <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-ocean-600">{d.atoll}</p>
-        <h3 className="font-display font-bold text-[22px] text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{d.name}</h3>
-        <p className="text-slate-500 text-[14.5px] mt-1.5 line-clamp-2">{d.tagline}</p>
-        <span className="flex items-center justify-between mt-4">
-          <span className="text-[14.5px] font-bold text-ocean-700">Explore</span>
-          <span className="arrow-dot" aria-hidden>›</span>
-        </span>
+      <div className="hidden sm:contents">
+        <Img src={d.cardImage} alt={d.name} ratio="aspect-[4/3]" />
+        <div className="p-5 sm:p-6">
+          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-ocean-600">{d.atoll}</p>
+          <h3 className="font-display font-bold text-[22px] text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{d.name}</h3>
+          <p className="text-slate-500 text-[14.5px] mt-1.5 line-clamp-2">{d.tagline}</p>
+          <span className="flex items-center justify-between mt-4">
+            <span className="text-[14.5px] font-bold text-ocean-700">Explore</span>
+            <span className="arrow-dot" aria-hidden>›</span>
+          </span>
+        </div>
+      </div>
+      {/* Mobile: reference app-style card */}
+      <div className="sm:hidden">
+        <img src={d.cardImage} alt={d.name} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+        <div className="p-4">
+          <h3 className="font-display font-bold text-[17px] leading-snug text-ink-900">{d.name}</h3>
+          <p className="text-slate-500 text-[12.5px] mt-1 line-clamp-2">{d.tagline}</p>
+          <span className="block w-full mt-3 rounded-xl bg-ocean-950 py-2.5 text-center text-sm font-bold text-white">View Details</span>
+        </div>
       </div>
     </Link>
   )
@@ -165,17 +176,27 @@ export function DestinationCard({ d }: { d: Destination }) {
 export function PropertyCard({ p }: { p: Property }) {
   return (
     <Link to={`/stays/${p.slug}`} className="card card-hover img-zoom group block shadow-soft">
-      <div className="relative">
-        <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/11]" />
-        <span className="absolute top-4 left-4 chip bg-white/95 text-ink-900 capitalize !text-[12px] font-bold">{p.type.replace('-', ' ')}</span>
+      <div className="hidden sm:contents">
+        <div className="relative">
+          <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/11]" />
+          <span className="absolute top-4 left-4 chip bg-white/95 text-ink-900 capitalize !text-[12px] font-bold">{p.type.replace('-', ' ')}</span>
+        </div>
+        <div className="p-5 sm:p-6">
+          <p className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-slate-500">{p.location}</p>
+          <h3 className="font-display font-bold text-[22px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{p.name}</h3>
+          <p className="text-slate-500 text-[14px] mt-2 line-clamp-2">{p.description}</p>
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+            <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
+            <span className="arrow-dot" aria-hidden>›</span>
+          </div>
+        </div>
       </div>
-      <div className="p-5 sm:p-6">
-        <p className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-slate-500">{p.location}</p>
-        <h3 className="font-display font-bold text-[22px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{p.name}</h3>
-        <p className="text-slate-500 text-[14px] mt-2 line-clamp-2">{p.description}</p>
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
-          <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
-          <span className="arrow-dot" aria-hidden>›</span>
+      {/* Mobile: reference app-style card */}
+      <div className="sm:hidden">
+        <img src={p.cardImage} alt={p.name} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+        <div className="p-4">
+          <h3 className="font-display font-bold text-[17px] leading-snug text-ink-900 line-clamp-2">{p.name}</h3>
+          <span className="block w-full mt-3 rounded-xl bg-ocean-950 py-2.5 text-center text-sm font-bold text-white">View Details</span>
         </div>
       </div>
     </Link>
@@ -185,35 +206,56 @@ export function PropertyCard({ p }: { p: Property }) {
 export function PackageCard({ p }: { p: Package }) {
   return (
     <Link to={`/packages/${p.slug}`} className="card card-hover img-zoom group block shadow-soft">
-      <div className="relative">
-        <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/10]" />
+      <div className="hidden sm:contents">
+        <div className="relative">
+          <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/10]" />
+        </div>
+        <div className="p-5 sm:p-6">
+          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-500">
+            {p.duration} <span className="text-lagoon-600 mx-1" aria-hidden>·</span> <span className="text-sunset-600 capitalize">{p.category[0]?.replace('-', ' ')}</span>
+          </p>
+          <h3 className="font-display text-[24px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-2">{p.name}</h3>
+          <p className="text-slate-600 text-[15px] mt-2 line-clamp-2">{p.description}</p>
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+            <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
+            <span className="arrow-dot" aria-hidden>›</span>
+          </div>
+        </div>
       </div>
-      <div className="p-5 sm:p-6">
-        <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-500">
-          {p.duration} <span className="text-lagoon-600 mx-1" aria-hidden>·</span> <span className="text-sunset-600 capitalize">{p.category[0]?.replace('-', ' ')}</span>
-        </p>
-        <h3 className="font-display text-[24px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-2">{p.name}</h3>
-        <p className="text-slate-600 text-[15px] mt-2 line-clamp-2">{p.description}</p>
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
-          <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
-          <span className="arrow-dot" aria-hidden>›</span>
+      {/* Mobile: reference app-style card */}
+      <div className="sm:hidden">
+        <img src={p.cardImage} alt={p.name} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+        <div className="p-4">
+          <h3 className="font-display font-bold text-[17px] leading-snug text-ink-900 line-clamp-2">{p.name}</h3>
+          <p className="text-slate-500 text-[12.5px] mt-1">{p.duration}</p>
+          <span className="block w-full mt-3 rounded-xl bg-ocean-950 py-2.5 text-center text-sm font-bold text-white">View Details</span>
         </div>
       </div>
     </Link>
   )
 }
 
-// Discovery-style overlay card: photography first, text on image.
+// Discovery card: overlay on desktop, white mini-card on mobile (reference style).
 export function ExperienceCard({ e }: { e: Experience }) {
   return (
-    <Link to={`/experiences/${e.slug}`} className="group relative block overflow-hidden rounded-[1.4rem] border border-slate-200/70 min-h-[300px] h-full img-zoom">
-      <img src={e.cardImage} alt={e.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/25 to-transparent" aria-hidden />
-      <span className="absolute top-4 left-4 chip bg-white/15 text-white border border-white/25 backdrop-blur !text-[12px]">{e.category}</span>
-      <div className="absolute bottom-0 inset-x-0 p-5 text-white">
-        <h3 className="font-display text-[22px] leading-tight">{e.name}</h3>
-        <p className="text-white/75 text-[13.5px] font-semibold mt-1">{e.duration} · {e.priceHint}</p>
-        <span className="alink alink-light mt-2.5 text-[14px]">Discover <span className="arr" aria-hidden>→</span></span>
+    <Link to={`/experiences/${e.slug}`} className="group block h-full">
+      <div className="relative hidden sm:block overflow-hidden rounded-[1.4rem] border border-slate-200/70 min-h-[300px] h-full img-zoom">
+        <img src={e.cardImage} alt={e.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/25 to-transparent" aria-hidden />
+        <span className="absolute top-4 left-4 chip bg-white/15 text-white border border-white/25 backdrop-blur !text-[12px]">{e.category}</span>
+        <div className="absolute bottom-0 inset-x-0 p-5 text-white">
+          <h3 className="font-display text-[22px] leading-tight">{e.name}</h3>
+          <p className="text-white/75 text-[13.5px] font-semibold mt-1">{e.duration} · {e.priceHint}</p>
+          <span className="alink alink-light mt-2.5 text-[14px]">Discover <span className="arr" aria-hidden>→</span></span>
+        </div>
+      </div>
+      {/* Mobile: reference app-style mini card */}
+      <div className="sm:hidden card overflow-hidden">
+        <img src={e.cardImage} alt={e.name} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+        <div className="p-4">
+          <h3 className="font-display font-bold text-[16px] leading-snug text-ink-900 line-clamp-2">{e.name}</h3>
+          <p className="text-slate-500 text-[12.5px] mt-1">{e.duration} · {e.priceHint}</p>
+        </div>
       </div>
     </Link>
   )
@@ -222,15 +264,26 @@ export function ExperienceCard({ e }: { e: Experience }) {
 export function ArticleCard({ a, large }: { a: Article; large?: boolean }) {
   return (
     <Link to={`/guide/${a.slug}`} className="card card-hover img-zoom group block shadow-soft">
-      <Img src={a.cardImage} alt={a.title} ratio={large ? 'aspect-[16/8]' : 'aspect-[16/10]'} />
-      <div className="p-5 sm:p-6">
-        <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-sunset-600">{a.category} <span className="text-slate-400 normal-case tracking-normal font-semibold">· {a.readTime}</span></p>
-        <h3 className={`font-display font-bold text-ink-900 group-hover:text-ocean-700 transition-colors leading-tight mt-2 ${large ? 'text-[clamp(1.6rem,3vw,2.4rem)]' : 'text-[21px]'}`}>{a.title}</h3>
-        <p className="text-slate-500 text-[14.5px] mt-2 line-clamp-2">{a.excerpt}</p>
-        <span className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
-          <span className="text-[13px] font-semibold text-slate-500">{a.author} · {a.date}</span>
-          <span className="arrow-dot !w-9 !h-9" aria-hidden>›</span>
-        </span>
+      <div className="hidden sm:contents">
+        <Img src={a.cardImage} alt={a.title} ratio={large ? 'aspect-[16/8]' : 'aspect-[16/10]'} />
+        <div className="p-5 sm:p-6">
+          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-sunset-600">{a.category} <span className="text-slate-400 normal-case tracking-normal font-semibold">· {a.readTime}</span></p>
+          <h3 className={`font-display font-bold text-ink-900 group-hover:text-ocean-700 transition-colors leading-tight mt-2 ${large ? 'text-[clamp(1.6rem,3vw,2.4rem)]' : 'text-[21px]'}`}>{a.title}</h3>
+          <p className="text-slate-500 text-[14.5px] mt-2 line-clamp-2">{a.excerpt}</p>
+          <span className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+            <span className="text-[13px] font-semibold text-slate-500">{a.author} · {a.date}</span>
+            <span className="arrow-dot !w-9 !h-9" aria-hidden>›</span>
+          </span>
+        </div>
+      </div>
+      {/* Mobile: reference app-style card */}
+      <div className="sm:hidden">
+        <img src={a.cardImage} alt={a.title} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
+        <div className="p-4">
+          <h3 className="font-display font-bold text-[17px] leading-snug text-ink-900 line-clamp-2">{a.title}</h3>
+          <p className="text-slate-500 text-[12.5px] mt-1">{a.category} · {a.readTime}</p>
+          <span className="block w-full mt-3 rounded-xl bg-ocean-950 py-2.5 text-center text-sm font-bold text-white">Read Guide</span>
+        </div>
       </div>
     </Link>
   )
@@ -238,14 +291,25 @@ export function ArticleCard({ a, large }: { a: Article; large?: boolean }) {
 
 export function CategoryCard({ image, title, text, to }: { image: string; title: string; text: string; to: string }) {
   return (
-    <Link to={to} className="group relative overflow-hidden rounded-[1.4rem] border border-slate-200/70 aspect-[4/5] sm:aspect-[3/4] block img-zoom">
-      <img src={image} alt={title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/15 to-transparent" aria-hidden />
-      <div className="absolute bottom-0 p-5 text-white">
-        <h3 className="font-display text-[22px]">{title}</h3>
-        <p className="text-white/75 text-[14px]">{text}</p>
-        <span className="alink alink-light mt-2 text-[14px]">Explore <span className="arr" aria-hidden>→</span></span>
-      </div>
+    <Link to={to} className="group block">
+      {/* Desktop: overlay tile */}
+      <span className="hidden sm:block relative overflow-hidden rounded-[1.4rem] border border-slate-200/70 aspect-[3/4] img-zoom">
+        <img src={image} alt={title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+        <span className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/15 to-transparent" aria-hidden />
+        <span className="absolute bottom-0 p-5 text-white block">
+          <span className="font-display text-[22px] block">{title}</span>
+          <span className="text-white/75 text-[14px] block">{text}</span>
+          <span className="alink alink-light mt-2 text-[14px]">Explore <span className="arr" aria-hidden>→</span></span>
+        </span>
+      </span>
+      {/* Mobile: reference app-style mini card */}
+      <span className="sm:hidden block card overflow-hidden">
+        <img src={image} alt={title} loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover" />
+        <span className="block p-3.5">
+          <span className="font-display font-bold text-[15px] leading-snug text-ink-900 block">{title}</span>
+          <span className="text-slate-500 text-[12px] mt-0.5 block">{text}</span>
+        </span>
+      </span>
     </Link>
   )
 }
