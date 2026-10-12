@@ -133,7 +133,7 @@ export function StickyEnquire({ label, planTo, waHref }: { label: string; planTo
   }, [])
   if (!show) return null
   return (
-    <div className="lg:hidden fixed inset-x-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-2 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] pb-[max(0.65rem,env(safe-area-inset-bottom))]">
+    <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-2 pb-[max(0.65rem,env(safe-area-inset-bottom))]">
       <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 truncate">{label}</p>
       <div className="flex gap-2 mt-1.5">
         <a href={waHref} className="btn-ghost flex-1 !py-2.5 !text-[14px]">WhatsApp</a>

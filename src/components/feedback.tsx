@@ -101,7 +101,7 @@ export function CookieBanner() {
     setVisible(false)
   }
   return (
-    <div className="fixed left-4 right-4 sm:right-auto sm:max-w-md z-50 card !rounded-2xl p-5 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] lg:bottom-4" role="dialog" aria-label="Cookie consent">
+    <div className="fixed bottom-4 left-4 right-4 sm:right-auto sm:max-w-md z-50 card !rounded-2xl p-5" role="dialog" aria-label="Cookie consent">
       <p className="font-bold text-ink-900 text-[15px]">A quick note on cookies</p>
       <p className="text-slate-600 text-[14px] mt-1">We only use optional analytics cookies to understand visits — after you accept. See our <Link to="/cookies" className="font-bold text-ocean-700">Cookie Policy</Link>.</p>
       <div className="flex gap-2 mt-4">
