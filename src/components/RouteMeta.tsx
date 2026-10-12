@@ -21,6 +21,7 @@ const STATIC: Record<string, { title: string; desc: string }> = {
   '/about': { title: 'About Us | IslandGo Maldives', desc: 'A small Malé-based travel studio matching you to the right island at the right season. New brand, local roots, straight answers.' },
   '/contact': { title: 'Contact | IslandGo Maldives', desc: 'Talk to a human in Malé — WhatsApp fastest (+960 733-7549) or email islandgomvtraveltours@gmail.com. Replies within hours.' },
   '/plan-trip': { title: 'Plan Your Trip | IslandGo Maldives', desc: 'Free Maldives trip planning help — tell us dates, budget and dreams; get 2–3 honest island options with clear prices.' },
+  '/b2b': { title: 'B2B Partners · Travel Trade | IslandGo MV', desc: 'Maldives ground services for travel agents and tour operators — packages, hotels, transfers and excursions with honest net rates.' },
   '/search': { title: 'Search | IslandGo Maldives', desc: 'Search Maldives destinations, stays, packages, experiences and travel guides.' },
   '/privacy': { title: 'Privacy Policy (Draft) | IslandGo Maldives', desc: 'How IslandGo Maldives handles enquiries and site data. Draft placeholder — final legal copy to be confirmed.' },
   '/terms': { title: 'Terms & Conditions (Draft) | IslandGo Maldives', desc: 'Enquiry terms for IslandGo Maldives travel planning. Draft placeholder — final legal copy to be confirmed.' },

@@ -10,6 +10,7 @@ import type { Article, Destination } from '../data/types'
 import { ArticleCard, CTASection, ExperienceCard, PackageCard, SectionHeader } from '../components/ui'
 import { HeroParallax, Magnetic, Marquee, Reveal, Spot, Words, prefersReduced } from '../components/motion'
 import { track } from '../lib/analytics'
+import { wa } from '../lib/whatsapp'
 
 // ---------- Destination tile (image overlay + zoom on hover) ----------
 export function DestTile({ d, className = '', wide }: { d: Destination; className?: string; wide?: boolean }) {
@@ -81,11 +82,12 @@ export const STYLES = [
 
 const MARQUEE = ['Baa Atoll', 'Hanifaru Bay', 'North Malé', 'Ari Atoll', 'Thulusdhoo', 'Dhigurah', 'Maafushi', 'Lhaviyani', 'Vaavu', 'Sandbanks', 'Mantas', 'Whale sharks']
 
-const SLIDES = [
+const SLIDES: { image: string; title: string; accent?: string; sub: string }[] = [
   {
     image: img.heroHome,
-    title: 'Your next island story starts here.',
-    sub: 'Discover extraordinary islands, resorts and experiences across the Maldives — planned with a Malé-based team that answers on WhatsApp.',
+    title: 'Discover the Maldives',
+    accent: 'with IslandGo MV',
+    sub: 'Plan your perfect island escape with local expertise, personalized holiday packages, island tours and reliable transfers.',
   },
   {
     image: img.heroBeachWide,
@@ -154,7 +156,10 @@ export function Home() {
             ☀ The sunny side of the Maldives
           </p>
           <h1 className="font-display font-semibold text-white tracking-tight text-[clamp(2.75rem,7.5vw,5.75rem)] leading-[1.0] max-w-4xl">
-            <Words key={slide} text={SLIDES[slide].title} delay={100} />
+            <Words key={`t-${slide}`} text={SLIDES[slide].title} delay={100} />
+            {SLIDES[slide].accent && (
+              <span key={`a-${slide}`} className="hero-in block text-amber-400">{SLIDES[slide].accent}</span>
+            )}
           </h1>
           <p key={`sub-${slide}`} className="hero-in mt-5 max-w-xl text-[17px] sm:text-lg text-white/85 leading-relaxed">
             {SLIDES[slide].sub}
@@ -165,8 +170,8 @@ export function Home() {
                 Plan Your Trip <span className="arr" aria-hidden>→</span>
               </Link>
             </Magnetic>
-            <Link to="/destinations" className="btn-outline-light !px-7 !py-4 !text-base">
-              Explore Maldives <span className="arr" aria-hidden>→</span>
+            <Link to="/packages" className="btn-outline-light !px-7 !py-4 !text-base">
+              Explore Maldives Packages <span className="arr" aria-hidden>→</span>
             </Link>
           </div>
           <div className="mt-9 flex items-center gap-3">
@@ -360,6 +365,26 @@ export function Home() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featPack.map((p, i) => <Reveal key={p.slug} delay={i * 90}><PackageCard p={p} /></Reveal>)}
         </div>
+      </section>
+
+      {/* ============ FOR TRAVEL AGENTS ============ */}
+      <section className="container-x pb-16 sm:pb-20" aria-label="For travel agents">
+        <Reveal className="rounded-[2rem] border border-slate-200 bg-sand-50/70 p-8 sm:p-12 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+          <div>
+            <p className="kicker mb-3">For travel agents</p>
+            <h2 className="display-xl">Partner with IslandGo MV.</h2>
+            <p className="text-slate-600 text-[16.5px] mt-3 leading-relaxed max-w-xl">Maldives ground services for international agents and operators — packages, hotels, transfers and excursions with honest net rates.</p>
+            <div className="flex flex-wrap gap-2 mt-5">
+              {['Net rates on request', 'Unbranded quotes', 'Reply in 1 business day'].map((t) => (
+                <span key={t} className="chip bg-white border border-slate-200 text-ink-700">✓ {t}</span>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-stretch">
+            <Link to="/b2b" className="btn-ocean !px-7 !py-4 !text-base text-center">Travel Trade / B2B <span className="arr" aria-hidden>→</span></Link>
+            <a href={wa.general()} className="btn-ghost !px-7 !py-4 !text-base text-center">WhatsApp trade desk</a>
+          </div>
+        </Reveal>
       </section>
 
       {/* ============ GUIDE (editorial) ============ */}

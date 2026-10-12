@@ -46,6 +46,7 @@ const menus: { label: string; to: string; children: { label: string; to: string;
     ],
   },
   { label: 'About', to: '/about', children: [{ label: 'About us', to: '/about', desc: 'Who we are' }, { label: 'Contact', to: '/contact', desc: 'Talk to a human' }] },
+  { label: 'B2B', to: '/b2b', children: [{ label: 'Partner with us', to: '/b2b', desc: 'Net rates for agents' }, { label: 'Trade enquiries', to: '/b2b', desc: 'Hotels, transfers, tours' }] },
 ]
 
 export function Header() {
@@ -206,7 +207,7 @@ export function Footer() {
         </nav>
         <nav aria-label="Guide">
           <p className="font-bold text-sm uppercase tracking-wider text-white/60 mb-3">Guide</p>
-          {[['Travel guide', '/guide'], ['Search', '/search'], ['Offers', '/offers'], ['About us', '/about'], ['Contact', '/contact']].map(([l, t]) => <Link key={t + l} to={t} className="block py-1.5 text-white/85 hover:text-white w-fit u-link">{l}</Link>)}
+          {[['Travel guide', '/guide'], ['Search', '/search'], ['Offers', '/offers'], ['B2B Partners', '/b2b'], ['About us', '/about'], ['Contact', '/contact']].map(([l, t]) => <Link key={t + l} to={t} className="block py-1.5 text-white/85 hover:text-white w-fit u-link">{l}</Link>)}
         </nav>
         <div>
           <p className="font-bold text-sm uppercase tracking-wider text-white/60 mb-3">Contact</p>

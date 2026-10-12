@@ -26,7 +26,7 @@ body {
 
 @layer components {
   .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
-  .h-display { @apply font-display tracking-tight text-ink-900; }
+  .h-display { @apply font-display tracking-tight text-ink-900 text-balance; }
 
   /* Buttons — flat, tactile, arrow micro-interaction. No glow, no shadow. */
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60; }
@@ -65,7 +65,7 @@ body {
   /* Editorial helpers */
   .kicker { @apply flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.16em] text-sunset-600; }
   .kicker::before { content: ""; width: 2rem; height: 2px; background: currentColor; display: inline-block; }
-  .display-xl { @apply font-display tracking-tight text-ink-900 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05]; }
+  .display-xl { @apply font-display tracking-tight text-ink-900 text-balance text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05]; }
   .txt-outline { -webkit-text-stroke: 1.5px rgba(10, 35, 66, .35); color: transparent; }
   .txt-outline-light { -webkit-text-stroke: 1.5px rgba(255, 255, 255, .55); color: transparent; }
 }

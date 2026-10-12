@@ -49,6 +49,10 @@ export function Terms() {
       <p>IslandGo Maldives is a travel-discovery and enquiry service. Browsing is free; submitting an enquiry asks our team for availability and a quote — it does not create a booking until you confirm in writing.</p>
       <h2 className="h-display text-2xl">Prices & availability</h2>
       <p>All “from” prices are indicative starting points in USD, excluding international flights unless stated. Final quotes confirm inclusions, transfers, taxes and validity dates.</p>
+      <h2 className="h-display text-2xl">Bookings & payments</h2>
+      <p>Nothing is booked or charged on this website. An enquiry asks our team for availability and a quote; a booking exists only once you confirm an offer in writing. Any payment timing and method is agreed per booking and stated on your confirmation — never assumed.</p>
+      <h2 className="h-display text-2xl">Cancellations & changes</h2>
+      <p>Life happens. Cancellation and amendment terms depend on the hotel, transfer or excursion supplier and your travel dates, so they are confirmed in writing with every quote — before you pay anything. If plans change, message us as early as possible and we will pursue the best available outcome with suppliers.</p>
       <h2 className="h-display text-2xl">Content</h2>
       <p>Photography is representative of the islands, resorts and experiences described. Marine-life sightings (mantas, whale sharks, dolphins) are never guaranteed — we operate ethical, no-chase policies.</p>
     </Shell>

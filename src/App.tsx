@@ -11,6 +11,7 @@ import { SearchPage } from './pages/Search'
 import { Privacy, Terms, Cookies } from './pages/Legal'
 import { ClassicHome } from './pages/ClassicHome'
 import { PreviewMerged } from './pages/PreviewMerged'
+import { B2B } from './pages/B2B'
 
 const withMeta = (el: React.ReactNode) => (
   <>
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/about" element={withMeta(<About />)} />
             <Route path="/contact" element={withMeta(<Contact />)} />
             <Route path="/plan-trip" element={withMeta(<PlanTrip />)} />
+            <Route path="/b2b" element={withMeta(<B2B />)} />
             <Route path="/search" element={withMeta(<SearchPage />)} />
             <Route path="/privacy" element={withMeta(<Privacy />)} />
             <Route path="/terms" element={withMeta(<Terms />)} />
