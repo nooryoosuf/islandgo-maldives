@@ -97,19 +97,19 @@ export function ClassicHome() {
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/55 via-ocean-950/10 to-transparent" aria-hidden />
         <div className="relative container-x pt-14 sm:pt-20 pb-16 sm:pb-48 text-white">
           <p className="text-[13px] font-bold tracking-[0.3em] text-white/80">DISCOVER PARADISE</p>
-          <h1 className="font-display font-bold text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.02] mt-3 max-w-2xl">
+          <h1 className="font-display font-bold text-[clamp(2rem,8vw,4.5rem)] leading-[1.02] mt-3 max-w-2xl text-balance [overflow-wrap:break-word]">
             Discover the Maldives<br />with <span className="text-amber-400">IslandGo MV</span>
           </h1>
           <p className="mt-3 font-semibold text-white/90">Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives</p>
-          <div className="mt-7 flex flex-wrap gap-x-8 gap-y-3">
+          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-8">
             {([
               [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
               [IconShieldCheck, 'Safe & Reliable', 'Trusted local travel partner'],
               [IconClock, 'Fast Support', 'We reply within hours'],
             ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
-              <div key={t} className="flex items-center gap-2.5">
-                <span className="text-amber-400"><Icon className="w-7 h-7" /></span>
-                <span><span className="block font-bold text-[15px]">{t}</span><span className="block text-white/70 text-[13px]">{d}</span></span>
+              <div key={t} className="flex items-center gap-2.5 min-w-0">
+                <span className="text-amber-400 shrink-0"><Icon className="w-7 h-7" /></span>
+                <span className="min-w-0"><span className="block font-bold text-[15px]">{t}</span><span className="block text-white/70 text-[13px]">{d}</span></span>
               </div>
             ))}
           </div>
@@ -131,9 +131,9 @@ export function ClassicHome() {
             [IconCompass, 'Excursions', '/experiences'],
             [IconPack, 'Packages', '/packages'],
           ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, label, to]) => (
-            <Link key={label} to={to} className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-200 bg-white py-3 px-1 text-center">
+            <Link key={label} to={to} className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-200 bg-white py-3 px-1 text-center min-w-0">
               <span className="text-ocean-600"><Icon className="w-6 h-6" /></span>
-              <span className="text-[11px] font-bold leading-tight text-ink-900">{label}</span>
+              <span className="text-[10px] font-bold leading-tight text-ink-900 [overflow-wrap:anywhere]">{label}</span>
             </Link>
           ))}
         </div>

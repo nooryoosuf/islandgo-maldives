@@ -48,7 +48,7 @@ export function Words({ text, className = '', delay = 0 }: { text: string; class
       {words.map((w, i) => (
         <span key={i} aria-hidden className="w" style={{ '--i': i, '--wd': `${delay}ms` } as CSSProperties}>
           {w}
-          {i < words.length - 1 ? ' ' : ''}
+          {i < words.length - 1 ? ' ' : ''}
         </span>
       ))}
     </span>

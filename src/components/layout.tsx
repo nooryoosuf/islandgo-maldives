@@ -111,7 +111,7 @@ export function Footer() {
         <div>
           <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-14 w-auto rounded-lg bg-white object-contain" />
           <p className="text-white/60 text-[13.5px] mt-4 max-w-xs">Explore • Discover • Experience Maldives.</p>
-          <p className="flex gap-4 mt-5 text-[12.5px] text-white/45">
+          <p className="flex flex-wrap gap-x-4 gap-y-2 mt-5 text-[12.5px] text-white/45">
             <Link to="/privacy" className="hover:text-white">Privacy</Link>
             <Link to="/terms" className="hover:text-white">Terms</Link>
             <Link to="/cookies" className="hover:text-white">Cookies</Link>
