@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { site } from '../config/site'
 import { wa } from '../lib/whatsapp'
@@ -19,6 +20,16 @@ const NAV: [string, string][] = [
 
 export function Header() {
   const loc = useLocation()
+  const [open, setOpen] = useState(false)
+  useEffect(() => setOpen(false), [loc.pathname])
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open ])
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50">
       <div className="container-x flex items-center justify-between gap-4 h-16 sm:h-[76px]">
@@ -38,23 +49,53 @@ export function Header() {
             B2B Partners
           </Link>
         </nav>
-        <Link to="/plan-trip" onClick={() => track('plan_trip_click', { from: 'header' })} className="btn-primary !py-2.5 hidden sm:inline-flex">
-          🗓 Request a Booking
-        </Link>
-        <Link to="/plan-trip" onClick={() => track('plan_trip_click', { from: 'header-mobile' })} className="btn-primary !py-2 !px-4 sm:hidden text-sm">
-          Book
-        </Link>
-      </div>
-        <nav className="lg:hidden container-x noscroll flex gap-6 overflow-x-auto pb-2.5 pt-0.5 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Mobile">
-          {NAV.map(([l, to]) => (
-            <Link key={l} to={to} aria-current={loc.pathname === to ? 'page' : undefined} className={`py-1.5 ${loc.pathname === to ? 'text-ocean-600' : 'hover:text-ocean-600'}`}>
-              {l}
-            </Link>
-          ))}
-          <Link to="/b2b" aria-current={loc.pathname === '/b2b' ? 'page' : undefined} className={`py-1.5 ${loc.pathname === '/b2b' ? 'text-ocean-600' : 'text-sunset-600 hover:text-sunset-500'}`}>
-            B2B Partners
+        <div className="flex items-center gap-2 shrink-0">
+          <Link to="/plan-trip" onClick={() => track('plan_trip_click', { from: 'header' })} className="btn-primary !py-2.5 hidden sm:inline-flex">
+            🗓 Request a Booking
           </Link>
+          <Link to="/plan-trip" onClick={() => track('plan_trip_click', { from: 'header-mobile' })} className="btn-primary !py-2 !px-4 sm:hidden text-sm">
+            Book
+          </Link>
+          <button
+            className={`lg:hidden w-11 h-11 grid place-items-center rounded-full border transition-all duration-300 ${open ? 'bg-ocean-950 text-white border-ocean-950 rotate-90' : 'border-slate-200 text-ink-900'}`}
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            <span className="text-xl leading-none" aria-hidden>{open ? '✕' : '☰'}</span>
+          </button>
+        </div>
+      </div>
+      {open && (
+        <nav className="lg:hidden border-t border-slate-100 bg-white dropdown-in" aria-label="Mobile">
+          <div className="container-x py-2 max-h-[70vh] overflow-y-auto flex flex-col">
+            {NAV.map(([l, to]) => (
+              <Link
+                key={l}
+                to={to}
+                onClick={() => setOpen(false)}
+                aria-current={loc.pathname === to ? 'page' : undefined}
+                className={`flex items-center justify-between py-3.5 border-b border-slate-100 font-display font-bold text-[19px] ${loc.pathname === to ? 'text-ocean-600' : 'text-ink-900'}`}
+              >
+                {l}
+                <span className="text-slate-300" aria-hidden>›</span>
+              </Link>
+            ))}
+            <Link
+              to="/b2b"
+              onClick={() => setOpen(false)}
+              aria-current={loc.pathname === '/b2b' ? 'page' : undefined}
+              className="flex items-center justify-between py-3.5 border-b border-slate-100 font-display font-bold text-[19px] text-sunset-600"
+            >
+              B2B Partners
+              <span className="text-slate-300" aria-hidden>›</span>
+            </Link>
+            <a href={wa.general()} className="text-center text-[14px] font-bold text-ocean-700 py-4">
+              WhatsApp {site.contact.whatsappDisplay}
+            </a>
+          </div>
         </nav>
+      )}
     </header>
   )
 }
