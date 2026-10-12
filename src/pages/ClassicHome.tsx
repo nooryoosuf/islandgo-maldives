@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
+import { properties } from '../data/properties'
+import { packages } from '../data/packages'
+import { experiences } from '../data/experiences'
+import { articles } from '../data/articles'
 import { img } from '../data/images'
+import { ArticleCard, CategoryCard, CTASection, DestinationCard, ExperienceCard, PackageCard, PropertyCard } from '../components/ui'
 import { track } from '../lib/analytics'
 
 // Classic agency homepage sections (reference-mockup direction).
@@ -118,7 +123,110 @@ export function ClassicHome() {
       <ClassicServices />
 
       <ClassicWhy />
+
+      <ClassicSections />
     </main>
+  )
+}
+
+// ---------- Classic section header ----------
+function CHead({ kicker, title, accent, text, link, linkLabel }: { kicker: string; title: string; accent?: string; text?: string; link?: string; linkLabel?: string }) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+      <div className="max-w-2xl">
+        <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-sky-600">{kicker}</p>
+        <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">{title} {accent && <span className="text-amber-500">{accent}</span>}</h2>
+        {text && <p className="text-slate-500 text-[15px] mt-2.5">{text}</p>}
+      </div>
+      {link && (
+        <Link to={link} className="inline-flex items-center gap-2 font-bold text-[15px] text-ocean-700 hover:text-ocean-600">
+          {linkLabel ?? 'View all'} <span className="grid place-items-center w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-300 text-white font-bold" aria-hidden>›</span>
+        </Link>
+      )}
+    </div>
+  )
+}
+
+const STYLE_TILES = [
+  { image: img.couple, title: 'Honeymoon', text: 'Private & romantic', to: '/packages/honeymoon' },
+  { image: img.family, title: 'Family', text: 'Kid-friendly reefs', to: '/packages/family' },
+  { image: img.dive, title: 'Diving', text: 'Thilas & channels', to: '/experiences/diving' },
+  { image: img.surf, title: 'Surfing', text: 'Cokes & Chickens', to: '/experiences/surfing' },
+  { image: img.villaDeck, title: 'Luxury', text: 'Space & silence', to: '/packages/luxury' },
+  { image: img.islandLife, title: 'Local Islands', text: 'Culture & value', to: '/stays/local-islands' },
+]
+
+// ---------- All remaining homepage sections in classic style ----------
+function ClassicSections() {
+  const featDest = destinations.filter((d) => d.featured)
+  const featStay = properties.filter((p) => p.featured)
+  const featPack = packages.filter((p) => p.featured).slice(0, 3)
+  return (
+    <>
+      <section className="container-x py-12 sm:py-16" aria-label="Destinations">
+        <CHead kicker="Destinations" title="Find Your Island" text="Six atolls and island characters we know deeply — pick the water first, then the island." link="/destinations" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {featDest.map((d) => <DestinationCard key={d.slug} d={d} />)}
+        </div>
+      </section>
+
+      <section className="bg-sky-50/60 border-y border-sky-100">
+        <div className="container-x py-12 sm:py-16" aria-label="Where to stay">
+          <CHead kicker="Where to Stay" title="Sleep Over" accent="the Lagoon" text="Real resorts and guesthouses around North Malé — Coco Bodu Hithi to Maafushi beach hotels." link="/stays" linkLabel="All stays" />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {featStay.map((p) => <PropertyCard key={p.slug} p={p} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="container-x py-12 sm:py-16" aria-label="Travel styles">
+        <CHead kicker="Travel Styles" title="How Do You" accent="Travel?" text="Pick your style — every tile leads somewhere real." />
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {STYLE_TILES.map((s) => <CategoryCard key={s.title} image={s.image} title={s.title} text={s.text} to={s.to} />)}
+        </div>
+      </section>
+
+      <section className="container-x pb-12 sm:pb-16" aria-label="Experiences">
+        <CHead kicker="Experiences" title="Days You’ll Remember" text="Mantas, channels, surf boats and village teas — the days between beach naps." link="/experiences" linkLabel="All experiences" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {experiences.slice(0, 8).map((e) => <ExperienceCard key={e.slug} e={e} />)}
+        </div>
+      </section>
+
+      <section className="container-x pb-12 sm:pb-16" aria-label="Packages">
+        <CHead kicker="Packages" title="Easy" accent="Starting Points" text="Fixed ideas, flexible details — every trip is tailored to your dates." link="/packages" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {featPack.map((p) => <PackageCard key={p.slug} p={p} />)}
+        </div>
+      </section>
+
+      <section className="container-x pb-12 sm:pb-16" aria-label="For travel agents">
+        <div className="rounded-[1.6rem] border border-slate-200 bg-white shadow-soft p-8 sm:p-10 grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+          <div>
+            <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-sky-600">For Travel Agents</p>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">Partner with <span className="text-amber-500">IslandGo MV</span></h2>
+            <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Maldives ground services for international agents — packages, hotels, transfers and excursions with honest net rates.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
+            <Link to="/b2b" className="btn-ocean !px-7 !py-3.5 text-center">Travel Trade / B2B</Link>
+            <Link to="/plan-trip" className="btn-ghost !px-7 !py-3.5 text-center">Plan Your Trip</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="container-x pb-14 sm:pb-20" aria-label="Travel guide">
+        <CHead kicker="Travel Guide" title="Read Before" accent="You Fly" link="/guide" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.slice(0, 3).map((a) => <ArticleCard key={a.slug} a={a} />)}
+        </div>
+      </section>
+
+      <CTASection
+        image={img.sunsetBeach}
+        title="Tell us what your perfect Maldives trip looks like."
+        text="Dates, budget, daydreams — we reply within hours with 2–3 honest island options and a clear price."
+      />
+    </>
   )
 }
 
