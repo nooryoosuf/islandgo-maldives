@@ -34,7 +34,7 @@ function TradeForm() {
       noValidate
       aria-label="B2B partnership enquiry form"
       id="b2b-enquire"
-      className="card !shadow-none p-6 sm:p-8 grid sm:grid-cols-2 gap-4"
+      className="card !shadow-none p-6 sm:p-8 grid sm:grid-cols-2 gap-4 scroll-mt-32"
       onSubmit={(e) => {
         e.preventDefault()
         if (status === 'sending') return

@@ -88,9 +88,9 @@ export function PackageDetail() {
 // ---------- EXPERIENCES ----------
 function ExpRow({ e, i }: { e: (typeof experiences)[number]; i: number }) {
   return (
-    <Link to={`/experiences/${e.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
-      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-      <span className="flex items-center gap-4 sm:gap-5 min-w-0">
+    <Link to={`/experiences/${e.slug}`} className="group grid grid-cols-[1fr_auto] sm:grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
+      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8 hidden sm:block" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+      <span className="flex items-center gap-3 sm:gap-5 min-w-0">
         <span className="img-zoom hidden sm:block w-28 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden border border-slate-200/70 shrink-0">
           <img src={e.cardImage} alt="" aria-hidden loading="lazy" decoding="async" className="w-full h-full object-cover" />
         </span>
@@ -222,9 +222,9 @@ export function ExperienceDetail() {
 // ---------- GUIDE ----------
 function GuideRow({ a, i }: { a: (typeof articles)[number]; i: number }) {
   return (
-    <Link to={`/guide/${a.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
-      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-      <span className="flex items-center gap-4 sm:gap-5 min-w-0">
+    <Link to={`/guide/${a.slug}`} className="group grid grid-cols-[1fr_auto] sm:grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
+      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8 hidden sm:block" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+      <span className="flex items-center gap-3 sm:gap-5 min-w-0">
         <span className="img-zoom hidden sm:block w-28 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden border border-slate-200/70 shrink-0">
           <img src={a.cardImage} alt="" aria-hidden loading="lazy" decoding="async" className="w-full h-full object-cover" />
         </span>

@@ -13,7 +13,12 @@ html { scroll-behavior: smooth; }
 body {
   @apply bg-white text-ink-700 font-sans antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
+
+/* Scrollable nav rows without visible scrollbars */
+.noscroll { scrollbar-width: none; -ms-overflow-style: none; }
+.noscroll::-webkit-scrollbar { display: none; }
 
 ::selection { background: #f97316; color: #fff; }
 

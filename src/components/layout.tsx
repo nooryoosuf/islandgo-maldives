@@ -21,9 +21,9 @@ export function Header() {
   const loc = useLocation()
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50">
-      <div className="container-x flex items-center justify-between gap-4 h-[76px]">
+      <div className="container-x flex items-center justify-between gap-4 h-16 sm:h-[76px]">
         <Link to="/" className="flex items-center shrink-0" aria-label="IslandGo MV home">
-          <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-12 w-auto object-contain" />
+          <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-10 sm:h-12 w-auto object-contain" />
         </Link>
         <nav className="hidden lg:flex items-center gap-6 text-[15px] font-semibold text-ink-900" aria-label="Primary">
           {NAV.map(([l, to]) => {
@@ -45,13 +45,13 @@ export function Header() {
           Book
         </Link>
       </div>
-        <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Mobile">
+        <nav className="lg:hidden container-x noscroll flex gap-6 overflow-x-auto pb-2.5 pt-0.5 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Mobile">
           {NAV.map(([l, to]) => (
-            <Link key={l} to={to} aria-current={loc.pathname === to ? 'page' : undefined} className={loc.pathname === to ? 'text-ocean-600' : 'hover:text-ocean-600'}>
+            <Link key={l} to={to} aria-current={loc.pathname === to ? 'page' : undefined} className={`py-1.5 ${loc.pathname === to ? 'text-ocean-600' : 'hover:text-ocean-600'}`}>
               {l}
             </Link>
           ))}
-          <Link to="/b2b" aria-current={loc.pathname === '/b2b' ? 'page' : undefined} className={loc.pathname === '/b2b' ? 'text-ocean-600' : 'text-sunset-600 hover:text-sunset-500'}>
+          <Link to="/b2b" aria-current={loc.pathname === '/b2b' ? 'page' : undefined} className={`py-1.5 ${loc.pathname === '/b2b' ? 'text-ocean-600' : 'text-sunset-600 hover:text-sunset-500'}`}>
             B2B Partners
           </Link>
         </nav>

@@ -38,9 +38,9 @@ export function DestTile({ d, className = '', wide }: { d: Destination; classNam
 // ---------- Stay row (editorial index list, not a card grid) ----------
 export function StayRow({ p, i }: { p: (typeof properties)[number]; i: number }) {
   return (
-    <Link to={`/stays/${p.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
-      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-      <span className="flex items-center gap-4 sm:gap-5 min-w-0">
+    <Link to={`/stays/${p.slug}`} className="group grid grid-cols-[1fr_auto] sm:grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-6 py-5 sm:py-6 border-t border-slate-200 last:border-b">
+      <span className="font-display text-xl sm:text-2xl text-slate-300 w-8 hidden sm:block" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+      <span className="flex items-center gap-3 sm:gap-5 min-w-0">
         <span className="img-zoom block w-24 h-24 sm:w-36 sm:h-24 rounded-2xl overflow-hidden border border-slate-200/70 shrink-0">
           <img src={p.cardImage} alt="" aria-hidden loading="lazy" decoding="async" className="w-full h-full object-cover" />
         </span>
