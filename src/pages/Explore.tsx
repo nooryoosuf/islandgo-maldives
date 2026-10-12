@@ -182,7 +182,7 @@ export function StayDetail() {
 // ---------- SHARED 404 (branded, visual, navigable) ----------
 export function NotFound() {
   return (
-    <main className="container-x section-pad !pt-32 sm:!pt-36">
+    <main className="container-x section-pad !pt-40 sm:!pt-36">
       <div className="relative overflow-hidden rounded-[2rem] max-w-4xl mx-auto text-center text-white">
         <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=1600&auto=format&fit=crop" alt="Turquoise Maldivian lagoon from above" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-ocean-950/60" aria-hidden />

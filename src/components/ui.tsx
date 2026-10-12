@@ -76,8 +76,8 @@ export function ImageHero({ image, kicker, title, text, children }: { image: str
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/75 via-ocean-950/20 to-ocean-950/30" aria-hidden />
       </div>
-      {/* top padding clears the fixed header */}
-      <div className="relative container-x pt-36 sm:pt-44 pb-14 sm:pb-20 text-white page-in">
+      {/* top padding clears the solid header */}
+      <div className="relative container-x pt-36 sm:pt-40 pb-14 sm:pb-20 text-white page-in">
         <p className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur px-4 py-1.5 text-[13px] font-bold uppercase tracking-[0.12em] mb-4">{kicker}</p>
         <h1 className="font-display font-semibold tracking-tight text-[clamp(2.25rem,5.5vw,4rem)] max-w-3xl leading-[1.04]">{title}</h1>
         {text && <p className="mt-4 max-w-2xl text-white/85 text-[17px] leading-relaxed">{text}</p>}
@@ -147,13 +147,16 @@ export function StickyEnquire({ label, planTo, waHref }: { label: string; planTo
 
 export function DestinationCard({ d }: { d: Destination }) {
   return (
-    <Link to={`/destinations/${d.slug}`} className="card card-hover img-zoom group block">
+    <Link to={`/destinations/${d.slug}`} className="card card-hover img-zoom group block shadow-soft">
       <Img src={d.cardImage} alt={d.name} ratio="aspect-[4/3]" />
       <div className="p-5 sm:p-6">
         <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-ocean-600">{d.atoll}</p>
-        <h3 className="font-display text-[24px] text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{d.name}</h3>
-        <p className="text-slate-600 text-[15px] mt-1.5 line-clamp-2">{d.tagline}</p>
-        <span className="alink mt-4 text-[14.5px] text-sunset-600">Explore <span className="arr" aria-hidden>→</span></span>
+        <h3 className="font-display font-bold text-[22px] text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{d.name}</h3>
+        <p className="text-slate-500 text-[14.5px] mt-1.5 line-clamp-2">{d.tagline}</p>
+        <span className="flex items-center justify-between mt-4">
+          <span className="text-[14.5px] font-bold text-ocean-700">Explore</span>
+          <span className="arrow-dot" aria-hidden>›</span>
+        </span>
       </div>
     </Link>
   )
@@ -161,18 +164,18 @@ export function DestinationCard({ d }: { d: Destination }) {
 
 export function PropertyCard({ p }: { p: Property }) {
   return (
-    <Link to={`/stays/${p.slug}`} className="card card-hover img-zoom group block">
+    <Link to={`/stays/${p.slug}`} className="card card-hover img-zoom group block shadow-soft">
       <div className="relative">
         <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/11]" />
         <span className="absolute top-4 left-4 chip bg-white/95 text-ink-900 capitalize !text-[12px] font-bold">{p.type.replace('-', ' ')}</span>
       </div>
       <div className="p-5 sm:p-6">
         <p className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-slate-500">{p.location}</p>
-        <h3 className="font-display text-[24px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{p.name}</h3>
-        <p className="text-[14px] text-slate-600 mt-2 line-clamp-2">{p.description}</p>
+        <h3 className="font-display font-bold text-[22px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-1">{p.name}</h3>
+        <p className="text-slate-500 text-[14px] mt-2 line-clamp-2">{p.description}</p>
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
-          <p className="text-[14px] font-bold text-ink-900">{p.priceHint}</p>
-          <span className="alink text-[14.5px] text-sunset-600">Explore <span className="arr" aria-hidden>→</span></span>
+          <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
+          <span className="arrow-dot" aria-hidden>›</span>
         </div>
       </div>
     </Link>
@@ -181,7 +184,7 @@ export function PropertyCard({ p }: { p: Property }) {
 
 export function PackageCard({ p }: { p: Package }) {
   return (
-    <Link to={`/packages/${p.slug}`} className="card card-hover img-zoom group block">
+    <Link to={`/packages/${p.slug}`} className="card card-hover img-zoom group block shadow-soft">
       <div className="relative">
         <Img src={p.cardImage} alt={p.name} ratio="aspect-[16/10]" />
       </div>
@@ -192,8 +195,8 @@ export function PackageCard({ p }: { p: Package }) {
         <h3 className="font-display text-[24px] leading-tight text-ink-900 group-hover:text-ocean-700 transition-colors mt-2">{p.name}</h3>
         <p className="text-slate-600 text-[15px] mt-2 line-clamp-2">{p.description}</p>
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
-          <p className="text-[14px] font-bold text-ink-900">{p.priceHint}</p>
-          <span className="alink text-[14.5px] text-sunset-600">Explore trip <span className="arr" aria-hidden>→</span></span>
+          <p className="text-[14px] font-bold text-ocean-700">{p.priceHint}</p>
+          <span className="arrow-dot" aria-hidden>›</span>
         </div>
       </div>
     </Link>
@@ -218,13 +221,16 @@ export function ExperienceCard({ e }: { e: Experience }) {
 
 export function ArticleCard({ a, large }: { a: Article; large?: boolean }) {
   return (
-    <Link to={`/guide/${a.slug}`} className="card card-hover img-zoom group block">
+    <Link to={`/guide/${a.slug}`} className="card card-hover img-zoom group block shadow-soft">
       <Img src={a.cardImage} alt={a.title} ratio={large ? 'aspect-[16/8]' : 'aspect-[16/10]'} />
       <div className="p-5 sm:p-6">
         <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-sunset-600">{a.category} <span className="text-slate-400 normal-case tracking-normal font-semibold">· {a.readTime}</span></p>
-        <h3 className={`font-display text-ink-900 group-hover:text-ocean-700 transition-colors leading-tight mt-2 ${large ? 'text-[clamp(1.6rem,3vw,2.4rem)]' : 'text-[22px]'}`}>{a.title}</h3>
-        <p className="text-slate-600 text-[15px] mt-2.5 line-clamp-2">{a.excerpt}</p>
-        <p className="text-[13px] font-semibold text-slate-500 mt-4 pt-4 border-t border-slate-100">{a.author} · {a.date}</p>
+        <h3 className={`font-display font-bold text-ink-900 group-hover:text-ocean-700 transition-colors leading-tight mt-2 ${large ? 'text-[clamp(1.6rem,3vw,2.4rem)]' : 'text-[21px]'}`}>{a.title}</h3>
+        <p className="text-slate-500 text-[14.5px] mt-2 line-clamp-2">{a.excerpt}</p>
+        <span className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+          <span className="text-[13px] font-semibold text-slate-500">{a.author} · {a.date}</span>
+          <span className="arrow-dot !w-9 !h-9" aria-hidden>›</span>
+        </span>
       </div>
     </Link>
   )

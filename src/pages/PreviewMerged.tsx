@@ -7,7 +7,7 @@ import { articles } from '../data/articles'
 import { img } from '../data/images'
 import { ArticleCard, CTASection, ExperienceCard, PackageCard, SectionHeader } from '../components/ui'
 import { HeroParallax, Marquee, Reveal, Spot, Words } from '../components/motion'
-import { ClassicFooter, ClassicHeader, ClassicServices, ClassicWhy, ClassicWidget } from './ClassicHome'
+import { ClassicServices, ClassicWhy, ClassicWidget } from './ClassicHome'
 import { DestTile, MiniArticle, STYLES, StayRow } from './Home'
 
 // Fusion preview: classic agency chrome + booking widget around the
@@ -23,8 +23,6 @@ export function PreviewMerged() {
 
   return (
     <main className="bg-white">
-      <ClassicHeader />
-
       {/* Fusion hero: classic aerial composition + editorial reveal */}
       <Spot className="relative overflow-hidden bg-ocean-950">
         <div className="absolute inset-0" aria-hidden>
@@ -184,8 +182,6 @@ export function PreviewMerged() {
         title="Tell us what your perfect Maldives trip looks like."
         text="Dates, budget, daydreams — we reply within hours with 2–3 honest island options and a clear price."
       />
-
-      <ClassicFooter />
     </main>
   )
 }

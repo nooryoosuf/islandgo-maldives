@@ -52,6 +52,10 @@ body {
 
   .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold; }
 
+  /* Gold dot arrow — classic agency card affordance */
+  .arrow-dot { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 9999px; color: #fff; font-weight: 700; font-size: 1.1rem; line-height: 1; background-image: linear-gradient(135deg, #f59e0b, #fcd34d); transition: transform .25s ease; }
+  .group:hover .arrow-dot { transform: translateX(5px); }
+
   /* Cards — borders, photography and spacing. Shadows ONLY for true elevation
      (dropdowns, floating nav, modals, overlapping panels). */
   .card { @apply bg-white rounded-[1.4rem] border border-slate-200/90 overflow-hidden; }

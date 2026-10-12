@@ -2,25 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { destinations } from '../data/destinations'
 import { img } from '../data/images'
-import { site } from '../config/site'
-import { wa } from '../lib/whatsapp'
 import { track } from '../lib/analytics'
 
-// Alternate "classic travel-agency" homepage, built to mirror the client's
-// reference mockup. Preview only: noindexed, unlinked, excluded from sitemap.
+// Classic agency homepage sections (reference-mockup direction).
+// Global chrome (white header + navy footer in layout.tsx) wraps this page.
 // Uses real routes, real contact details and the prefill enquiry flow —
 // no fake booking, no invented claims.
-
-const NAV: [string, string][] = [
-  ['Home', '/preview-classic'],
-  ['Destinations', '/destinations'],
-  ['Transfers', '/experiences/island-hopping-day'],
-  ['Hotels', '/stays'],
-  ['Tours', '/experiences'],
-  ['Packages', '/packages'],
-  ['About', '/about'],
-  ['Contact', '/contact'],
-]
 
 const SERVICES = [
   { label: 'Speedboat Transfers', interest: 'speedboat transfers', image: img.beachBoat, icon: '⛴', to: '/experiences/island-hopping-day', text: 'Fast, safe and comfortable transfers across the Maldives.' },
@@ -95,33 +82,9 @@ export function ClassicWidget() {
   )
 }
 
-export function ClassicHeader() {
-  return (
-    <header className="bg-white border-b border-slate-100">
-      <div className="container-x flex items-center justify-between gap-4 h-[76px]">
-        <Link to="/preview-classic" className="flex items-center gap-3 shrink-0" aria-label="IslandGo MV home">
-          <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-12 w-auto object-contain" />
-        </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-[15px] font-semibold text-ink-900" aria-label="Preview">
-          {NAV.map(([l, to], i) => (
-            <Link key={l} to={to} aria-current={i === 0 ? 'page' : undefined} className={i === 0 ? 'text-ocean-600 border-b-2 border-sunset-500 pb-0.5' : 'hover:text-ocean-600'}>{l}</Link>
-          ))}
-        </nav>
-        <Link to="/plan-trip" className="btn-primary !py-2.5 hidden sm:inline-flex">🗓 Request a Booking</Link>
-        <Link to="/plan-trip" className="btn-primary !py-2 !px-4 sm:hidden text-sm">Book</Link>
-      </div>
-      <nav className="lg:hidden container-x flex gap-5 overflow-x-auto pb-3 text-[14px] font-semibold text-ink-900 whitespace-nowrap" aria-label="Preview mobile">
-        {NAV.map(([l, to]) => <Link key={l} to={to} className="hover:text-ocean-600">{l}</Link>)}
-      </nav>
-    </header>
-  )
-}
-
 export function ClassicHome() {
   return (
     <main className="bg-white">
-      <ClassicHeader />
-
       {/* Hero */}
       <section className="relative overflow-hidden">
         <img src={img.heroBeachWide} alt="Aerial view of a Maldivian resort island" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
@@ -155,8 +118,6 @@ export function ClassicHome() {
       <ClassicServices />
 
       <ClassicWhy />
-
-      <ClassicFooter />
     </main>
   )
 }
@@ -210,36 +171,5 @@ export function ClassicWhy() {
         </ul>
       </div>
     </section>
-  )
-}
-
-export function ClassicFooter() {
-  return (
-    <footer className="bg-ocean-950 text-white">
-        <div className="container-x py-12 grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_auto]">
-          <div>
-            <img src="/logo.jpg" alt="IslandGo MV Travel and Tours logo" className="h-14 w-auto rounded-lg bg-white object-contain" />
-            <p className="text-white/60 text-[13.5px] mt-4 max-w-xs">Explore • Discover • Experience Maldives.</p>
-          </div>
-          <div className="text-[14.5px] space-y-3">
-            <p className="flex gap-2.5"><span aria-hidden>📍</span><span>Ferry Terminal Rd, Malé,<br />Maldives</span></p>
-            <p className="flex gap-2.5"><span aria-hidden>✆</span><a href={wa.general()} className="hover:text-white font-semibold">{site.contact.whatsappDisplay}<span className="block text-white/55 text-[12.5px] font-normal">Call or WhatsApp</span></a></p>
-            <p className="flex gap-2.5"><span aria-hidden>✉</span><a href={`mailto:${site.contact.email}`} className="hover:text-white font-semibold break-all">{site.contact.email}<span className="block text-white/55 text-[12.5px] font-normal">We reply quickly</span></a></p>
-          </div>
-          <nav className="grid grid-cols-2 md:grid-cols-1 gap-1.5 text-[14.5px] text-white/80" aria-label="Preview footer">
-            {NAV.map(([l, to]) => <Link key={l} to={to} className="hover:text-white w-fit">{l}</Link>)}
-          </nav>
-          <div className="flex md:flex-col gap-3 items-start">
-            <a href={wa.general()} className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-bold text-[15px] hover:brightness-110">Chat on WhatsApp ›</a>
-            <Link to="/plan-trip" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 font-bold text-[15px] hover:bg-white/10">Plan Your Trip</Link>
-          </div>
-        </div>
-        <div className="border-t border-white/10">
-          <div className="container-x py-4 flex flex-col sm:flex-row justify-between gap-2 text-[12.5px] text-white/45">
-            <p className="flex gap-3"><Link to="/terms" className="hover:text-white">Terms & Conditions</Link><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></p>
-            <p>© 2026 IslandGo MV Travel & Tours. All Rights Reserved.</p>
-          </div>
-        </div>
-      </footer>
   )
 }

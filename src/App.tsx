@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Header, Footer, WhatsAppFloat } from './components/layout'
 import { ScrollToTop } from './components/ScrollToTop'
 import { RouteMeta } from './components/RouteMeta'
@@ -21,17 +21,15 @@ const withMeta = (el: React.ReactNode) => (
 )
 
 export default function App() {
-  const loc = useLocation()
-  const bare = loc.pathname === '/preview-classic' || loc.pathname === '/preview-merged'
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <SkipLink />
       <ScrollToTop />
-      {!bare && <Header />}
+      <Header />
       <div className="flex-1" id="main-content">
         <ErrorBoundary>
           <Routes>
-            <Route path="/" element={withMeta(<Home />)} />
+            <Route path="/" element={withMeta(<ClassicHome />)} />
             <Route path="/destinations" element={withMeta(<DestinationsList />)} />
             <Route path="/destinations/:slug" element={withMeta(<DestinationDetail />)} />
             <Route path="/stays" element={withMeta(<StaysList />)} />
@@ -56,14 +54,15 @@ export default function App() {
             <Route path="/privacy" element={withMeta(<Privacy />)} />
             <Route path="/terms" element={withMeta(<Terms />)} />
             <Route path="/cookies" element={withMeta(<Cookies />)} />
-            {/* Design preview (unlinked, noindexed, excluded from sitemap) */}
-            <Route path="/preview-classic" element={withMeta(<ClassicHome />)} />
+            {/* Design previews (unlinked, noindexed, excluded from sitemap) */}
+            <Route path="/preview-classic" element={<Navigate to="/" replace />} />
             <Route path="/preview-merged" element={withMeta(<PreviewMerged />)} />
+            <Route path="/preview-editorial" element={withMeta(<Home />)} />
             <Route path="*" element={withMeta(<NotFound />)} />
           </Routes>
         </ErrorBoundary>
       </div>
-      {!bare && <Footer />}
+      <Footer />
       <WhatsAppFloat />
       <CookieBanner />
     </div>
