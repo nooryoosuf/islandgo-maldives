@@ -29,7 +29,7 @@ export function PackagesList({ presetCat }: { presetCat?: string }) {
         image={packages[0].heroImage}
         kicker={catLabel ? `Packages · ${catLabel}` : 'Packages · Flexible starting points'}
         title={catLabel ? `${catLabel} in the Maldives` : 'Packages'}
-        text={catLabel ? `Hand-picked ${catLabel.toLowerCase()} trips — every itinerary is tailored to your dates.` : 'Honeymoon to budget — every itinerary is tailored to your dates. No checkout, just enquire.'}
+        text={catLabel ? `Hand-picked ${catLabel.toLowerCase()} trips — every itinerary is tailored to your dates.` : 'Discover Maldives holiday packages for couples, families and budget-conscious travelers. Choose your preferred experience and contact us for a personalized quotation.'}
       />
       <div className="container-x pt-6"><Breadcrumbs items={catLabel ? [{ label: 'Packages', to: '/packages' }, { label: catLabel }] : [{ label: 'Packages' }]} /></div>
       <section className="container-x section-pad">

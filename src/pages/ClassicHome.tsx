@@ -101,6 +101,7 @@ export function ClassicHome() {
             Discover the Maldives<br />with <span className="text-amber-400">IslandGo MV</span>
           </h1>
           <p className="mt-3 font-semibold text-white/90">Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives</p>
+          <p className="mt-4 max-w-xl text-[15.5px] sm:text-[16.5px] text-white/80 leading-relaxed">IslandGo MV Travel & Tours connects travelers with the best of the Maldives, offering resort stays, guesthouses, speedboat transfers, excursions and customized holiday packages. We are committed to personalized service, reliable support and strong partnerships with travel agents and tourism providers.</p>
           <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-8">
             {([
               [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
@@ -238,7 +239,7 @@ function ClassicSections() {
           <div>
             <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-sky-600">For Travel Agents</p>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">Partner with <span className="text-amber-500">IslandGo MV</span></h2>
-            <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Maldives ground services for international agents — packages, hotels, transfers and excursions with honest net rates.</p>
+            <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Maldives travel services for international travel agents and tour operators, including resort stays, guesthouses, transfers, excursions and customized holiday packages.</p>
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
             <Link to="/b2b" className="btn-ocean !px-7 !py-3.5 text-center">Travel Trade / B2B</Link>

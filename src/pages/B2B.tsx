@@ -92,7 +92,7 @@ export function B2B() {
         image={img.beachBoat}
         kicker="Travel Trade · B2B Partners"
         title="Partner with IslandGo MV."
-        text="Maldives ground services for international travel agents and tour operators — packages, hotels, transfers and excursions with honest net rates."
+        text="Maldives travel services for international travel agents and tour operators, including resort stays, guesthouses, transfers, excursions and customized holiday packages. Contact us for B2B rates and partnership opportunities."
       >
         <a href="#b2b-enquire" className="btn-primary">Request net rates</a>
       </ImageHero>
@@ -103,8 +103,8 @@ export function B2B() {
           <p className="kicker mb-3">Who we work with</p>
           <h2 className="display-xl">Your local team in the Maldives.</h2>
           <div className="mt-4 space-y-4 text-[16.5px] text-slate-700 leading-relaxed">
-            <p>We act as the Maldives ground partner for overseas agencies: real supplier relationships around North Malé Atoll, honest advice on seasons and transfers, and quotes your clients can trust.</p>
-            <p>Tell us your markets and volumes — we respond with net-rate arrangements, commission terms and booking procedures agreed per partnership. No hidden costs, no surprises for your clients.</p>
+            <p>We help international travel agents arrange Maldives accommodation, transfers, excursions and holiday packages, with local assistance and clear communication.</p>
+            <p>Tell us about your market and requirements. We can discuss net rates, commission terms and booking procedures based on our agreed arrangements.</p>
           </div>
           <div className="flex flex-wrap gap-2 mt-6">
             {['Net rates on request', 'Unbranded quotes available', 'Malé-based operations', 'Reply within 1 business day'].map((t) => (

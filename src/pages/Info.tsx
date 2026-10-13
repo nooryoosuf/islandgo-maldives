@@ -47,11 +47,10 @@ export function About() {
       <section className="container-x py-12 grid lg:grid-cols-2 gap-10 items-center">
         <div>
           <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-sunset-600">Who we are</p>
-          <h2 className="h-display text-3xl sm:text-4xl mt-2">New brand, local roots.</h2>
+          <h2 className="h-display text-3xl sm:text-4xl mt-2">Your Trusted Local Partner for Maldives Travel</h2>
           <div className="mt-4 space-y-4 text-[16.5px] text-slate-700 leading-relaxed">
-            <p>We started IslandGo because planning the Maldives felt harder than it should be — identical resort photos, hidden transfer costs, and “book now” buttons with no human behind them.</p>
-            <p>So we do it differently: <b>atoll first, island second, star-rating last.</b> We check tides, seasons and transfer times before we quote. If a cheaper local island fits you better than a resort, we will say so.</p>
-            <p>You explore, you message us, and we confirm availability and price in writing before anything is booked.</p>
+            <p>IslandGo MV Travel & Tours connects travelers with the best of the Maldives, offering resort stays, guesthouses, speedboat transfers, excursions and customized holiday packages.</p>
+            <p>We are committed to personalized service, reliable support and strong partnerships with travel agents and tourism providers.</p>
           </div>
           <div className="flex gap-3 mt-6"><Link to="/plan-trip" className="btn-primary">Plan Your Trip</Link><Link to="/contact" className="btn-ghost">Contact</Link></div>
         </div>
@@ -89,7 +88,7 @@ export function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle')
   return (
     <main>
-      <ImageHero image={img.beachBoat} kicker="Contact · Humans reply" title="Talk to us." text="WhatsApp is fastest. Email works too. We reply within a few hours, Malé time (GMT+5)." />
+      <ImageHero image={img.beachBoat} kicker="Contact · Humans reply" title="Talk to us." text="Contact us on WhatsApp or email for bookings, travel enquiries and partnership opportunities. Our team will assist you as soon as possible." />
       <section className="container-x section-pad grid lg:grid-cols-[1fr_1.2fr] gap-8">
         <div className="space-y-4">
           {[

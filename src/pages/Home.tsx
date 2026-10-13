@@ -373,7 +373,7 @@ export function Home() {
           <div>
             <p className="kicker mb-3">For travel agents</p>
             <h2 className="display-xl">Partner with IslandGo MV.</h2>
-            <p className="text-slate-600 text-[16.5px] mt-3 leading-relaxed max-w-xl">Maldives ground services for international agents and operators — packages, hotels, transfers and excursions with honest net rates.</p>
+            <p className="text-slate-600 text-[16.5px] mt-3 leading-relaxed max-w-xl">Maldives travel services for international travel agents and tour operators, including resort stays, guesthouses, transfers, excursions and customized holiday packages.</p>
             <div className="flex flex-wrap gap-2 mt-5">
               {['Net rates on request', 'Unbranded quotes', 'Reply in 1 business day'].map((t) => (
                 <span key={t} className="chip bg-white border border-slate-200 text-ink-700">✓ {t}</span>
