@@ -16,6 +16,16 @@ const NAV: [string, string][] = [
   ['Contact', '/contact'],
 ]
 
+// Hamburger-to-cross morph: two bars that glide together and rotate.
+function MorphIcon({ open, className = 'w-5 h-5' }: { open: boolean; className?: string }) {
+  return (
+    <span className={`relative block ${className}`} aria-hidden>
+      <span className={`absolute left-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${open ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-[32%]'}`} />
+      <span className={`absolute left-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${open ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'top-[68%] -translate-y-full'}`} />
+    </span>
+  )
+}
+
 const SUBS: Record<string, { label: string; to: string }[]> = {
   Home: [
     { label: 'Destinations', to: '/destinations' },
@@ -116,12 +126,12 @@ export function Header() {
             <IconSearch className="w-5 h-5" />
           </Link>
           <button
-            className={`lg:hidden w-10 h-10 grid place-items-center rounded-full border transition-all duration-300 ${open ? 'bg-ocean-950 text-white border-ocean-950 rotate-90' : 'border-slate-200 text-ink-900'}`}
+            className={`lg:hidden w-10 h-10 grid place-items-center rounded-full border transition-all duration-300 ${open ? 'bg-ocean-950 text-white border-ocean-950' : 'border-slate-200 text-ink-900'}`}
             onClick={() => (open ? hide() : show())}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
           >
-            <span className="text-xl leading-none" aria-hidden>{open ? '✕' : '☰'}</span>
+            <MorphIcon open={open} />
           </button>
         </div>
       </div>
@@ -144,7 +154,7 @@ export function Header() {
             onClick={() => hide()}
             aria-label="Close menu"
           >
-            <span className="text-xl leading-none" aria-hidden>✕</span>
+            <MorphIcon open={open} />
           </button>
         </div>
         <nav
