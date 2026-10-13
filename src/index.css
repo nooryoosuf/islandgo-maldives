@@ -124,9 +124,9 @@ body {
     .xpan .xpan-more { opacity: 1; max-height: 8rem; }
   }
 
-  /* Mobile dropdown menu entrance */
-  .dropdown-in { animation: drop-in .25s ease both; transform-origin: top center; }
-  @keyframes drop-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+  /* Mobile drawer: circular reveal expanding from the hamburger button */
+  .drawer-circle { clip-path: circle(0px at calc(100% - 40px) 34px); transition: clip-path .55s cubic-bezier(.22,.61,.36,1); }
+  .drawer-circle.open { clip-path: circle(150% at calc(100% - 40px) 34px); }
 
   /* Mobile edge-to-edge snap rail (mockup-style horizontal cards).
      Base = horizontal snap; sm+ = normal grids via grid classes. */

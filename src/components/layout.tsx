@@ -57,7 +57,7 @@ export function Header() {
   const hide = () => {
     setOpen(false)
     if (timer.current) window.clearTimeout(timer.current)
-    timer.current = window.setTimeout(() => setMounted(false), 320)
+    timer.current = window.setTimeout(() => setMounted(false), 580)
   }
   const hideNow = () => {
     if (timer.current) window.clearTimeout(timer.current)
@@ -128,7 +128,7 @@ export function Header() {
       {/* Full-screen side drawer (mobile) */}
       {mounted && (
       <div
-        className={`lg:hidden fixed inset-0 z-[60] bg-ocean-950 text-white flex flex-col transition-transform duration-300 ease-[cubic-bezier(.22,.61,.36,1)] ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`lg:hidden fixed inset-0 z-[60] bg-ocean-950 text-white flex flex-col drawer-circle ${open ? 'open' : ''}`}
       >
         <div
           className="absolute inset-0 opacity-40 pointer-events-none"
