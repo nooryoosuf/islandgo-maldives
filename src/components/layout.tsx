@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { site } from '../config/site'
 import { wa } from '../lib/whatsapp'
@@ -16,18 +16,76 @@ const NAV: [string, string][] = [
   ['Contact', '/contact'],
 ]
 
+const SUBS: Record<string, { label: string; to: string }[]> = {
+  Home: [
+    { label: 'Destinations', to: '/destinations' },
+    { label: 'Packages', to: '/packages' },
+  ],
+  Hotels: [
+    { label: 'Resorts', to: '/stays/resorts' },
+    { label: 'Local Islands', to: '/stays/local-islands' },
+    { label: 'All stays', to: '/stays' },
+  ],
+  Tours: [
+    { label: 'Diving', to: '/experiences/diving' },
+    { label: 'Snorkelling', to: '/experiences/snorkelling' },
+    { label: 'Surfing', to: '/experiences/surfing' },
+    { label: 'All experiences', to: '/experiences' },
+  ],
+  Packages: [
+    { label: 'Honeymoon', to: '/packages/honeymoon' },
+    { label: 'Family', to: '/packages/family' },
+    { label: 'Luxury', to: '/packages/luxury' },
+    { label: 'All packages', to: '/packages' },
+  ],
+  Contact: [
+    { label: 'Plan Your Trip', to: '/plan-trip' },
+    { label: 'B2B Partners', to: '/b2b' },
+  ],
+}
+
 export function Header() {
   const loc = useLocation()
   const [open, setOpen] = useState(false)
-  useEffect(() => setOpen(false), [loc.pathname])
+  const [mounted, setMounted] = useState(false)
+  const timer = useRef<number | null>(null)
+  const show = () => {
+    if (timer.current) window.clearTimeout(timer.current)
+    setMounted(true)
+    requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true)))
+  }
+  const hide = () => {
+    setOpen(false)
+    if (timer.current) window.clearTimeout(timer.current)
+    timer.current = window.setTimeout(() => setMounted(false), 320)
+  }
+  const hideNow = () => {
+    if (timer.current) window.clearTimeout(timer.current)
+    setOpen(false)
+    setMounted(false)
+  }
   useEffect(() => {
-    if (!open) return
+    hideNow()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loc.pathname ])
+  useEffect(() => {
+    if (!mounted) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') hide()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted])
+  useEffect(() => {
+    document.body.style.overflow = mounted ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mounted ])
+  useEffect(() => () => {
+    if (timer.current) window.clearTimeout(timer.current)
+  }, [])
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50">
       <div className="container-x flex items-center justify-between gap-4 h-16 sm:h-[76px]">
@@ -59,7 +117,7 @@ export function Header() {
           </Link>
           <button
             className={`lg:hidden w-10 h-10 grid place-items-center rounded-full border transition-all duration-300 ${open ? 'bg-ocean-950 text-white border-ocean-950 rotate-90' : 'border-slate-200 text-ink-900'}`}
-            onClick={() => setOpen(!open)}
+            onClick={() => (open ? hide() : show())}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
           >
@@ -67,38 +125,68 @@ export function Header() {
           </button>
         </div>
       </div>
-      {open && (
-        <nav className="lg:hidden border-t border-slate-100 bg-white dropdown-in" aria-label="Mobile">
-          <div className="container-x py-2 max-h-[70vh] overflow-y-auto flex flex-col">
-            {NAV.map(([l, to]) => (
-              <Link
-                key={l}
-                to={to}
-                onClick={() => setOpen(false)}
-                aria-current={loc.pathname === to ? 'page' : undefined}
-                className={`flex items-center justify-between py-3.5 border-b border-slate-100 font-display font-bold text-[19px] ${loc.pathname === to ? 'text-ocean-600' : 'text-ink-900'}`}
-              >
-                {l}
-                <span className="text-slate-300" aria-hidden>›</span>
-              </Link>
-            ))}
-            <Link
-              to="/b2b"
-              onClick={() => setOpen(false)}
-              aria-current={loc.pathname === '/b2b' ? 'page' : undefined}
-              className="flex items-center justify-between py-3.5 border-b border-slate-100 font-display font-bold text-[19px] text-sunset-600"
-            >
-              B2B Partners
-              <span className="text-slate-300" aria-hidden>›</span>
-            </Link>
-            <a href={wa.general()} className="text-center text-[14px] font-bold text-ocean-700 py-3">
-              WhatsApp {site.contact.whatsappDisplay}
-            </a>
-            <Link to="/plan-trip" onClick={() => setOpen(false)} className="btn-primary w-full !py-3.5 mb-3">
-              🗓 Request a Booking
-            </Link>
-          </div>
+      {/* Full-screen side drawer (mobile) */}
+      {mounted && (
+      <div
+        className={`lg:hidden fixed inset-0 z-[60] bg-ocean-950 text-white flex flex-col transition-transform duration-300 ease-[cubic-bezier(.22,.61,.36,1)] ${open ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div
+          className="absolute inset-0 opacity-40 pointer-events-none"
+          aria-hidden
+          style={{ background: 'radial-gradient(520px circle at 90% 8%, rgba(11,122,191,.45), transparent 65%), radial-gradient(420px circle at 8% 95%, rgba(249,115,22,.22), transparent 60%)' }}
+        />
+        <div className="relative container-x flex items-center justify-between h-16 sm:h-[76px] shrink-0">
+          <span className="flex items-center">
+            <img src="/logo.jpg" alt="" aria-hidden className="h-10 w-auto rounded-lg bg-white object-contain" />
+          </span>
+          <button
+            className="w-11 h-11 grid place-items-center rounded-full bg-white text-ocean-950 transition-transform duration-300"
+            onClick={() => hide()}
+            aria-label="Close menu"
+          >
+            <span className="text-xl leading-none" aria-hidden>✕</span>
+          </button>
+        </div>
+        <nav
+          className="relative container-x flex-1 overflow-y-auto flex flex-col py-2"
+          aria-label="Mobile"
+        >
+          {NAV.map(([l, to], i) => (
+            <div key={l} className="mnav-item border-b border-white/10 py-4" style={{ '--i': i } as CSSProperties}>
+              <div className="flex items-baseline gap-4">
+                <span className="font-display text-sm text-white/30 w-7 shrink-0" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+                <Link to={to} onClick={() => hideNow()} aria-current={loc.pathname === to ? 'page' : undefined} className="font-display font-semibold text-[32px] leading-none tracking-tight hover:text-sunset-300 transition-colors">{l}</Link>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-3 pl-11">
+                {SUBS[l]?.map((c) => (
+                  <Link key={c.label} to={c.to} onClick={() => setOpen(false)} className="rounded-full bg-white/10 border border-white/10 px-3.5 py-1.5 text-[13px] font-semibold text-white/85">{c.label}</Link>
+                ))}
+              </div>
+            </div>
+          ))}
+          <Link
+            to="/b2b"
+            onClick={() => hideNow()}
+            className="mnav-item border-b border-white/10 py-4"
+            style={{ '--i': NAV.length } as CSSProperties}
+          >
+            <div className="flex items-baseline gap-4">
+              <span className="font-display text-sm text-white/30 w-7 shrink-0" aria-hidden>{String(NAV.length + 1).padStart(2, '0')}</span>
+              <span className="font-display font-semibold text-[32px] leading-none tracking-tight text-sunset-300">B2B Partners</span>
+            </div>
+          </Link>
         </nav>
+        <div className="relative container-x pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shrink-0">
+          <Link to="/plan-trip" onClick={() => hideNow()} className="btn-primary w-full !py-3.5">
+            🗓 Request a Booking
+          </Link>
+          <p className="text-center text-[13.5px] text-white/60 font-semibold mt-3">
+            <a href={wa.general()}>WhatsApp {site.contact.whatsappDisplay}</a>
+            <span className="mx-2" aria-hidden>·</span>
+            <a href={`mailto:${site.contact.email}`}>Email us</a>
+          </p>
+        </div>
+      </div>
       )}
     </header>
   )
