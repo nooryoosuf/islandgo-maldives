@@ -17,8 +17,8 @@ export const site = {
   themeColor: '#0a2342',
   contact: {
     email: env.VITE_CONTACT_EMAIL || 'islandgomvtraveltours@gmail.com',
-    whatsappNumber: (env.VITE_WHATSAPP_NUMBER || '9607337549').replace(/\D/g, ''),
-    whatsappDisplay: '+960 733-7549',
+    whatsappNumber: (env.VITE_WHATSAPP_NUMBER || '9607922030').replace(/\D/g, ''),
+    whatsappDisplay: '+960 792-2030',
     address: 'Ferry Terminal Rd, Malé, Maldives',
     hours: 'Daily 8am–10pm Malé time (GMT+5)',
   },
