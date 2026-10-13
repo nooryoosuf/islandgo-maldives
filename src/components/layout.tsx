@@ -145,10 +145,7 @@ export function Header() {
           aria-hidden
           style={{ background: 'radial-gradient(520px circle at 90% 8%, rgba(11,122,191,.45), transparent 65%), radial-gradient(420px circle at 8% 95%, rgba(249,115,22,.22), transparent 60%)' }}
         />
-        <div className="relative container-x flex items-center justify-between h-16 sm:h-[76px] shrink-0">
-          <span className="flex items-center">
-            <img src="/logo.jpg" alt="" aria-hidden className="h-10 w-auto rounded-lg bg-white object-contain" />
-          </span>
+        <div className="relative container-x flex items-center justify-end h-16 sm:h-[76px] shrink-0">
           <button
             className="w-11 h-11 grid place-items-center rounded-full bg-white text-ocean-950 transition-transform duration-300"
             onClick={() => hide()}
