@@ -1,18 +1,10 @@
 import { useState, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
-import { destinations } from '../data/destinations'
-import { properties } from '../data/properties'
-import { packages } from '../data/packages'
-import { experiences } from '../data/experiences'
-import { articles } from '../data/articles'
 import { img } from '../data/images'
 import { ArticleCard, CategoryCard, CTASection, DestinationCard, ExperienceCard, PackageCard, PropertyCard } from '../components/ui'
 import { track } from '../lib/analytics'
 import { IconAnchor, IconBed, IconClock, IconCompass, IconGem, IconHeart, IconHome, IconPack, IconShieldCheck, IconSun, IconUsers } from '../components/icons'
-
-// Classic agency homepage sections.
-// Global chrome (white header + navy footer in layout.tsx) wraps this page.
-// Uses real routes, real contact details and prefilled enquiry flows.
+import { useContentStore, type WebsiteData } from '../lib/contentStore'
 
 const SERVICES = [
   { label: 'Speedboat Transfers', interest: 'speedboat transfers', image: img.beachBoat, Icon: IconAnchor, to: '/experiences/island-hopping-day', text: 'Fast, safe and comfortable transfers across the Maldives.' },
@@ -23,12 +15,14 @@ const SERVICES = [
 
 const ORIGINS = ['Velana International Airport (MLE)', 'Malé City', 'Hulhumalé', 'Already on an island']
 
-export function ClassicWidget() {
+export function ClassicWidget({ dests }: { dests?: { slug: string; name: string }[] }) {
   const [service, setService] = useState(SERVICES[0].label)
   const [from, setFrom] = useState(ORIGINS[0])
   const [to, setTo] = useState('')
   const [date, setDate] = useState('')
   const [pax, setPax] = useState('2 Adults')
+  const destinationsList = dests || []
+
   const sel = (label: string, v: string, set: (s: string) => void, opts: string[]) => (
     <label className="block min-w-0">
       <span className="block text-[12px] font-bold text-slate-500 mb-1">{label}</span>
@@ -65,7 +59,7 @@ export function ClassicWidget() {
         <span className="flex items-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-3 py-2.5">
           <select value={to} onChange={(e) => setTo(e.target.value)} aria-label="To / Destination" className="bg-transparent w-full font-bold text-ink-900 text-[14.5px] outline-none">
             <option value="">Anywhere in the Maldives</option>
-            {destinations.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}
+            {destinationsList.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}
           </select>
         </span>
       </label>
@@ -88,19 +82,23 @@ export function ClassicWidget() {
 }
 
 export function ClassicHome() {
+  const content = useContentStore()
+  const { brand } = content
+  const hero = brand.hero
+
   return (
     <main className="bg-white">
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <img src={img.heroBeachWide} alt="Aerial view of a Maldivian turquoise lagoon" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={hero.bgImage || img.heroBeachWide} alt="Aerial view of a Maldivian turquoise lagoon" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/55 via-ocean-950/10 to-transparent" aria-hidden />
         <div className="relative container-x pt-14 sm:pt-20 pb-16 sm:pb-48 text-white">
-          <p className="text-[13px] font-bold tracking-[0.3em] text-white/80">DISCOVER PARADISE</p>
+          <p className="text-[13px] font-bold tracking-[0.3em] text-white/80">{hero.kicker}</p>
           <h1 className="font-display font-bold text-[clamp(2rem,8vw,4.5rem)] leading-[1.02] mt-3 max-w-2xl text-balance [overflow-wrap:break-word]">
-            Discover the Maldives<br />with <span className="text-amber-400">IslandGo MV</span>
+            {hero.title}<br />with <span className="text-amber-400">{hero.accent}</span>
           </h1>
-          <p className="mt-3 font-semibold text-white/90">Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives</p>
-          <p className="mt-4 max-w-xl text-[15.5px] sm:text-[16.5px] text-white/80 leading-relaxed">Your premier Maldivian getaway begins here. Experience beachfront comfort at Kaani hotels, swift speedboat transfers across crystal atolls, and unforgettable sandbank excursions curated by local travel specialists in Malé.</p>
+          <p className="mt-3 font-semibold text-white/90">{hero.subtitle}</p>
+          <p className="mt-4 max-w-xl text-[15.5px] sm:text-[16.5px] text-white/80 leading-relaxed">{hero.description}</p>
           <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-8">
             {([
               [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
@@ -118,7 +116,7 @@ export function ClassicHome() {
 
       {/* Booking widget overlapping hero */}
       <div className="container-x relative z-10 -mt-28 sm:-mt-32 hidden sm:block">
-        <ClassicWidget />
+        <ClassicWidget dests={content.destinations} />
       </div>
 
       {/* Quick tiles — mobile shortcuts */}
@@ -143,12 +141,11 @@ export function ClassicHome() {
 
       <ClassicWhy />
 
-      <ClassicSections />
+      <ClassicSections content={content} />
     </main>
   )
 }
 
-// ---------- Classic section header ----------
 function CHead({ kicker, title, accent, text, link, linkLabel }: { kicker: string; title: string; accent?: string; text?: string; link?: string; linkLabel?: string }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
@@ -175,11 +172,11 @@ const STYLE_TILES = [
   { image: img.islandLife, title: 'Local Islands', text: 'Culture & value', to: '/stays' },
 ]
 
-// ---------- All remaining homepage sections in classic style ----------
-function ClassicSections() {
-  const featDest = destinations.filter((d) => d.featured)
-  const featStay = properties.filter((p) => p.featured)
-  const featPack = packages.filter((p) => p.featured).slice(0, 3)
+function ClassicSections({ content }: { content: WebsiteData }) {
+  const featDest = content.destinations.filter((d) => d.featured)
+  const featStay = content.properties.filter((p) => p.featured)
+  const featPack = content.packages.filter((p) => p.featured).slice(0, 3)
+
   return (
     <>
       <section className="container-x py-12 sm:py-16" aria-label="Destinations">
@@ -208,7 +205,7 @@ function ClassicSections() {
       <section className="container-x pb-12 sm:pb-16" aria-label="Experiences">
         <CHead kicker="Experiences" title="Days You’ll Remember" text="Mantas, channels, surf boats and sandbanks — the days between beach naps." link="/experiences" linkLabel="All experiences" />
         <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {experiences.slice(0, 8).map((e) => <ExperienceCard key={e.slug} e={e} />)}
+          {content.experiences.slice(0, 8).map((e) => <ExperienceCard key={e.slug} e={e} />)}
         </div>
       </section>
 
@@ -223,7 +220,7 @@ function ClassicSections() {
         <div className="rounded-[1.6rem] border border-slate-200 bg-white shadow-soft p-8 sm:p-10 grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
           <div>
             <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-sky-600">For Travel Agents</p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">Partner with <span className="text-amber-500">IslandGo MV</span></h2>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">Partner with <span className="text-amber-500">{content.brand.name}</span></h2>
             <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Reliable ground handling, contracted Kaani allotments, fast quotations, and bespoke group coordination across the Maldives.</p>
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
@@ -236,7 +233,7 @@ function ClassicSections() {
       <section className="container-x pb-14 sm:pb-20" aria-label="Travel guide">
         <CHead kicker="Travel Guide" title="Read Before" accent="You Fly" link="/guide" />
         <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.slice(0, 3).map((a) => <ArticleCard key={a.slug} a={a} />)}
+          {content.articles.slice(0, 3).map((a) => <ArticleCard key={a.slug} a={a} />)}
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Header, Footer, WhatsAppFloat } from './components/layout'
 import { ScrollToTop } from './components/ScrollToTop'
 import { RouteMeta } from './components/RouteMeta'
@@ -12,6 +12,7 @@ import { Privacy, Terms, Cookies } from './pages/Legal'
 import { ClassicHome } from './pages/ClassicHome'
 import { PreviewMerged } from './pages/PreviewMerged'
 import { B2B } from './pages/B2B'
+import { AdminDashboard } from './pages/Admin'
 
 const withMeta = (el: React.ReactNode) => (
   <>
@@ -21,6 +22,21 @@ const withMeta = (el: React.ReactNode) => (
 )
 
 export default function App() {
+  const loc = useLocation()
+  const isAdmin = loc.pathname.startsWith('/admin')
+
+  // Clean standalone Admin Dashboard without public header & footer
+  if (isAdmin) {
+    return (
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
+        </Routes>
+      </ErrorBoundary>
+    )
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <SkipLink />
@@ -34,7 +50,7 @@ export default function App() {
             <Route path="/destinations/:slug" element={withMeta(<DestinationDetail />)} />
             <Route path="/stays" element={withMeta(<StaysList />)} />
             <Route path="/stays/:slug" element={withMeta(<StayDetail />)} />
-            {/* URL-structure aliases (brief examples use /properties & /travel-guide) */}
+            {/* URL-structure aliases */}
             <Route path="/properties" element={<Navigate to="/stays" replace />} />
             <Route path="/properties/:slug" element={<Navigate to="/stays" replace />} />
             <Route path="/travel-guide" element={<Navigate to="/guide" replace />} />

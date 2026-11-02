@@ -1,6 +1,5 @@
 import { useState, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
-import { offers } from '../data/articles'
 import { destinations } from '../data/destinations'
 import { img } from '../data/images'
 import { site } from '../config/site'
@@ -13,8 +12,11 @@ import { isValidEmail, isValidPhone, sanitizeInput } from '../lib/utils'
 import { IconChat, IconCheck, IconCompass, IconHeart, IconHome } from '../components/icons'
 import { track } from '../lib/analytics'
 import { Breadcrumbs, CTASection, ImageHero, SectionHeader } from '../components/ui'
+import { useContentStore } from '../lib/contentStore'
 
 export function OffersPage() {
+  const { offers } = useContentStore()
+
   return (
     <main>
       <ImageHero image={img.sunsetBeach} kicker="Offers · Seasonal value" title="Offers" text="Simple, real promotions — no blackout mazes. Mention the code in your enquiry." />

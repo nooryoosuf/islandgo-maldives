@@ -1,21 +1,19 @@
 import { useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { destinations, getDestination } from '../data/destinations'
-import { experiences, getExperience } from '../data/experiences'
-import { propertiesByDestination, properties } from '../data/properties'
-import { packages } from '../data/packages'
+import { getExperience, experiences } from '../data/experiences'
 import { Breadcrumbs, CTASection, DestinationCard, ExperienceCard, Gallery, ImageHero, PackageCard, PropertyCard, SectionHeader, StickyEnquire } from '../components/ui'
 import { wa } from '../lib/whatsapp'
 import { resolveStayType } from '../lib/categories'
 import { EnquiryForm, Faq, FilterBar } from '../components/forms'
 import { EmptyState } from '../components/feedback'
-import { getProperty } from '../data/properties'
+import { useContentStore } from '../lib/contentStore'
 
 // ---------- DESTINATIONS ----------
 export function DestinationsList() {
+  const { destinations } = useContentStore()
   return (
     <main>
-      <ImageHero image={destinations[0].heroImage} kicker="Explore · Atolls & islands" title="Destinations" text="Six places we know deeply — pick an atoll character first, then the island.">
+      <ImageHero image={destinations[0]?.heroImage} kicker="Explore · Atolls & islands" title="Destinations" text="Places we know deeply — pick an atoll character first, then the island.">
         <Link to="/plan-trip" className="btn-primary">Plan Your Trip</Link>
       </ImageHero>
       <section className="container-x section-pad">
@@ -23,19 +21,21 @@ export function DestinationsList() {
           {destinations.map((d) => <DestinationCard key={d.slug} d={d} />)}
         </div>
       </section>
-      <CTASection image={destinations[2].cardImage} title="Not sure which atoll fits?" text="Tell us your month + passions and we will match you in one message." />
+      <CTASection image={destinations[2]?.cardImage || destinations[0]?.cardImage} title="Not sure which atoll fits?" text="Tell us your month + passions and we will match you in one message." />
     </main>
   )
 }
 
 export function DestinationDetail() {
   const { slug = '' } = useParams()
-  const d = getDestination(slug)
+  const { destinations, properties, packages } = useContentStore()
+  const d = destinations.find((x) => x.slug === slug)
   if (!d) return <NotFound />
-  const stays = propertiesByDestination(d.slug)
+  const stays = properties.filter((p) => p.destinationSlug === d.slug)
   const exps = d.thingsToDo.map(getExperience).filter(Boolean) as typeof experiences
   const related = destinations.filter((x) => x.slug !== d.slug).slice(0, 3)
   const relPacks = packages.filter((p) => p.destinationSlugs.includes(d.slug)).slice(0, 3)
+
   return (
     <main>
       <ImageHero image={d.heroImage} kicker={d.atoll} title={d.name} text={d.tagline} />
@@ -93,6 +93,7 @@ export function DestinationDetail() {
 
 // ---------- STAYS ----------
 export function StaysList({ preset }: { preset?: string }) {
+  const { properties } = useContentStore()
   const [sp] = useSearchParams()
   const [q, setQ] = useState('')
   const resolved = resolveStayType(preset)
@@ -102,11 +103,12 @@ export function StaysList({ preset }: { preset?: string }) {
     const okT = !type || p.type === type
     const okQ = !q || (p.name + p.location + p.description).toLowerCase().includes(q.toLowerCase())
     return okT && okQ
-  }), [q, type])
+  }), [properties, q, type])
+
   return (
     <main>
       <ImageHero
-        image={properties[0].heroImage}
+        image={properties[0]?.heroImage}
         kicker="Stays · Kaani Hotels & Beach Stays"
         title="Kaani Stays in the Maldives"
         text="Explore premier beachfront hotels at Kaani on Maafushi — iconic rooftop infinity pools, sea-view suites, and verified direct availability."
@@ -122,20 +124,22 @@ export function StaysList({ preset }: { preset?: string }) {
         </div>
         {list.length === 0 && <div className="mt-8"><EmptyState title="No stays found" text="Try a different search — or ask us and we'll check Kaani availability manually." actionTo="/plan-trip" actionLabel="Ask about availability" /></div>}
       </section>
-      <CTASection image={properties[1]?.heroImage || properties[0].heroImage} title="Ready to reserve your Kaani stay?" text="One message with your travel dates gets you confirmed rates and direct room options." />
+      <CTASection image={properties[1]?.heroImage || properties[0]?.heroImage} title="Ready to reserve your Kaani stay?" text="One message with your travel dates gets you confirmed rates and direct room options." />
     </main>
   )
 }
 
 export function StayDetail() {
   const { slug = '' } = useParams()
+  const { properties, destinations, packages } = useContentStore()
   if (resolveStayType(slug)) return <StaysList preset={slug} />
-  const p = getProperty(slug)
+  const p = properties.find((x) => x.slug === slug)
   if (!p) return <NotFound />
-  const dest = getDestination(p.destinationSlug)
+  const dest = destinations.find((x) => x.slug === p.destinationSlug)
   const exps = p.experiences.map(getExperience).filter(Boolean) as typeof experiences
   const relPacks = packages.filter((x) => x.propertySlugs?.includes(p.slug)).slice(0, 3)
   const related = properties.filter((x) => x.slug !== p.slug && x.destinationSlug === p.destinationSlug).slice(0, 3)
+
   return (
     <main>
       <ImageHero image={p.heroImage} kicker={`${p.type.replace('-', ' ')} · ${p.location}`} title={p.name} text={p.rating} />
