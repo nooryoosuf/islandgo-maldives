@@ -98,8 +98,9 @@ export function PreviewMerged() {
         <div className="absolute inset-0 container-x flex flex-col justify-end pb-12 sm:pb-16 text-white">
           <Reveal>
             <p className="text-[13px] font-bold uppercase tracking-[0.18em] text-sunset-300">Somewhere out there</p>
-            <p className="font-display font-semibold tracking-tight text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.98] mt-2">THE OCEAN<br />IS CALLING.</p>
-            <Link to="/destinations" className="alink alink-light mt-5 text-[16px]">Explore the Maldives <span className="arr" aria-hidden>→</span></Link>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl max-w-xl leading-tight mt-2">The water is this blue right now.</h2>
+            <p className="text-white/80 text-[15.5px] mt-2 max-w-md">No filters, no stock promises. Just the sunny side, managed by locals who live here.</p>
+            <div className="mt-6 flex gap-3"><Link to="/plan-trip" className="btn-primary">Plan Your Trip</Link><Link to="/destinations" className="btn-white">Browse Destinations</Link></div>
           </Reveal>
         </div>
       </section>
@@ -111,7 +112,7 @@ export function PreviewMerged() {
             <Reveal>
               <p className="kicker mb-3">Where to stay</p>
               <h2 className="display-xl">Sleep over<br />the lagoon.</h2>
-              <p className="text-slate-600 text-[16.5px] mt-4 leading-relaxed max-w-md">Real resorts and guesthouses around North Malé — Coco Bodu Hithi to Maafushi beach hotels.</p>
+              <p className="text-slate-600 text-[16.5px] mt-4 leading-relaxed max-w-md">Beachfront comfort at Kaani hotels on Maafushi — infinity pools, ocean-view suites, and warm hospitality.</p>
               <Link to="/stays" className="alink mt-6 text-[15px]">View all stays <span className="arr" aria-hidden>→</span></Link>
             </Reveal>
           </div>
@@ -124,58 +125,47 @@ export function PreviewMerged() {
       {/* Travel styles */}
       <section className="bg-sand-100/50 border-y border-orange-100/70" aria-label="Travel styles">
         <div className="container-x section-pad">
-          <SectionHeader kicker="Travel styles" title="How do you travel?" text="Hover to expand — every panel leads somewhere real." />
-          <Reveal className="xpan gap-3 lg:h-[500px]">
+          <SectionHeader kicker="Travel styles" title="How do you want your days to feel?" />
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
             {STYLES.map((s) => (
-              <Link key={s.title} to={s.to} className="group relative block overflow-hidden rounded-[1.4rem] border border-slate-200/70 img-zoom">
-                <img src={s.image} alt={s.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/20 to-transparent" aria-hidden />
-                <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 text-white">
-                  <h3 className="font-display text-[26px] lg:text-3xl whitespace-nowrap">{s.title}</h3>
-                  <div className="xpan-more">
-                    <p className="text-white/80 text-[14.5px] mt-1.5 max-w-[240px]">{s.text}</p>
-                    <span className="alink alink-light mt-2.5 text-[14.5px]">Explore <span className="arr" aria-hidden>→</span></span>
-                  </div>
+              <Link key={s.title} to={s.to} className="group relative block overflow-hidden rounded-[1.4rem] border border-slate-200/70 aspect-[4/3] img-zoom">
+                <img src={s.image} alt="" aria-hidden loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/30 to-transparent" aria-hidden />
+                <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 text-white">
+                  <h3 className="font-display font-bold text-xl sm:text-2xl">{s.title}</h3>
+                  <p className="text-white/75 text-[13px] sm:text-[14px] mt-1 line-clamp-1">{s.text}</p>
                 </div>
               </Link>
             ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Experiences */}
-      <section className="container-x section-pad" aria-label="Experiences">
-        <SectionHeader kicker="Experiences" title="Days you’ll talk about for years." link="/experiences" linkLabel="All experiences" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" role="list" aria-label="Featured experiences">
-          {experiences.slice(0, 8).map((e) => (
-            <div key={e.slug} role="listitem" className="h-[360px] sm:h-[400px]">
-              <ExperienceCard e={e} />
-            </div>
-          ))}
+          </div>
         </div>
       </section>
 
       <ClassicWhy />
 
-      {/* Packages */}
-      <section className="container-x section-pad" aria-label="Packages">
-        <SectionHeader kicker="Packages" title="Easy starting points." text="Fixed ideas, flexible details — every trip is tailored to your dates." link="/packages" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featPack.map((p, i) => <Reveal key={p.slug} delay={i * 90}><PackageCard p={p} /></Reveal>)}
+      {/* Experiences */}
+      <section className="container-x section-pad" aria-label="Experiences">
+        <SectionHeader kicker="Experiences" title="Days you’ll remember." text="Mantas, channels, surf boats and sandbanks — the days between beach naps." link="/experiences" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {experiences.slice(0, 4).map((e) => <ExperienceCard key={e.slug} e={e} />)}
         </div>
       </section>
 
-      {/* Guide */}
-      <section className="bg-sand-50/70 border-y border-slate-200/70" aria-label="Travel guide">
-        <div className="container-x section-pad">
-          <SectionHeader kicker="Travel guide" title="Read before you fly." link="/guide" />
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-start">
-            <Reveal>{articles[0] && <ArticleCard a={articles[0]} large />}</Reveal>
-            <Reveal delay={120}>
-              {articles.slice(1, 3).map((a) => <MiniArticle key={a.slug} a={a} />)}
-              <Link to="/guide" className="alink mt-6 text-[15px]">All guides & stories <span className="arr" aria-hidden>→</span></Link>
-            </Reveal>
+      {/* Packages */}
+      <section className="bg-sand-50 border-y border-slate-100">
+        <div className="container-x section-pad" aria-label="Packages">
+          <SectionHeader kicker="Packages" title="Easy starting points." text="Fixed ideas, flexible details — every trip is tailored to your dates." link="/packages" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {featPack.map((p) => <PackageCard key={p.slug} p={p} />)}
           </div>
+        </div>
+      </section>
+
+      {/* Editorial guide row */}
+      <section className="container-x section-pad" aria-label="Travel guide">
+        <SectionHeader kicker="Travel guide" title="Read before you fly." text="Honest briefings from our Malé team." link="/guide" />
+        <div className="mt-6">
+          {articles.slice(0, 3).map((a) => <MiniArticle key={a.slug} a={a} />)}
         </div>
       </section>
 

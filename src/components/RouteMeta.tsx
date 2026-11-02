@@ -11,35 +11,33 @@ import { isPackageCat, packageCatLabel, isExpCat, expCatLabel, resolveStayType }
 import { trackPageView } from '../lib/analytics'
 
 const STATIC: Record<string, { title: string; desc: string }> = {
-  '/': { title: 'IslandGo Maldives — Discover the Sunny Side of the Maldives', desc: 'Resorts, local islands, diving, surfing, packages and honest Malé-based trip planning. Explore destinations and plan your trip.' },
+  '/': { title: 'IslandGo Maldives — Discover the Sunny Side of the Maldives', desc: 'Beach stays, Kaani hotels, diving, surfing, packages and honest Malé-based trip planning. Explore destinations and plan your trip.' },
   '/destinations': { title: 'Destinations | Maldives Travel Guide | IslandGo Maldives', desc: 'Explore Maldives atolls and local islands — North Malé, Baa, Ari, local-island life and more, with honest season advice.' },
-  '/stays': { title: 'Resorts, Hotels & Local Islands | IslandGo Maldives', desc: 'Overwater resorts, boutique hotels and family-run guesthouses across the Maldives. Explore, then enquire for confirmed availability.' },
+  '/stays': { title: 'Kaani Hotels & Beach Stays | IslandGo Maldives', desc: 'Kaani Palm Beach, Grand Seaview, and beachfront hotels on Maafushi. Explore rooms, rooftop infinity pools, and enquire for confirmed availability.' },
   '/packages': { title: 'Maldives Travel Packages | IslandGo Maldives', desc: 'Discover Maldives holiday packages for couples, families and budget-conscious travelers. Contact us for a personalized quotation.' },
   '/experiences': { title: 'Maldives Experiences | IslandGo Maldives', desc: 'Diving, manta snorkelling, surfing, sandbanks, dolphin cruises, fishing and island culture with local guides.' },
   '/guide': { title: 'Maldives Travel Guide | IslandGo Maldives', desc: 'First-timer briefings, resort-vs-local-island advice, manta seasons, surf guides and packing tips from locals.' },
   '/offers': { title: 'Offers | IslandGo Maldives', desc: 'Seasonal Maldives offers and value weeks. Mention the code in your enquiry — simple, real promotions.' },
-  '/about': { title: 'About Us | IslandGo Maldives', desc: 'A small Malé-based travel studio matching you to the right island at the right season. New brand, local roots, straight answers.' },
+  '/about': { title: 'About Us | IslandGo Maldives', desc: 'A dedicated Malé-based travel studio matching you to the right island at the right season with genuine local advice.' },
   '/contact': { title: 'Contact | IslandGo Maldives', desc: 'Contact us on WhatsApp or email for bookings, travel enquiries and partnership opportunities.' },
-  '/plan-trip': { title: 'Plan Your Trip | IslandGo Maldives', desc: 'Free Maldives trip planning help — tell us dates, budget and dreams; get 2–3 honest island options with clear prices.' },
+  '/plan-trip': { title: 'Plan Your Trip | IslandGo Maldives', desc: 'Free Maldives trip planning help — tell us dates, budget and dreams; get honest island options with clear prices.' },
   '/b2b': { title: 'B2B Partners · Travel Trade | IslandGo MV', desc: 'Maldives travel services for international travel agents and tour operators. Contact us for B2B rates and partnership opportunities.' },
   '/search': { title: 'Search | IslandGo Maldives', desc: 'Search Maldives destinations, stays, packages, experiences and travel guides.' },
-  '/privacy': { title: 'Privacy Policy (Draft) | IslandGo Maldives', desc: 'How IslandGo Maldives handles enquiries and site data. Draft placeholder — final legal copy to be confirmed.' },
-  '/terms': { title: 'Terms & Conditions (Draft) | IslandGo Maldives', desc: 'Enquiry terms for IslandGo Maldives travel planning. Draft placeholder — final legal copy to be confirmed.' },
-  '/cookies': { title: 'Cookie Policy | IslandGo Maldives', desc: 'How IslandGo Maldives uses cookies — essentials only, analytics only after consent.' },
-  '/preview-classic': { title: 'Classic Homepage Preview | IslandGo MV', desc: 'Internal design preview — not indexed.' },
-  '/preview-merged': { title: 'Merged Homepage Preview | IslandGo MV', desc: 'Internal design preview — not indexed.' },
-  '/preview-editorial': { title: 'Editorial Homepage Preview | IslandGo MV', desc: 'Internal design preview — not indexed.' },
+  '/privacy': { title: 'Privacy Policy | IslandGo Maldives', desc: 'How IslandGo Maldives handles enquiries and site data with complete privacy and transparency.' },
+  '/terms': { title: 'Terms & Conditions | IslandGo Maldives', desc: 'Terms and booking conditions for IslandGo Maldives travel planning and enquiry services.' },
+  '/cookies': { title: 'Cookie Policy | IslandGo Maldives', desc: 'How IslandGo Maldives uses cookies and local storage — privacy-focused, essential functions and anonymous analytics.' },
 }
 
-/** Central per-route SEO + structured data + page-view tracking. */
+/** Central per-route SEO + structured data + page-view and URL campaign tracking. */
 export function RouteMeta() {
   const loc = useLocation()
   const params = useParams()
   const path = loc.pathname
+  const fullPath = loc.pathname + loc.search
 
   useEffect(() => {
-    trackPageView(path)
-  }, [path])
+    trackPageView(fullPath)
+  }, [fullPath])
 
   // Dynamic detail routes
   if (path.startsWith('/destinations/') && params.slug) {
@@ -57,7 +55,7 @@ export function RouteMeta() {
     if (st)
       return (
         <>
-          <SEO title={`${st.label} | Maldives Resorts & Stays | ${site.name}`} description={`Hand-picked Maldives ${st.label.toLowerCase()} across the atolls — explore, then enquire for confirmed availability.`} path={path} />
+          <SEO title={`${st.label} | Maldives Kaani Stays | ${site.name}`} description={`Hand-picked Maldives ${st.label.toLowerCase()} — explore, then enquire for confirmed availability.`} path={path} />
           <JsonLd data={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Stays', path: '/stays' }, { name: st.label }])} />
         </>
       )
@@ -65,7 +63,7 @@ export function RouteMeta() {
     if (!p) return <SEO title={`Not found | ${site.name}`} description="Page not found." path={path} noindex />
     return (
       <>
-        <SEO title={`${p.name} | Maldives Resort & Stay | ${site.name}`} description={`${p.location}. ${p.description.slice(0, 140)}`} path={path} image={p.heroImage} />
+        <SEO title={`${p.name} | Maldives Beach Hotel | ${site.name}`} description={`${p.location}. ${p.description.slice(0, 140)}`} path={path} image={p.heroImage} />
         <JsonLd data={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Stays', path: '/stays' }, { name: p.name }]), lodgingSchema(p.name, p.description, p.heroImage, `${site.url}${path}`), faqSchema(p.faqs)]} />
       </>
     )
@@ -119,10 +117,9 @@ export function RouteMeta() {
     )
   }
   const s = STATIC[path] ?? { title: `IslandGo Maldives — ${site.tagline}`, desc: site.description }
-  const noindex = path.startsWith('/preview-') ? true : undefined
   return (
     <>
-      <SEO title={s.title} description={s.desc} path={path} noindex={noindex} />
+      <SEO title={s.title} description={s.desc} path={path} />
       {path === '/' && <JsonLd data={breadcrumbSchema([{ name: 'Home' }])} />}
     </>
   )

@@ -1,4 +1,11 @@
-# Cloudflare Pages SPA fallback — serves index.html for all app routes
-# (lets /destinations/baa-atoll etc. load directly and on refresh).
-/packages/luxury-baa-escape /packages/luxury-coco-serenity 301
+# SPA fallback & redirects for Cloudflare Pages
+/packages/luxury-baa-escape /packages/honeymoon-kaani-beach-getaway 301
+/packages/luxury-coco-serenity /packages/honeymoon-kaani-beach-getaway 301
+/packages/surf-thulusdhoo-week /packages/diver-deep-south-channels 301
+/stays/coco-bodu-hithi /stays/kaani-palm-beach 301
+/stays/kurumba-maldives /stays/kaani-palm-beach 301
+/stays/bandos-maldives /stays/kaani-palm-beach 301
+/stays/hudhuran-fushi /stays/kaani-palm-beach 301
+/stays/arena-beach-maafushi /stays/kaani-palm-beach 301
+/stays/season-paradise /stays/kaani-palm-beach 301
 /* /index.html 200

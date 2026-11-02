@@ -10,7 +10,6 @@ import { resolveStayType } from '../lib/categories'
 import { EnquiryForm, Faq, FilterBar } from '../components/forms'
 import { EmptyState } from '../components/feedback'
 import { getProperty } from '../data/properties'
-import { getPackage } from '../data/packages'
 
 // ---------- DESTINATIONS ----------
 export function DestinationsList() {
@@ -108,22 +107,22 @@ export function StaysList({ preset }: { preset?: string }) {
     <main>
       <ImageHero
         image={properties[0].heroImage}
-        kicker={typeLabel ? `Stays · ${typeLabel}` : 'Stays · Resorts, hotels & guesthouses'}
-        title={typeLabel ? `Maldives ${typeLabel.toLowerCase()}` : 'Where to stay'}
-        text={typeLabel ? `Hand-picked ${typeLabel.toLowerCase()} across the atolls — explore, then enquire.` : 'Browse every island stay — then enquire for confirmed availability and honest prices.'}
+        kicker="Stays · Kaani Hotels & Beach Stays"
+        title="Kaani Stays in the Maldives"
+        text="Explore premier beachfront hotels at Kaani on Maafushi — iconic rooftop infinity pools, sea-view suites, and verified direct availability."
       >
-        <Link to="/plan-trip" className="btn-primary">Ask about a stay</Link>
+        <Link to="/plan-trip" className="btn-primary">Ask about a Kaani stay</Link>
       </ImageHero>
       <div className="container-x pt-6"><Breadcrumbs items={typeLabel ? [{ label: 'Stays', to: '/stays' }, { label: typeLabel }] : [{ label: 'Stays' }]} /></div>
       <section className="container-x section-pad">
-        <FilterBar value={q} onChange={setQ} placeholder="Search stays, islands, vibes…" options={[{ label: 'Resorts', value: 'resort' }, { label: 'Hotels', value: 'hotel' }, { label: 'Local islands', value: 'local-island' }]} />
+        <FilterBar value={q} onChange={setQ} placeholder="Search Kaani hotels, rooms, amenities…" options={[{ label: 'All Stays', value: '' }, { label: 'Beachfront', value: 'hotel' }]} />
         {type && <p className="mt-3 text-sm text-slate-500">Filtered by type: <b className="text-ink-900 capitalize">{typeLabel || type.replace('-', ' ')}</b> · <Link to="/stays" className="text-ocean-700 font-bold">clear</Link></p>}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
           {list.map((p) => <PropertyCard key={p.slug} p={p} />)}
         </div>
-        {list.length === 0 && <div className="mt-8"><EmptyState title="No stays found" text="Try a different search or clear the type filter — or ask us and we'll match you manually." actionTo="/plan-trip" actionLabel="Ask us to match you" /></div>}
+        {list.length === 0 && <div className="mt-8"><EmptyState title="No stays found" text="Try a different search — or ask us and we'll check Kaani availability manually." actionTo="/plan-trip" actionLabel="Ask about availability" /></div>}
       </section>
-      <CTASection image={properties[1].heroImage} title="Want us to match you?" text="One message with dates + budget beats an hour of tab-hopping." />
+      <CTASection image={properties[1]?.heroImage || properties[0].heroImage} title="Ready to reserve your Kaani stay?" text="One message with your travel dates gets you confirmed rates and direct room options." />
     </main>
   )
 }
@@ -179,7 +178,7 @@ export function StayDetail() {
   )
 }
 
-// ---------- SHARED 404 (branded, visual, navigable) ----------
+// ---------- SHARED 404 ----------
 export function NotFound() {
   return (
     <main className="container-x section-pad !pt-40 sm:!pt-36">

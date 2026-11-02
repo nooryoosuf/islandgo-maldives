@@ -21,6 +21,22 @@
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=1200&auto=format&fit=crop" />
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"TravelAgency","@id":"https://islandgomv.com/#org","name":"IslandGo Maldives","description":"Malé-based travel studio for Maldives destinations, stays, experiences and packages.","url":"https://islandgomv.com/","email":"islandgomvtraveltours@gmail.com","telephone":"+9607922030","address":{"@type":"PostalAddress","addressLocality":"Malé","addressCountry":"MV"},"areaServed":"Maldives"}</script>
     <title>IslandGo Maldives — Discover the Sunny Side of the Maldives</title>
+    <!-- SPA route restoration for static hosting & GitHub Pages -->
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === 'p') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          }).join('&');
+          var params = new URLSearchParams(decoded);
+          var path = params.get('p') || '';
+          var query = params.get('q') ? '?' + params.get('q') : '';
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + path + query + l.hash
+          );
+        }
+      }(window.location));
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://images.unsplash.com" />

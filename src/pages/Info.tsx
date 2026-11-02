@@ -42,15 +42,15 @@ export function OffersPage() {
 export function About() {
   return (
     <main>
-      <ImageHero image={img.islandLife} kicker="About · Malé-based travel studio" title="We plan Maldives trips we’d take ourselves." text="IslandGo Maldives is a small, new travel studio with a simple job: match you to the right island, at the right season, at a fair price." />
+      <ImageHero image={img.islandLife} kicker="About · Malé-based travel studio" title="We plan Maldives trips we’d take ourselves." text="IslandGo Maldives is a dedicated travel team matching you to the right island, at the right season, with clear prices." />
       <div className="container-x pt-6"><Breadcrumbs items={[{ label: 'About' }]} /></div>
       <section className="container-x py-12 grid lg:grid-cols-2 gap-10 items-center">
         <div>
           <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-sunset-600">Who we are</p>
-          <h2 className="h-display text-3xl sm:text-4xl mt-2">Your Trusted Local Partner for Maldives Travel</h2>
+          <h2 className="h-display text-3xl sm:text-4xl mt-2">Local Roots, Honest Planning, Unforgettable Stays</h2>
           <div className="mt-4 space-y-4 text-[16.5px] text-slate-700 leading-relaxed">
-            <p>IslandGo MV Travel & Tours connects travelers with the best of the Maldives, offering resort stays, guesthouses, speedboat transfers, excursions and customized holiday packages.</p>
-            <p>We are committed to personalized service, reliable support and strong partnerships with travel agents and tourism providers.</p>
+            <p>Based in Malé, IslandGo Maldives was created by locals who know these waters, atolls, and tides inside out. We take the guesswork out of booking by pairing you directly with premier stays like the Kaani hotel collection on Maafushi and coordinating seamless boat transfers.</p>
+            <p>From sunset dolphin cruises and guided reef snorkels to private sandbank escapes, our mission is straightforward: personal attention from your first enquiry to your final departure, with zero hidden surprises.</p>
           </div>
           <div className="flex gap-3 mt-6"><Link to="/plan-trip" className="btn-primary">Plan Your Trip</Link><Link to="/contact" className="btn-ghost">Contact</Link></div>
         </div>
@@ -62,7 +62,7 @@ export function About() {
           {([
             ['Right island first', 'Season + transfer + vibe before price comparison.', IconCompass],
             ['Humans on WhatsApp', 'Same person from first message to welcome briefing.', IconChat],
-            ['Resorts + local islands', 'We sell both, so advice stays neutral.', IconHome],
+            ['Curated island stays', 'Handpicked Kaani oceanfront hotels and proven excursions.', IconHome],
             ['No pressure', 'Quotes valid 7 days. No countdown timers, ever.', IconHeart],
           ] as [string, string, ComponentType<{ className?: string }>][]).map(([t, d, Icon]) => (
             <div key={t} className="rounded-3xl bg-white border border-slate-200 p-6"><span className="inline-grid place-items-center w-11 h-11 rounded-2xl bg-ocean-50 text-ocean-700"><Icon className="w-6 h-6" /></span><p className="font-bold text-ink-900 mt-3">{t}</p><p className="text-slate-600 text-[14.5px] mt-1">{d}</p></div>

@@ -10,16 +10,15 @@ import { ArticleCard, CategoryCard, CTASection, DestinationCard, ExperienceCard,
 import { track } from '../lib/analytics'
 import { IconAnchor, IconBed, IconClock, IconCompass, IconGem, IconHeart, IconHome, IconPack, IconShieldCheck, IconSun, IconUsers } from '../components/icons'
 
-// Classic agency homepage sections (reference-mockup direction).
+// Classic agency homepage sections.
 // Global chrome (white header + navy footer in layout.tsx) wraps this page.
-// Uses real routes, real contact details and the prefill enquiry flow —
-// no fake booking, no invented claims.
+// Uses real routes, real contact details and prefilled enquiry flows.
 
 const SERVICES = [
   { label: 'Speedboat Transfers', interest: 'speedboat transfers', image: img.beachBoat, Icon: IconAnchor, to: '/experiences/island-hopping-day', text: 'Fast, safe and comfortable transfers across the Maldives.' },
-  { label: 'Hotels & Guesthouses', interest: 'a resort or guesthouse stay', image: img.resortPool, Icon: IconHome, to: '/stays', text: 'Handpicked stays on local islands and resorts.' },
-  { label: 'Tours & Excursions', interest: 'tours and excursions', image: img.turtle, Icon: IconCompass, to: '/experiences', text: 'Snorkelling, resort trips, island hopping and more.' },
-  { label: 'Holiday Packages', interest: 'a holiday package', image: img.sandbank, Icon: IconPack, to: '/packages', text: 'Complete Maldives holiday packages for every traveller.' },
+  { label: 'Hotels & Beach Stays', interest: 'a Kaani beach hotel stay', image: img.resortPool, Icon: IconHome, to: '/stays', text: 'Premier ocean-view stays at Kaani on Maafushi.' },
+  { label: 'Tours & Excursions', interest: 'tours and excursions', image: img.turtle, Icon: IconCompass, to: '/experiences', text: 'Snorkelling, sandbanks, turtle safaris, and island hopping.' },
+  { label: 'Holiday Packages', interest: 'a holiday package', image: img.sandbank, Icon: IconPack, to: '/packages', text: 'Curated Maldives holiday packages with transfers and activities.' },
 ]
 
 const ORIGINS = ['Velana International Airport (MLE)', 'Malé City', 'Hulhumalé', 'Already on an island']
@@ -93,7 +92,7 @@ export function ClassicHome() {
     <main className="bg-white">
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <img src={img.heroBeachWide} alt="Aerial view of a Maldivian resort island" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={img.heroBeachWide} alt="Aerial view of a Maldivian turquoise lagoon" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/55 via-ocean-950/10 to-transparent" aria-hidden />
         <div className="relative container-x pt-14 sm:pt-20 pb-16 sm:pb-48 text-white">
           <p className="text-[13px] font-bold tracking-[0.3em] text-white/80">DISCOVER PARADISE</p>
@@ -101,7 +100,7 @@ export function ClassicHome() {
             Discover the Maldives<br />with <span className="text-amber-400">IslandGo MV</span>
           </h1>
           <p className="mt-3 font-semibold text-white/90">Explore <span className="text-amber-400">•</span> Discover <span className="text-amber-400">•</span> Experience Maldives</p>
-          <p className="mt-4 max-w-xl text-[15.5px] sm:text-[16.5px] text-white/80 leading-relaxed">IslandGo MV Travel & Tours connects travelers with the best of the Maldives, offering resort stays, guesthouses, speedboat transfers, excursions and customized holiday packages. We are committed to personalized service, reliable support and strong partnerships with travel agents and tourism providers.</p>
+          <p className="mt-4 max-w-xl text-[15.5px] sm:text-[16.5px] text-white/80 leading-relaxed">Your premier Maldivian getaway begins here. Experience beachfront comfort at Kaani hotels, swift speedboat transfers across crystal atolls, and unforgettable sandbank excursions curated by local travel specialists in Malé.</p>
           <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-8">
             {([
               [IconSun, 'Stunning Islands', 'Breathtaking destinations'],
@@ -117,17 +116,17 @@ export function ClassicHome() {
         </div>
       </section>
 
-      {/* Booking widget overlapping hero (desktop and up — mobile uses quick tiles + tab bar) */}
+      {/* Booking widget overlapping hero */}
       <div className="container-x relative z-10 -mt-28 sm:-mt-32 hidden sm:block">
         <ClassicWidget />
       </div>
 
-      {/* Quick tiles — mobile app-style shortcuts */}
+      {/* Quick tiles — mobile shortcuts */}
       <section className="container-x lg:hidden pt-6" aria-label="Quick links">
         <div className="grid grid-cols-5 gap-2">
           {([
-            [IconBed, 'Resorts', '/stays/resorts'],
-            [IconHome, 'Guesthouses', '/stays/local-islands'],
+            [IconBed, 'Kaani Stays', '/stays'],
+            [IconHome, 'Maafushi', '/destinations/maafushi-local-island'],
             [IconAnchor, 'Transfers', '/experiences/island-hopping-day'],
             [IconCompass, 'Excursions', '/experiences'],
             [IconPack, 'Packages', '/packages'],
@@ -173,7 +172,7 @@ const STYLE_TILES = [
   { image: img.dive, title: 'Diving', text: 'Thilas & channels', to: '/experiences/diving' },
   { image: img.surf, title: 'Surfing', text: 'Cokes & Chickens', to: '/experiences/surfing' },
   { image: img.villaDeck, title: 'Luxury', text: 'Space & silence', to: '/packages/luxury' },
-  { image: img.islandLife, title: 'Local Islands', text: 'Culture & value', to: '/stays/local-islands' },
+  { image: img.islandLife, title: 'Local Islands', text: 'Culture & value', to: '/stays' },
 ]
 
 // ---------- All remaining homepage sections in classic style ----------
@@ -184,7 +183,7 @@ function ClassicSections() {
   return (
     <>
       <section className="container-x py-12 sm:py-16" aria-label="Destinations">
-        <CHead kicker="Destinations" title="Find Your Island" text="Six atolls and island characters we know deeply — pick the water first, then the island." link="/destinations" />
+        <CHead kicker="Destinations" title="Find Your Island" text="Atolls and island characters we know deeply — pick the water first, then the island." link="/destinations" />
         <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {featDest.map((d) => <DestinationCard key={d.slug} d={d} />)}
         </div>
@@ -192,7 +191,7 @@ function ClassicSections() {
 
       <section className="bg-sky-50/60 border-y border-sky-100">
         <div className="container-x py-12 sm:py-16" aria-label="Where to stay">
-          <CHead kicker="Where to Stay" title="Sleep Over" accent="the Lagoon" text="Real resorts and guesthouses around North Malé — Coco Bodu Hithi to Maafushi beach hotels." link="/stays" linkLabel="All stays" />
+          <CHead kicker="Where to Stay" title="Sleep Over" accent="the Lagoon" text="Beachfront comfort on Maafushi — rooftop infinity pools, ocean-view suites, and warm hospitality at Kaani." link="/stays" linkLabel="All Kaani stays" />
           <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featStay.map((p) => <PropertyCard key={p.slug} p={p} />)}
           </div>
@@ -207,24 +206,10 @@ function ClassicSections() {
       </section>
 
       <section className="container-x pb-12 sm:pb-16" aria-label="Experiences">
-        <CHead kicker="Experiences" title="Days You’ll Remember" text="Mantas, channels, surf boats and village teas — the days between beach naps." link="/experiences" linkLabel="All experiences" />
+        <CHead kicker="Experiences" title="Days You’ll Remember" text="Mantas, channels, surf boats and sandbanks — the days between beach naps." link="/experiences" linkLabel="All experiences" />
         <div className="mrail gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {experiences.slice(0, 8).map((e) => <ExperienceCard key={e.slug} e={e} />)}
         </div>
-      </section>
-
-      {/* Excursion banner */}
-      <section className="container-x pb-12 sm:pb-16" aria-label="Excursions">
-        <Link to="/experiences" className="group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/70 min-h-[300px] sm:min-h-[340px] img-zoom">
-          <img src={img.turtle} alt="Snorkeller swimming with a sea turtle" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ocean-950/75 via-ocean-950/25 to-transparent" aria-hidden />
-          <div className="relative p-6 sm:p-10 max-w-lg text-white flex flex-col items-start justify-center h-full min-h-[inherit]">
-            <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-white/70">Exciting</p>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl leading-tight mt-1">Excursions</h2>
-            <p className="text-white/80 text-[14.5px] sm:text-[16px] mt-2">Snorkelling • Island Hopping • Dolphin Cruise • Sunset Trips & More</p>
-            <span className="inline-flex items-center gap-2 mt-5 rounded-full bg-white text-ink-900 font-bold text-[14.5px] sm:text-[15px] px-6 py-3 group-hover:gap-3.5 transition-all">Explore Excursions <span aria-hidden>→</span></span>
-          </div>
-        </Link>
       </section>
 
       <section className="container-x pb-12 sm:pb-16" aria-label="Packages">
@@ -239,7 +224,7 @@ function ClassicSections() {
           <div>
             <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-sky-600">For Travel Agents</p>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900 mt-2">Partner with <span className="text-amber-500">IslandGo MV</span></h2>
-            <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Maldives travel services for international travel agents and tour operators, including resort stays, guesthouses, transfers, excursions and customized holiday packages.</p>
+            <p className="text-slate-500 text-[15px] mt-2.5 max-w-xl">Reliable ground handling, contracted Kaani allotments, fast quotations, and bespoke group coordination across the Maldives.</p>
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
             <Link to="/b2b" className="btn-ocean !px-7 !py-3.5 text-center">Travel Trade / B2B</Link>
@@ -258,7 +243,7 @@ function ClassicSections() {
       <CTASection
         image={img.sunsetBeach}
         title="Tell us what your perfect Maldives trip looks like."
-        text="Dates, budget, daydreams — we reply within hours with 2–3 honest island options and a clear price."
+        text="Dates, budget, daydreams — we reply within hours with tailored options and a clear price."
       />
     </>
   )
@@ -272,7 +257,7 @@ export function ClassicServices() {
           <Link key={s.label} to={s.to} className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:-translate-y-1 transition-transform">
             <div className="relative">
               <img src={s.image} alt={s.label} loading="lazy" decoding="async" className="w-full aspect-[16/10] object-cover" />
-                <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-sky-700"><s.Icon className="w-5 h-5" /></span>
+              <span className="absolute -bottom-5 left-5 grid place-items-center w-11 h-11 rounded-full bg-sky-100 border-4 border-white text-sky-700"><s.Icon className="w-5 h-5" /></span>
             </div>
             <div className="p-5 pt-7 flex items-start justify-between gap-3">
               <div>
@@ -296,21 +281,21 @@ export function ClassicWhy() {
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink-900">Why Choose<br /><span className="text-amber-500">IslandGo MV?</span></h2>
           <p className="text-slate-500 text-[15px] mt-3">Your trusted local travel partner for unforgettable Maldives experiences.</p>
         </div>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
-            {([
-              [IconGem, 'Local Expertise', 'In-depth knowledge of the Maldives'],
-              [IconShieldCheck, 'Honest Prices', 'Great value, confirmed in writing'],
-              [IconUsers, 'Easy Planning', 'Quick and simple enquiries'],
-              [IconClock, 'Fast Support', 'Replies within hours'],
-              [IconHeart, 'Real Experiences', 'Unforgettable memories'],
-            ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
-              <li key={t} className="text-center sm:text-left">
-                <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-sky-700"><Icon className="w-6 h-6" /></span>
-                <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
-                <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
-              </li>
-            ))}
-          </ul>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 m-0 p-0 list-none">
+          {([
+            [IconGem, 'Local Expertise', 'In-depth knowledge of the Maldives'],
+            [IconShieldCheck, 'Honest Prices', 'Great value, confirmed in writing'],
+            [IconUsers, 'Easy Planning', 'Quick and simple enquiries'],
+            [IconClock, 'Fast Support', 'Replies within hours'],
+            [IconHeart, 'Real Experiences', 'Unforgettable memories'],
+          ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
+            <li key={t} className="text-center sm:text-left">
+              <span className="inline-grid place-items-center w-12 h-12 rounded-full bg-sky-100 text-sky-700"><Icon className="w-6 h-6" /></span>
+              <p className="font-bold text-ink-900 text-[14.5px] mt-2.5">{t}</p>
+              <p className="text-slate-500 text-[12.5px] mt-1 leading-snug">{d}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

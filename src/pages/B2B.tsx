@@ -10,7 +10,7 @@ import { Breadcrumbs, CTASection, ImageHero, SectionHeader } from '../components
 import { Faq } from '../components/forms'
 import { IconAnchor, IconCheck, IconCompass, IconHome, IconPack } from '../components/icons'
 
-const TRADE_SERVICES = ['Holiday packages', 'Hotels & resorts', 'Speedboat transfers', 'Excursions & experiences']
+const TRADE_SERVICES = ['Holiday packages', 'Kaani beach hotels', 'Speedboat transfers', 'Excursions & experiences']
 
 function TradeForm() {
   const [f, setF] = useState({ agency: '', person: '', email: '', country: '', phone: '', volume: 'Under 50 pax / year', message: '' })
@@ -92,7 +92,7 @@ export function B2B() {
         image={img.beachBoat}
         kicker="Travel Trade · B2B Partners"
         title="Partner with IslandGo MV."
-        text="Maldives travel services for international travel agents and tour operators, including resort stays, guesthouses, transfers, excursions and customized holiday packages. Contact us for B2B rates and partnership opportunities."
+        text="Specialist Maldives destination management for international travel agents, tour operators, and group organizers. Access contracted B2B rates for Kaani beach hotels, speedboats, and curated atoll excursions."
       >
         <a href="#b2b-enquire" className="btn-primary">Request net rates</a>
       </ImageHero>
@@ -103,8 +103,8 @@ export function B2B() {
           <p className="kicker mb-3">Who we work with</p>
           <h2 className="display-xl">Your local team in the Maldives.</h2>
           <div className="mt-4 space-y-4 text-[16.5px] text-slate-700 leading-relaxed">
-            <p>We help international travel agents arrange Maldives accommodation, transfers, excursions and holiday packages, with local assistance and clear communication.</p>
-            <p>Tell us about your market and requirements. We can discuss net rates, commission terms and booking procedures based on our agreed arrangements.</p>
+            <p>We assist international travel agents, tour operators, and corporate travel planners with ground logistics, hotel allotments, speedboats, and bespoke excursions throughout the atolls.</p>
+            <p>Tell us about your market and volumes. We provide net rates, transparent commission terms, and rapid WhatsApp trade support for your peace of mind.</p>
           </div>
           <div className="flex flex-wrap gap-2 mt-6">
             {['Net rates on request', 'Unbranded quotes available', 'Malé-based operations', 'Reply within 1 business day'].map((t) => (
@@ -121,9 +121,9 @@ export function B2B() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {([
               [IconPack, 'Packages for resale', 'Honeymoon, family, luxury and budget itineraries priced for your market.'],
-              [IconHome, 'Hotels & resorts', 'Contracted guesthouses plus resort allocations around North Malé.'],
-              [IconAnchor, 'Transfers', 'Speedboat coordination matched to your clients’ flights.'],
-              [IconCompass, 'Excursions', 'Sandbanks, snorkelling safaris, cruises and fishing nights.'],
+              [IconHome, 'Kaani Hotels & Stays', 'Contracted allocations across Kaani Palm Beach, Grand Seaview, and beach hotels.'],
+              [IconAnchor, 'Transfers', 'Scheduled & private speedboat coordination matched to international flight arrivals.'],
+              [IconCompass, 'Excursions', 'Sandbanks, turtle reefs, nurse sharks, dolphin cruises and fishing charters.'],
             ] as [ComponentType<{ className?: string }>, string, string][]).map(([Icon, t, d]) => (
               <div key={t} className="rounded-3xl bg-white border border-slate-200 p-6">
                 <span className="inline-grid place-items-center w-11 h-11 rounded-2xl bg-ocean-50 text-ocean-700"><Icon className="w-6 h-6" /></span>

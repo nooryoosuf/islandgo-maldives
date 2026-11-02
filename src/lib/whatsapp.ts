@@ -1,8 +1,11 @@
-// One reusable WhatsApp system — no hardcoded logic scattered in pages.
+// One reusable WhatsApp system — with automatic URL and campaign attribution.
 import { site } from '../config/site'
+import { getAttributionText } from './urlTracker'
 
 export function whatsappLink(message?: string) {
-  const text = message ? `?text=${encodeURIComponent(message)}` : ''
+  const attr = getAttributionText()
+  const fullMsg = message ? (attr ? `${message}${attr}` : message) : ''
+  const text = fullMsg ? `?text=${encodeURIComponent(fullMsg)}` : ''
   return `https://wa.me/${site.contact.whatsappNumber}${text}`
 }
 
